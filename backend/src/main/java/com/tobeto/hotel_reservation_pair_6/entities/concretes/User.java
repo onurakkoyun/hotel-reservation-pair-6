@@ -4,7 +4,6 @@ import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.List;
 
 import lombok.*;
