@@ -15,10 +15,10 @@ public enum Permission {
     GUEST_CREATE("guest:create"),
     GUEST_DELETE("guest:delete"),
 	
-	MANAGER_READ("manager:read"),
-	MANAGER_UPDATE("manager:update"),
-	MANAGER_CREATE("manager:create"),
-	MANAGER_DELETE("manager:delete");
+    MANAGER_READ("manager:read"),
+    MANAGER_UPDATE("manager:update"),
+    MANAGER_CREATE("manager:create"),
+    MANAGER_DELETE("manager:delete");
     
     @Getter
     private final String permission;

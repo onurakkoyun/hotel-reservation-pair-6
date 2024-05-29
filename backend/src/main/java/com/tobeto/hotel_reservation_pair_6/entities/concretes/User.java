@@ -8,37 +8,56 @@ import java.util.List;
 
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-public class User extends BaseEntity<Integer> {
- //TODO: Security eklendikten sonra implements et UserDetails'ı
+public class User extends BaseEntity<Long> {
+	// TODO: Security eklendikten sonra implements et UserDetails'ı
 
-  @Column(name="first_name")
-  private String firstName;
+	@Column(name = "first_name")
+	private String firstName;
 
-  @Column(name="last_name")
-  private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-  @Column(name="email")
-  private String email;
+	@Column(name = "email")
+	private String email;
 
-  @Column(name="password")
-  private String password;
+	@Column(name = "password")
+	private String password;
 
-  @Column(name="phone_number")
-  private String phoneNumber;
+	@Column(name = "phone_number")
+	private String phoneNumber;
 
-  @Column(name="profile_photo_url")
-  private String profilePhotoUrl;
+	@Column(name = "profile_photo_url")
+	private String profilePhotoUrl;
 
-  @Enumerated(EnumType.STRING)
-  private Role role;
+	@Column(name = "first_address_line")
+	private String firstAddress;
 
-  @OneToMany(mappedBy = "user")
-  private List<Token> tokens;
+	@Column(name = "second_address_line")
+	private String secondAddressLine;
+
+	@Column(name = "country")
+	private String country;
+
+	@Column(name = "province")
+	private String province;
+
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "postal_code")
+	private String postalCode;
+
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	@OneToMany(mappedBy = "user")
+	private List<Token> tokens;
 }

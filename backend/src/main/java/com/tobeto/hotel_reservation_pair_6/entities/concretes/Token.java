@@ -27,8 +27,10 @@ public class Token extends BaseEntity<Integer> {
   @Enumerated(EnumType.STRING)
   public TokenType tokenType = TokenType.BEARER;
 
+  @Column(name = "revoked")
   public boolean revoked;
 
+  @Column(name = "expired")
   public boolean expired;
 
   @ManyToOne(fetch = FetchType.LAZY)
