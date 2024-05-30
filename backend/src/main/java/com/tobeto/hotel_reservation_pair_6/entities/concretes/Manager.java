@@ -4,19 +4,20 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@PrimaryKeyJoinColumn(name = "manager_id", referencedColumnName = "id")
 @Table(name = "managers")
 public class Manager extends User {
 

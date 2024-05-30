@@ -1,5 +1,9 @@
 package com.tobeto.hotel_reservation_pair_6.services.abstracts;
 
-public interface ManagerService {
+import com.tobeto.hotel_reservation_pair_6.core.results.Result;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.authDtos.responses.AuthenticationResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.RegisterManagerRequest;
 
+public interface ManagerService {
+    AuthenticationResponse register(RegisterManagerRequest request);
 }

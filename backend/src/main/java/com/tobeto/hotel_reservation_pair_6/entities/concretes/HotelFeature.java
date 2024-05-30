@@ -2,6 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -23,7 +24,7 @@ public class HotelFeature extends BaseEntity<Integer>{
 	
 	@Column(name = "hotel_feature_name")
 	private String hotelFeatureName;
-	
+
 	@ManyToMany(mappedBy = "hotelFeatures")
 	private List<Hotel> hotel;
 }
