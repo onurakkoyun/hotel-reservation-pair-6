@@ -1,6 +1,7 @@
 package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations;
 
 import com.tobeto.hotel_reservation_pair_6.core.filters.JwtAuthenticationFilter;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+import static com.tobeto.hotel_reservation_pair_6.entities.enums.Role.*;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -40,6 +43,8 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/api/auth/**",
+          //  "/api/**"
+
     };
 
     @Bean
@@ -51,6 +56,7 @@ public class SecurityConfiguration {
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 //.requestMatchers(POST, "/api/members/**").hasRole(ADMIN.name())
+                                .requestMatchers(POST, "/api/hotels/**").hasRole(MANAGER.name())
                                 .anyRequest()
                                 .authenticated()
                 )
