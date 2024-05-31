@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Translation imports
@@ -23,6 +20,10 @@ import { GuardsModule } from './guards/guards.module';
 import { InterceptorsModule } from './interceptors/interceptors.module';
 import { ModelsModule } from './models/models.module';
 import { UtilitiesModule } from './utilities/utilities.module';
+import { LoginComponent } from './components/user/login/login.component';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -31,11 +32,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
   declarations: [
-    //AppComponent,
+    LoginComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
+    CommonModule,
+    RouterModule,
     HttpClientModule,
     UserModule,
     HotelModule,
@@ -55,9 +56,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     })
   ],
+  exports: [RouterModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
-  bootstrap:[]//[AppComponent]
+  bootstrap:[]
 })
 export class AppModule { }
