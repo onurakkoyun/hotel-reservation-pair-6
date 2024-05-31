@@ -1,4 +1,4 @@
-package com.tobeto.hotel_reservation_pair_6.core.utilities.results;
+package com.tobeto.hotel_reservation_pair_6.core.results;
 
 public class Result {
 	
