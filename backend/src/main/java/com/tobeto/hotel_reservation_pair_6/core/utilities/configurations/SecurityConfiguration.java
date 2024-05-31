@@ -43,7 +43,10 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/api/auth/**",
-          //  "/api/**"
+            "/api/managers/register",
+            "/api/guests/register"
+            //  "/api/**"
+
 
     };
 
@@ -55,7 +58,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                //.requestMatchers(POST, "/api/members/**").hasRole(ADMIN.name())
                                 .requestMatchers(POST, "/api/hotels/**").hasRole(MANAGER.name())
                                 .anyRequest()
                                 .authenticated()
