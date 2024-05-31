@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/roomsBeds")
-public class RoomsBedController {
+public class RoomBedsController {
     private final RoomBedService roomBedService;
 }
