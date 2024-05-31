@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/hotels")
 public class HotelsController {
+
     private final HotelService hotelService;
 
     @PostMapping("/add")

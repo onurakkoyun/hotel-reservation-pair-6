@@ -12,24 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddHotelRequest {
-
     @NotNull
     private int managerId;
-
     @NotBlank(message = "Hotel name can not be blank")
     private String hotelName;
-
     @NotBlank(message = "Company name can not be blank")
     private String companyName;
-
     @NotNull(message = "Breakfast information must be selected")
     private boolean isBreakfastAvailable;
-
     private boolean IsBreakfasIncludedInPrice;
-
     private double breakfastPricePerPerson;
-
     private int starCount;
-
     List<AssignHotelFeatureRequest> hotelFeatures;
 }

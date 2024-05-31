@@ -20,7 +20,7 @@ public class HotelServiceImpl implements HotelService{
     public Result add(AddHotelRequest request) {
        Hotel hotel = HotelMapper.INSTANCE.mapAddHotelRequestToHotel(request);
 
-        hotelRepository.save(hotel);
-        return new SuccessResult("Hotel added.");
+       hotelRepository.save(hotel);
+       return new SuccessResult("Hotel added.");
     }
 }
