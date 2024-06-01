@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/managers")
 public class ManagersController {
     private final ManagerService managerService;
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     AuthenticationResponse register(@RequestBody @Valid RegisterManagerRequest request){

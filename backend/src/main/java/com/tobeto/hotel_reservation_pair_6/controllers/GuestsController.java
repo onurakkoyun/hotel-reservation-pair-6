@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/guests")
 public class GuestsController {
     private final GuestService guestService;
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     AuthenticationResponse register(@RequestBody @Valid RegisterGuestRequest request){
