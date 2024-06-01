@@ -1,17 +1,24 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { AuthService } from '../services/auth/auth.service';
 import { inject } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
+export function jwtInterceptor(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
   const authService = inject(AuthService);
+  
+  if (req.url.endsWith('/login')) {
+    // Don't add the Authorization header
+    return next.handle(req);
+  }
 
-  // Eğer request'i değiştirmek istiyorsak yeni bir request (referans) oluşturmalıyız.
   const newReq = req.clone({
     headers: req.headers.set('Authorization', `Bearer ${authService.token}`),
   });
-  return next(newReq);
+  return next.handle(newReq);
 };
 
-export class JwtInterceptor {
-  intercept = jwtInterceptor;
+export class JwtInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return jwtInterceptor(req, next);
+  }
 }
