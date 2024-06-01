@@ -20,9 +20,9 @@ import { GuardsModule } from './guards/guards.module';
 import { InterceptorsModule } from './interceptors/interceptors.module';
 import { ModelsModule } from './models/models.module';
 import { UtilitiesModule } from './utilities/utilities.module';
-import { LoginComponent } from './components/user/login/login.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
 
 
 // AoT requires an exported function for factories
@@ -32,12 +32,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
   declarations: [
-    LoginComponent,
   ],
   imports: [
-    CommonModule,
     RouterModule,
-    HttpClientModule,
     UserModule,
     HotelModule,
     ReservationModule,

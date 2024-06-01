@@ -1,3 +1,11 @@
+
+<!--
+  Heads up! 👋
+
+  Plugins:
+    - @tailwindcss/forms
+-->
+
 <section class="bg-white">
     <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
       <aside class="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
@@ -62,6 +70,32 @@
                 class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
               />
             </div>
+
+            <div class="col-span-6 sm:col-span-3">
+              <label for="CompanyName" class="block text-sm font-medium text-gray-700">
+                Company Name
+              </label>
+  
+              <input
+                type="text"
+                id="CompanyName"
+                name="company_name"
+                class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
+              />
+            </div>
+  
+            <div class="col-span-6 sm:col-span-3">
+              <label for="HotelName" class="block text-sm font-medium text-gray-700">
+                Hotel Name
+              </label>
+  
+              <input
+                type="text"
+                id="HotelName"
+                name="hotel_name"
+                class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
+              />
+            </div>
   
             <div class="col-span-6 sm:col-span-3">
               <label for="Email" class="block text-sm font-medium text-gray-700"> Email </label>
@@ -75,15 +109,15 @@
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-                <label for="phoneNumber" class="block text-sm font-medium text-gray-700"> Phone Number </label>
-              
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  name="phone_number"
-                  class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
-                  />
-              </div>
+              <label for="phoneNumber" class="block text-sm font-medium text-gray-700"> Company Phone Number </label>
+            
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phone_number"
+                class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
+                />
+            </div>
   
             <div class="col-span-6 sm:col-span-3">
               <label for="Password" class="block text-sm font-medium text-gray-700"> Password </label>
@@ -115,7 +149,7 @@
                   type="checkbox"
                   id="MarketingAccept"
                   name="marketing_accept"
-                  class="size-5 rounded-md border-gray-200 border-2 shadow-sm"
+                  class="size-5 rounded-md border-gray-200 bg-white shadow-sm"
                 />
   
                 <span class="text-sm text-gray-700">
