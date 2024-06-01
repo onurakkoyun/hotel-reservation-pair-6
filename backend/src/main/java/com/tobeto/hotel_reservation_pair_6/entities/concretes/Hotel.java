@@ -27,12 +27,6 @@ import lombok.Setter;
 public class Hotel extends BaseEntity<Integer> {
 	
 	//TODO: Otel'e ait imageler eklenecek (ex: Cloudinary)
-
-	@Column(name = "hotel_name")
-	private String hotelName;
-
-	@Column(name = "company_name")
-	private String companyName;
 	
 	@Column(name = "is_breakfast_available")
 	private boolean isBreakfastAvailable;

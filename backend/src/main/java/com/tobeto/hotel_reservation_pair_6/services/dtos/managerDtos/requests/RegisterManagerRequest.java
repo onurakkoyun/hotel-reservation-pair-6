@@ -1,6 +1,7 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +32,10 @@ public class RegisterManagerRequest {
     @NotNull(message = "Phone number cannot be empty.")
     //@Pattern(regexp = "^\\\\+905[0-9]{2}-[0-9]{3}-[0-9]{4}$", message = "Enter a valid mobile phone number (Example: +905XX-XXX-XXXX)")
     private String phoneNumber;
+
+    @NotBlank(message = "Hotel name can not be blank")
+    private String hotelName;
+    
+    @NotBlank(message = "Company name can not be blank")
+    private String companyName;
 }
