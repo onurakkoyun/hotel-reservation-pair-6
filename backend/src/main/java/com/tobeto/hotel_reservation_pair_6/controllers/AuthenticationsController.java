@@ -19,7 +19,6 @@ import java.io.IOException;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationsController {
-
     private final AuthenticationService authenticationService;
     private final LogoutService logoutService;
 

@@ -1,7 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations;
 
 import com.tobeto.hotel_reservation_pair_6.core.filters.JwtAuthenticationFilter;
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.Manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,10 +43,11 @@ public class SecurityConfiguration {
             "/swagger-ui.html",
             "/api/auth/**",
             "/api/managers/register",
-          //  "/api/**"
+            "/api/guests/register"
+            //  "/api/**"
+
 
     };
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -56,8 +56,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                //.requestMatchers(POST, "/api/members/**").hasRole(ADMIN.name())
                                 .requestMatchers(POST, "/api/hotels/**").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
                                 .anyRequest()
                                 .authenticated()
                 )
