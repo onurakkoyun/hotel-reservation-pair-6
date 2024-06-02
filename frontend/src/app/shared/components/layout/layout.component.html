@@ -1,0 +1,16 @@
+<div class="d-flex flex-column min-vh-100 nw-container">
+      <header class="bg-white">
+        <app-navbar></app-navbar>
+      </header>
+    
+      <main class="container flex-grow-1 py-2">
+        <ng-content></ng-content>
+        <!-- Bu componenti içerisine yerleştirilen template buraya alacaktır. -->
+        <router-outlet></router-outlet>
+      </main>
+    
+      <!-- HTML Semantic HTML Tags -->
+      <footer class="bg-gray-50">
+        <app-footer></app-footer>
+      </footer>
+    </div>
