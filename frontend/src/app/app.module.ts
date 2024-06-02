@@ -21,7 +21,7 @@ import { InterceptorsModule } from './interceptors/interceptors.module';
 import { ModelsModule } from './models/models.module';
 import { UtilitiesModule } from './utilities/utilities.module';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -45,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     InterceptorsModule,
     ModelsModule,
     UtilitiesModule,
+    SharedModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
