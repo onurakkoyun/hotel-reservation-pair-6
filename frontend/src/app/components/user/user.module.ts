@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth/auth.service';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -13,6 +14,7 @@ import { AuthService } from '../../services/auth/auth.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterLink
   ],
 })
 export class UserModule { }
