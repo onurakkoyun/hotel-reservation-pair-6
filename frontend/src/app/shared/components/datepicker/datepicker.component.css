@@ -1,0 +1,12 @@
+/* CSS */
+.datepicker-container {
+  position: relative;
+  overflow: visible; /* Add this */
+}
+
+.datepicker-wrapper {
+  position: absolute;
+  top: 100%; /* Position it below the input box */
+  left: 0;
+  z-index: 1000; /* Make sure it's on top of everything */
+}
