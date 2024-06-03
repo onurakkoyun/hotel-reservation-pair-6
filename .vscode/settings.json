@@ -3,5 +3,6 @@
         "angular-*": {
             "externalTemplate": true
         }
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
