@@ -17,7 +17,7 @@ public class AddHotelRequest {
 
     @NotNull(message = "Breakfast information must be selected")
     private boolean isBreakfastAvailable;
-    private boolean IsBreakfasIncludedInPrice;
+    private boolean IsBreakfastIncludedInPrice;
     private double breakfastPricePerPerson;
     private int starCount;
     List<AssignHotelFeatureRequest> hotelFeatures;

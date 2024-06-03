@@ -12,5 +12,4 @@ public interface HotelMapper {
 
     @Mapping(source = "managerId", target = "manager.id")
     Hotel mapAddHotelRequestToHotel(AddHotelRequest request);
-
 }

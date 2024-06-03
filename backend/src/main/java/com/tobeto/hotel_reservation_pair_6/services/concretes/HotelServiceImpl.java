@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class HotelServiceImpl implements HotelService{
 
+    //TODO: Konum veya Otel adına göre tüm otelleri listeleyecek methodu oluştur.
+
     private final HotelRepository hotelRepository;
 
     @Override
@@ -22,5 +24,10 @@ public class HotelServiceImpl implements HotelService{
 
        hotelRepository.save(hotel);
        return new SuccessResult("Hotel added.");
+    }
+
+    @Override
+    public Hotel findByRooms_Id(long id) {
+        return hotelRepository.findByRooms_Id(id);
     }
 }

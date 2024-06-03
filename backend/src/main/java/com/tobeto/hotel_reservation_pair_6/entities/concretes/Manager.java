@@ -22,9 +22,6 @@ import lombok.*;
 @PrimaryKeyJoinColumn(name = "manager_id", referencedColumnName = "id")
 @Table(name = "managers")
 public class Manager extends User {
-	
-	@Column(name = "hotel_name")
-	private String hotelName;
 
 	@Column(name = "company_name")
 	private String companyName;

@@ -1,4 +1,4 @@
-package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations;
+package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.security;
 
 import com.tobeto.hotel_reservation_pair_6.core.filters.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,8 @@ public class SecurityConfiguration {
             "/swagger-ui.html",
             "/api/auth/**",
             "/api/managers/register",
-            "/api/guests/register"
+            "/api/guests/register",
+            "/api/rooms/**"
             //  "/api/**"
 
 
@@ -57,7 +58,8 @@ public class SecurityConfiguration {
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .requestMatchers(POST, "/api/hotels/**").hasRole(MANAGER.name())
-                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
+                               // .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/reservations/create").hasRole(GUEST.name())
                                 .anyRequest()
                                 .authenticated()
                 )
