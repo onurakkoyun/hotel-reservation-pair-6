@@ -33,7 +33,7 @@
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": ["node_modules/preline/preline.js"],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
