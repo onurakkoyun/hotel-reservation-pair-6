@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
@@ -15,7 +20,11 @@ export class LoginComponent {
   loginFormGroup: FormGroup;
   loginSuccess = new EventEmitter<void>();
 
-  constructor(private router: Router, private formBuilder: FormBuilder,  @Inject(AuthService)private authService: AuthService) {
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    @Inject(AuthService) private authService: AuthService
+  ) {
     this.loginFormGroup = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],

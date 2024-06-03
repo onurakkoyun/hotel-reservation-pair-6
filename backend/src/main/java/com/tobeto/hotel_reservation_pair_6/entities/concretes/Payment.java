@@ -4,12 +4,7 @@ import java.time.LocalDateTime;
 
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +20,6 @@ public class Payment extends BaseEntity<Long> {
 	
 	//TODO: Düzenlenecek.
 	//TODO: PaymentMethod ve Currency adında bir enum oluşturulabilir (Araştır currency).
-	
-	@Column(name = "stripe_payment_id")
-	private String stripePaymentId;
 
 	@Column(name = "payment_date")
 	private LocalDateTime paymentDate;
@@ -38,10 +30,8 @@ public class Payment extends BaseEntity<Long> {
 	@Column(name = "currency")
 	private String currency;
 
-	@Column(name = "payment_method")
-	private String paymentMethod; // e.g., Credit Card, Bank Transfer, etc.
-
-	@OneToOne(mappedBy = "payment")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private Reservation reservation;
 
 	@ManyToOne

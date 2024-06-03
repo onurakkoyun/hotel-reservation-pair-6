@@ -3,6 +3,7 @@ package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 
 import jakarta.persistence.CascadeType;
@@ -30,8 +31,11 @@ public class Room extends BaseEntity<Long>{
     @Column(name = "quantity")
 	private int quantity;
 
-    @Column(name = "room_price")
-	private double roomPrice;
+    @Column(name = "booked_room_quantity")
+    private int bookedRoomQuantity = 0;
+
+    @Column(name = "daily_price")
+	private double dailyPrice;
 
     @Column(name = "capacity")
 	private int capacity;
@@ -59,5 +63,21 @@ public class Room extends BaseEntity<Long>{
 	joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"), 
 	inverseJoinColumns = @JoinColumn(name = "room_feature_id"))
     private List<RoomFeature> roomFeatures;
+
+    public void bookRoom() {
+        if (this.bookedRoomQuantity < this.quantity) {
+            this.bookedRoomQuantity++;
+        } else {
+            throw new BusinessException("No available rooms.");
+        }
+    }
+
+    public void releaseRoom() {
+        if (this.bookedRoomQuantity > 0) {
+            this.bookedRoomQuantity--;
+        } else {
+            throw new BusinessException("No booked rooms to release.");
+        }
+    }
 
 }

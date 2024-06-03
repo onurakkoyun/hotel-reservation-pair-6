@@ -1,4 +1,4 @@
-package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations;
+package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.security;
 
 import java.io.IOException;
 import java.util.HashMap;

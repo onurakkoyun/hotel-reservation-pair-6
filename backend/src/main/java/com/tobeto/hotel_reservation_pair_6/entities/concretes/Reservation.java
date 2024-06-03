@@ -41,14 +41,13 @@ public class Reservation extends BaseEntity<Long> {
 	@Column(name = "check_out_date")
 	private LocalDate checkOutDate;
 
-	@Column(name = "total_amount")
-	private double totalAmount;
+	@Column(name = "amount")
+	private double amount;
 	
 	@Enumerated(EnumType.STRING)
 	private ReservationStatus status;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+
+	@OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private Payment payment;
 
 	@ManyToOne

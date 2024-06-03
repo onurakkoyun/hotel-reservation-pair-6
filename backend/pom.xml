@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tobeto</groupId>
 	<artifactId>hotel-reservation-pair-6</artifactId>
@@ -49,11 +50,18 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 			<version>${org.projectlombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${org.mapstruct.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -99,6 +107,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.iyzipay</groupId>
+			<artifactId>iyzipay-java</artifactId>
+			<version>2.0.124</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -128,6 +141,9 @@
 								<version>${lombok-mapstruct-binding.version}</version>
 							</path>
 						</annotationProcessorPaths>
+						<compilerArgs>
+							<arg>-Amapstruct.verbose=true</arg>
+						</compilerArgs>
 					</configuration>
 				</plugin>
 			</plugins>

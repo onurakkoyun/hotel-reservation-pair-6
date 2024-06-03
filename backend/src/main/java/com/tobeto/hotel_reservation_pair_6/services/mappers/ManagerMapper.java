@@ -1,7 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.mappers;
 
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Manager;
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.User;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.RegisterManagerRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

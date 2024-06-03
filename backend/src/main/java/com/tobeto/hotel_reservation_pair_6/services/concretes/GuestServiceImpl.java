@@ -1,6 +1,7 @@
 package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.core.services.concretes.JwtService;
+import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Guest;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 import com.tobeto.hotel_reservation_pair_6.repositories.GuestRepository;
@@ -41,5 +42,10 @@ public class GuestServiceImpl implements GuestService{
         authenticationService.saveUserToken(savedGuest, jwtToken);
 
         return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+    }
+
+    @Override
+    public Guest findById(long id) {
+        return guestRepository.findById(id).orElseThrow(() -> new BusinessException("Guest is not found."));
     }
 }

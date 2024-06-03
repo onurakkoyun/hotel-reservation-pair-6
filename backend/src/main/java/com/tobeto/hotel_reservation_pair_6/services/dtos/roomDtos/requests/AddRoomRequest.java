@@ -23,7 +23,7 @@ public class AddRoomRequest {
     private int quantity;
 
     @NotNull(message = "Room price can not be null.")
-    private double roomPrice;
+    private double dailyPrice;
 
     @Positive(message = "Room capacity must be positive.")
     private int capacity;

@@ -13,3 +13,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 application.security.jwt.secret-key=YOUR_JWT_SECRET_KEY
 application.security.jwt.expiration=86400000
 application.security.jwt.refresh-token.expiration=604800000
+
+iyzico.api.key=YOUR_IYZICO_API_KEY
+iyzico.secret.key=YOUR_IYZICO_SECRET_KEY
+iyzico.base.url=https://sandbox-api.iyzipay.com

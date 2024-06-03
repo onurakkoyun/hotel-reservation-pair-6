@@ -5,16 +5,20 @@ import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.RoomBed;
+import com.tobeto.hotel_reservation_pair_6.repositories.ReservationRepository;
 import com.tobeto.hotel_reservation_pair_6.repositories.RoomRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.BedService;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.RoomService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.AddRoomRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.UpdateRoomRequest;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetAvailableRoomResponse;
 import com.tobeto.hotel_reservation_pair_6.services.mappers.RoomMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
 public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
 
+    private final ReservationRepository reservationRepository;
     private final BedService bedService;
 
     @Transactional
@@ -69,5 +74,41 @@ public class RoomServiceImpl implements RoomService{
         roomRepository.save(existingRoom);
 
         return new SuccessResult("Room updated.");
+    }
+
+    @Override
+    public Room findById(long id) {
+        return roomRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public void save(Room room) {
+        roomRepository.save(room);
+    }
+
+    //TODO: Return tipi ListAvailableRoomResponse olacak
+    @Override
+    public List<GetAvailableRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
+        List<Room> allRooms = roomRepository.findAvailableRoomsByHotelId(hotelId);
+
+        List<GetAvailableRoomResponse> availableRooms = new ArrayList<>();
+
+        // Her bir odayı tek tek işle
+        for (Room room : allRooms) {
+            // Odayı GetAvailableRoomResponse nesnesine dönüştür
+            GetAvailableRoomResponse roomResponse = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
+
+            // Belirtilen tarih aralığında rezervasyon olup olmadığını kontrol et
+            boolean isAvailable = reservationRepository.findReservationsForRoomInDateRange(
+                    room.getId(), checkInDate, checkOutDate).isEmpty();
+
+            // Eğer oda müsaitse, sonucu listeye ekle
+            if (isAvailable) {
+                availableRooms.add(roomResponse);
+            }
+        }
+
+        // Müsait odalar listesini döndür
+        return availableRooms;
     }
 }

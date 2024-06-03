@@ -1,18 +1,14 @@
 package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
-import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.services.concretes.JwtService;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Manager;
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.User;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 import com.tobeto.hotel_reservation_pair_6.repositories.ManagerRepository;
-import com.tobeto.hotel_reservation_pair_6.repositories.UserRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.AuthenticationService;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.ManagerService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.authDtos.responses.AuthenticationResponse;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.RegisterManagerRequest;
 import com.tobeto.hotel_reservation_pair_6.services.mappers.ManagerMapper;
-import com.tobeto.hotel_reservation_pair_6.services.mappers.UserMapper;
 import com.tobeto.hotel_reservation_pair_6.services.rules.abstracts.UserBusinessRuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
