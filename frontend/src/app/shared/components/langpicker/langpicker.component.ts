@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.css',
+    selector: 'app-langpicker',
+    templateUrl: './langpicker.component.html',
+    styleUrl: './langpicker.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent { }
+export class LangpickerComponent { }

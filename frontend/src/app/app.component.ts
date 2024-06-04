@@ -1,13 +1,8 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterModule, Event } from '@angular/router';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router, RouterModule} from '@angular/router';
 import { AppModule } from './app.module';
-import { IStaticMethods } from 'preline/preline';
-
-declare global {
-  interface Window {
-    HSStaticMethods: IStaticMethods;
-  }
-}
+import { initFlowbite } from 'flowbite';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -16,20 +11,14 @@ declare global {
   styleUrls: ['./app.component.scss'],
   imports: [RouterModule , AppModule]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'hotel-reservation-frontend';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
   
   ngOnInit() {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          if (typeof window !== 'undefined' && window.HSStaticMethods) {
-            window.HSStaticMethods.autoInit();
-          }
-        }, 100);
-      }
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      initFlowbite();
+    }
   }
 }
