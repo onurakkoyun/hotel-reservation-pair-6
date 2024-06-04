@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReservationService {
     Result createReservation(CreateReservationRequest request);
 
-    List<Reservation> findReservationsForRoomInDateRange(Long roomId,
+    /*List<Reservation> findReservationsForRoomInDateRange(Long roomId,
                                                           LocalDate checkInDate,
-                                                          LocalDate checkOutDate);
+                                                          LocalDate checkOutDate);*/
 }

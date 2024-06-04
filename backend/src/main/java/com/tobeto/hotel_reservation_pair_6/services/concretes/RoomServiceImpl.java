@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,26 +88,11 @@ public class RoomServiceImpl implements RoomService{
     //TODO: Return tipi ListAvailableRoomResponse olacak
     @Override
     public List<GetAvailableRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
-        List<Room> allRooms = roomRepository.findAvailableRoomsByHotelId(hotelId);
+        List<Room> allRooms = roomRepository.findAvailableRoomsByHotelAndDates(hotelId, checkInDate, checkOutDate);
 
-        List<GetAvailableRoomResponse> availableRooms = new ArrayList<>();
-
-        // Her bir odayı tek tek işle
-        for (Room room : allRooms) {
-            // Odayı GetAvailableRoomResponse nesnesine dönüştür
-            GetAvailableRoomResponse roomResponse = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
-
-            // Belirtilen tarih aralığında rezervasyon olup olmadığını kontrol et
-            boolean isAvailable = reservationRepository.findReservationsForRoomInDateRange(
-                    room.getId(), checkInDate, checkOutDate).isEmpty();
-
-            // Eğer oda müsaitse, sonucu listeye ekle
-            if (isAvailable) {
-                availableRooms.add(roomResponse);
-            }
-        }
-
-        // Müsait odalar listesini döndür
-        return availableRooms;
+        return allRooms.stream().map(room -> {
+            GetAvailableRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
+            return availableRooms;
+        }).collect(Collectors.toList());
     }
 }

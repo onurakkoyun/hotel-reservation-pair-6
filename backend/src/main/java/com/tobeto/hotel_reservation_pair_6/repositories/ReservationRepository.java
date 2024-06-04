@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query("SELECT r FROM Reservation r WHERE r.room.id = :roomId " +
+    /*@Query("SELECT r FROM Reservation r WHERE r.room.id = :roomId " +
             "AND r.status NOT IN ('CANCELED_BY_HOTEL', 'CANCELED_BY_GUEST') " +
             "AND (r.checkInDate < :checkOutDate AND r.checkOutDate > :checkInDate)")
     List<Reservation> findReservationsForRoomInDateRange(
             @Param("roomId") Long roomId,
             @Param("checkInDate") LocalDate checkInDate,
-            @Param("checkOutDate") LocalDate checkOutDate);
+            @Param("checkOutDate") LocalDate checkOutDate);*/
 }

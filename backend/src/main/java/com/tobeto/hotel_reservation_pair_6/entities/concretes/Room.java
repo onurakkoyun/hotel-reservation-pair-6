@@ -31,9 +31,6 @@ public class Room extends BaseEntity<Long>{
     @Column(name = "quantity")
 	private int quantity;
 
-    @Column(name = "booked_room_quantity")
-    private int bookedRoomQuantity = 0;
-
     @Column(name = "daily_price")
 	private double dailyPrice;
 
@@ -63,21 +60,5 @@ public class Room extends BaseEntity<Long>{
 	joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "id"), 
 	inverseJoinColumns = @JoinColumn(name = "room_feature_id"))
     private List<RoomFeature> roomFeatures;
-
-    public void bookRoom() {
-        if (this.bookedRoomQuantity < this.quantity) {
-            this.bookedRoomQuantity++;
-        } else {
-            throw new BusinessException("No available rooms.");
-        }
-    }
-
-    public void releaseRoom() {
-        if (this.bookedRoomQuantity > 0) {
-            this.bookedRoomQuantity--;
-        } else {
-            throw new BusinessException("No booked rooms to release.");
-        }
-    }
 
 }

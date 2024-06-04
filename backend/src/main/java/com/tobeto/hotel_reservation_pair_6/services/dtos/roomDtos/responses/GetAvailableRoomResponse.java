@@ -19,8 +19,6 @@ public class GetAvailableRoomResponse {
 
     private int quantity;
 
-    private int bookedRoomQuantity;
-
     private double dailyPrice;
 
     private int capacity;

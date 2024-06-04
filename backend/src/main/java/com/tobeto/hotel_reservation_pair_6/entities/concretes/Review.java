@@ -2,10 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,7 @@ public class Review extends BaseEntity<Long>{
 	@ManyToOne
     @JoinColumn(name = "reservation_id")
 	private Reservation reservation;
-	
+
+	@Column(name = "comment")
 	private String comment;
 }

@@ -5,9 +5,29 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    @Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId AND r.bookedRoomQuantity < r.quantity")
-    List<Room> findAvailableRoomsByHotelId(@Param("hotelId") int hotelId);
+
+    /*@Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId " +
+            "AND r.bookedRoomQuantity < r.quantity " +
+            "AND r.id NOT IN (SELECT res.room.id FROM Reservation res " +
+            "WHERE res.status NOT IN ('CANCELED_BY_HOTEL', 'CANCELED_BY_GUEST') " +
+            "AND (res.checkInDate < :checkOutDate AND res.checkOutDate > :checkInDate))")
+    List<Room> findAvailableRoomsByHotelIdAndDateRange(@Param("hotelId") int hotelId,
+                                                       @Param("checkInDate") LocalDate checkInDate,
+                                                       @Param("checkOutDate") LocalDate checkOutDate);*/
+
+    @Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId AND r.quantity > " +
+            "(SELECT COUNT(res) FROM Reservation res WHERE res.room.id = r.id AND " +
+            "((res.checkInDate <= :endDate AND res.checkOutDate >= :startDate) OR " +
+            "(res.checkInDate >= :startDate AND res.checkInDate <= :endDate) OR " +
+            "(res.checkOutDate >= :startDate AND res.checkOutDate <= :endDate)) AND " +
+            "(res.status = 'APPROVED_BY_HOTEL' OR res.status = 'PENDING_APPROVAL_BY_HOTEL'))")
+    List<Room> findAvailableRoomsByHotelAndDates(@Param("hotelId") int hotelId,
+                                                 @Param("startDate") LocalDate startDate,
+                                                 @Param("endDate") LocalDate endDate);
+
+    List<Room> findByHotelId(Long hotelId);
 }
