@@ -34,7 +34,9 @@ public class RoomsController {
     }
 
     @GetMapping("/available-rooms")
-    public List<GetAvailableRoomResponse> getAvailableRooms(@RequestParam int hotelId, @RequestParam LocalDate checkInDate, @RequestParam LocalDate checkOutDate) {
+    public List<GetAvailableRoomResponse> getAvailableRooms(@RequestParam("hotelId") int hotelId,
+                                                            @RequestParam("checkInDate") LocalDate checkInDate,
+                                                            @RequestParam("checkOutDate") LocalDate checkOutDate) {
         return roomService.getAvailableRooms(hotelId, checkInDate, checkOutDate);
     }
 }

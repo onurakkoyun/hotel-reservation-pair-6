@@ -2,6 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
+import com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.email.EmailConfiguration;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Guest;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Payment;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Reservation;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +30,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final PaymentService paymentService;
     private final GuestService guestService;
+    private final EmailConfiguration emailConfiguration;
 
     private final RoomService roomService;
 
@@ -39,14 +40,6 @@ public class ReservationServiceImpl implements ReservationService{
         Guest guest = guestService.findById(request.getGuestId());
         Room room = roomService.findById(request.getRoomId());
 
-        /*
-        List<Reservation> overlappingReservations = reservationRepository.findReservationsForRoomInDateRange(
-                request.getRoomId(), request.getCheckInDate(), request.getCheckOutDate());
-
-        if (!overlappingReservations.isEmpty()) {
-            throw new BusinessException("The room is not available for the selected dates.");
-        }*/
-
         Reservation reservation = ReservationMapper.INSTANCE.mapCreateReservationRequestToReservation(request);
         reservation.setStatus(ReservationStatus.PENDING_APPROVAL_BY_HOTEL);
         reservation.setCreatedDate(LocalDate.now());
@@ -55,31 +48,48 @@ public class ReservationServiceImpl implements ReservationService{
         double calculateAmount = room.getDailyPrice() * daysBetween;
         reservation.setAmount(calculateAmount);
 
-        //request.setAmount(room.getDailyPrice() * daysBetween);
-
         Payment payment = paymentService.createPayment(request, calculateAmount);
 
-        reservation.setAmount(room.getDailyPrice() * daysBetween);
+        reservation.setAmount(calculateAmount);
         reservation.setGuest(guest);
         reservation.setRoom(room);
-
-       // reservation.setPayment(payment);
 
         payment.setReservation(reservation);
 
         paymentService.save(payment);
 
-        room.bookRoom(); // Room booking
-
         roomService.save(room); // Save room with updated bookedRoomQuantity
 
-        reservationRepository.save(reservation);
+        //reservationRepository.save(reservation);
+
+        String managerEmailBody = "<strong>You have a new reservation!</strong><br/>" +
+                "Please confirm your reservation in the system.<br/><br/>" +
+                "<strong>Guest Information</strong><br/>" +
+                "Fullname : " + guest.getFirstName() + " " + guest.getLastName() +
+                "<br/>Email : " + guest.getEmail() +
+                "<br/><br/><strong>Reservation Information</strong>"+
+                "<br/>Reservation creation date : " + reservation.getCreatedDate()+
+                "<br/>Room type : " + room.getRoomType().getRoomTypeName() +
+                "<br/>Check in date : " + reservation.getCheckInDate() +
+                "<br/>Check out date : " + reservation.getCheckOutDate();
+        if (request.getCurrency().equals("TL")){
+            managerEmailBody += "<br/>Reservation Fee : " + calculateAmount + " " + request.getCurrency();
+        } else if (request.getCurrency().equals("USD")) {
+            managerEmailBody += "<br/>Reservation Fee : " + request.getCurrency() + calculateAmount;
+        }
+        else {
+            managerEmailBody += "<br/>Reservation Fee : " + calculateAmount;
+        }
+
+
+        emailConfiguration.sendEmail(room.getHotel().getManager().getEmail(),
+                "New Reservation Notification", managerEmailBody);
 
         return new SuccessResult("The reservation has been created successfully.");
     }
 
-    @Override
+    /*@Override
     public List<Reservation> findReservationsForRoomInDateRange(Long roomId, LocalDate checkInDate, LocalDate checkOutDate) {
         return reservationRepository.findReservationsForRoomInDateRange(roomId, checkInDate, checkOutDate);
-    }
+    }*/
 }

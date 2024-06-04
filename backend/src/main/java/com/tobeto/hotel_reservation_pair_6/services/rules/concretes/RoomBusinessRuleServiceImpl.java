@@ -12,14 +12,4 @@ import org.springframework.stereotype.Service;
 public class RoomBusinessRuleServiceImpl implements RoomBusinessRuleService {
     private final RoomRepository roomRepository;
 
-
-    @Override
-    public void checkRoomAvailability(Room room) {
-        int roomQuantity = room.getQuantity();
-        int bookedQuantity = room.getBookedRoomQuantity();
-
-        if (roomQuantity == bookedQuantity){
-            throw new BusinessException("The requested room is not available.");
-        }
-    }
 }

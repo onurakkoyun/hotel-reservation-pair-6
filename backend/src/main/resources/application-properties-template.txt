@@ -17,3 +17,11 @@ application.security.jwt.refresh-token.expiration=604800000
 iyzico.api.key=YOUR_IYZICO_API_KEY
 iyzico.secret.key=YOUR_IYZICO_SECRET_KEY
 iyzico.base.url=https://sandbox-api.iyzipay.com
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=YOUR_MAIL
+spring.mail.password=YOUR_MAIL_APP_PASSWORD
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
