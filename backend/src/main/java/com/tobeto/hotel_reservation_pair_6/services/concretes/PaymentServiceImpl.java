@@ -1,7 +1,14 @@
 package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.iyzipay.Options;
-import com.iyzipay.model.*;
+import com.iyzipay.model.Address;
+import com.iyzipay.model.BasketItem;
+import com.iyzipay.model.BasketItemType;
+import com.iyzipay.model.Buyer;
+import com.iyzipay.model.Locale;
+import com.iyzipay.model.PaymentCard;
+import com.iyzipay.model.PaymentChannel;
+import com.iyzipay.model.PaymentGroup;
 import com.iyzipay.request.CreatePaymentRequest;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Guest;
@@ -62,18 +69,8 @@ public class PaymentServiceImpl implements PaymentService{
         iyzicoPaymentRequest.setBasketId(hotel.getId().toString());
         iyzicoPaymentRequest.setPaymentChannel(PaymentChannel.WEB.name());
         iyzicoPaymentRequest.setPaymentGroup(PaymentGroup.PRODUCT.name());
+        iyzicoPaymentRequest.setCurrency(createReservationRequest.getCurrency().name());
 
-
-        if (createReservationRequest.getCurrency().equals("TL")){
-            iyzicoPaymentRequest.setCurrency(Currency.TRY.name());
-        }
-        else if (createReservationRequest.getCurrency().equals("USD")){
-            iyzicoPaymentRequest.setCurrency(Currency.USD.name());
-        } else if (createReservationRequest.getCurrency().isEmpty()) {
-            throw new BusinessException("The currency can not be null.");
-        } else {
-            throw new BusinessException("The currency is not supported.");
-        }
 
         Address address = new Address();
         address.setAddress(guest.getFirstAddress() + guest.getSecondAddressLine());
@@ -109,7 +106,6 @@ public class PaymentServiceImpl implements PaymentService{
         buyer.setGsmNumber(guest.getPhoneNumber());
         iyzicoPaymentRequest.setBuyer(buyer);
 
-
         PaymentCard paymentCard = new PaymentCard();
         paymentCard.setCardHolderName(createReservationRequest.getCardHolderName());
         paymentCard.setCardNumber(createReservationRequest.getCardNumber());
@@ -119,22 +115,37 @@ public class PaymentServiceImpl implements PaymentService{
         paymentCard.setRegisterCard(0);
         iyzicoPaymentRequest.setPaymentCard(paymentCard);
 
-        com.iyzipay.model.Payment.create(iyzicoPaymentRequest, options);
+        com.iyzipay.model.Payment iyzicoPaymentResponse = com.iyzipay.model.Payment.create(iyzicoPaymentRequest, options);
+
+        if (!"success".equalsIgnoreCase(iyzicoPaymentResponse.getStatus())) {
+            throw new BusinessException("Payment failed: " + iyzicoPaymentResponse.getErrorMessage());
+        }
+
+        String paymentTransactionId = iyzicoPaymentResponse.getPaymentItems().get(0).getPaymentTransactionId();
 
         Payment payment = new Payment();
         payment.setPaymentDate(LocalDateTime.now());
         payment.setAmount(amount);
         payment.setCurrency(createReservationRequest.getCurrency());
         payment.setGuest(guest);
+        payment.setPaymentTransactionId(paymentTransactionId);
 
         paymentRepository.save(payment);
 
         return payment;
     }
 
+
+	@Override
+	public void save(Payment payment) {
+		// TODO Auto-generated method stub
+		
+	}
+
     @Override
-    public void save(Payment payment) {
-        paymentRepository.save(payment);
+    public Payment findById(long paymentId) {
+        return paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new BusinessException("Payment not found!"));
     }
 
 }

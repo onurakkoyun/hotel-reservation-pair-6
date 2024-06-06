@@ -3,18 +3,10 @@ package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
+import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +25,10 @@ public class Room extends BaseEntity<Long>{
 
     @Column(name = "daily_price")
 	private double dailyPrice;
+
+    @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Column(name = "capacity")
 	private int capacity;

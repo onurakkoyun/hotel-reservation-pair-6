@@ -1,9 +1,11 @@
 package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.ReservationStatus;
 
@@ -43,6 +45,10 @@ public class Reservation extends BaseEntity<Long> {
 
 	@Column(name = "amount")
 	private double amount;
+
+	@Column(name = "currency")
+	@Enumerated(EnumType.STRING)
+	private Currency currency;
 	
 	@Enumerated(EnumType.STRING)
 	private ReservationStatus status;

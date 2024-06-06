@@ -8,4 +8,6 @@ public interface PaymentService {
 
     void save(Payment payment);
 
+    Payment findById(long paymentId);
+
 }

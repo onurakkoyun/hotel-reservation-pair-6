@@ -35,6 +35,9 @@ public class EmailConfiguration {
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(body, true); // true for HTML content
+
+            message.setHeader("X-Priority", "1"); // 1 (Highest) to 5 (Lowest)
+            message.setHeader("Importance", "High");
             javaMailSender.send(message);
         } catch (Exception e) {
             throw new RuntimeException(e);

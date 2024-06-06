@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAvailableRoomResponse {
+public class GetRoomResponse {
 
     private long id;
 
@@ -28,6 +28,8 @@ public class GetAvailableRoomResponse {
     private int hotelId;
 
     private int roomTypeId;
+
+    private String roomTypeName;
 
     private List<GetRoomBedResponse> roomBeds;
 

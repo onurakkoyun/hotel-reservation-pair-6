@@ -43,6 +43,24 @@ public class Hotel extends BaseEntity<Integer> {
 	@Column(name = "star_count")
     private int starCount;
 
+	@Column(name = "first_address_line")
+	private String firstAddressLine;
+
+	@Column(name = "second_address_line")
+	private String secondAddressLine;
+
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "postal_code")
+	private String postalCode;
+
+	@Column(name = "province")
+	private String province;
+
+	@Column(name = "country")
+	private String country;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "hotel")
 	private List<Room> rooms;

@@ -4,7 +4,7 @@ import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.AddRoomRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.UpdateRoomRequest;
-import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetAvailableRoomResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetRoomResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,5 +18,5 @@ public interface RoomService {
 
     void save(Room room);
 
-    List<GetAvailableRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate);
+    List<GetRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate);
 }

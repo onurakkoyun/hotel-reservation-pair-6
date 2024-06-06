@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
