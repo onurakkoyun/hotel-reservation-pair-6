@@ -11,7 +11,7 @@ import com.tobeto.hotel_reservation_pair_6.services.abstracts.BedService;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.RoomService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.AddRoomRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.UpdateRoomRequest;
-import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetAvailableRoomResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetRoomResponse;
 import com.tobeto.hotel_reservation_pair_6.services.mappers.RoomMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -87,11 +87,11 @@ public class RoomServiceImpl implements RoomService{
 
     //TODO: Return tipi ListAvailableRoomResponse olacak
     @Override
-    public List<GetAvailableRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
+    public List<GetRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
         List<Room> allRooms = roomRepository.findAvailableRoomsByHotelAndDates(hotelId, checkInDate, checkOutDate);
 
         return allRooms.stream().map(room -> {
-            GetAvailableRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
+            GetRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
             return availableRooms;
         }).collect(Collectors.toList());
     }

@@ -44,7 +44,9 @@ public class SecurityConfiguration {
             "/api/auth/**",
             "/api/managers/register",
             "/api/guests/register",
-            "/api/rooms/**"
+            "/api/rooms/available-rooms",
+            "/api/hotels/search",
+
             //  "/api/**"
 
 
@@ -57,9 +59,15 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers(POST, "/api/hotels/**").hasRole(MANAGER.name())
-                               // .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/hotels/add").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/reservations/create").hasRole(GUEST.name())
+                                .requestMatchers(GET, "/api/reservations/getAllByHotelId").hasRole(MANAGER.name())
+                                .requestMatchers(GET, "/api/reservations/getAllByGuestId").hasRole(GUEST.name())
+                                .requestMatchers(PUT, "/api/reservations/update-status").hasRole(MANAGER.name())
+                                .requestMatchers(PUT, "/api/reservations/cancel").hasRole(GUEST.name())
+
                                 .anyRequest()
                                 .authenticated()
                 )

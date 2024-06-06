@@ -1,12 +1,10 @@
 package com.tobeto.hotel_reservation_pair_6.controllers;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.RoomService;
-import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.requests.AddHotelRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.AddRoomRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.UpdateRoomRequest;
-import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetAvailableRoomResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetRoomResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,9 +32,9 @@ public class RoomsController {
     }
 
     @GetMapping("/available-rooms")
-    public List<GetAvailableRoomResponse> getAvailableRooms(@RequestParam("hotelId") int hotelId,
-                                                            @RequestParam("checkInDate") LocalDate checkInDate,
-                                                            @RequestParam("checkOutDate") LocalDate checkOutDate) {
+    public List<GetRoomResponse> getAvailableRooms(@RequestParam("hotelId") int hotelId,
+                                                   @RequestParam("checkInDate") LocalDate checkInDate,
+                                                   @RequestParam("checkOutDate") LocalDate checkOutDate) {
         return roomService.getAvailableRooms(hotelId, checkInDate, checkOutDate);
     }
 }

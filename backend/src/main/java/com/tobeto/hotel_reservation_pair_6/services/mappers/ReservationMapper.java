@@ -2,6 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.services.mappers;
 
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Reservation;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.requests.CreateReservationRequest;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetAllReservationsResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -13,4 +14,9 @@ public interface ReservationMapper {
     @Mapping(source = "roomId", target = "room.id")
     @Mapping(source = "guestId", target = "guest.id")
     Reservation mapCreateReservationRequestToReservation(CreateReservationRequest request);
+
+    @Mapping(source = "room.hotel.id", target = "room.hotelId")
+    @Mapping(source = "room.roomType.id", target = "room.roomTypeId")
+    @Mapping(source = "room.roomType.roomTypeName", target = "room.roomTypeName")
+    GetAllReservationsResponse mapReservationToGetAllReservationsResponse(Reservation reservation);
 }

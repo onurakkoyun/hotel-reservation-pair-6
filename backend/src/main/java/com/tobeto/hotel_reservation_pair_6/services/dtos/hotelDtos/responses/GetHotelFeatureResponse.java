@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class AddHotelResponse {
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class GetHotelFeatureResponse {
+    private String hotelFeatureName;
 }
