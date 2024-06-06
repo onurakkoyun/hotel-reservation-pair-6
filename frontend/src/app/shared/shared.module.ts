@@ -5,15 +5,20 @@ import { LayoutComponent } from "./components/layout/layout.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
+import { DatepickerComponent } from "./components/datepicker/datepicker.component";
+import { SearchBoxComponent } from "./components/search-box/search-box.component";
+import { HomeComponent } from "./components/home/home.component";
+import { LangpickerComponent } from "./components/langpicker/langpicker.component";
 
 
 
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, LayoutComponent],
+    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent],
     exports: [LayoutComponent],
     imports: [
         RouterModule,
+        CommonModule,
     ],
   })
   export class SharedModule { }

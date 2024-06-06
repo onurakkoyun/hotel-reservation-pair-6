@@ -25,5 +25,7 @@ export class NavbarComponent implements OnInit {
         this.isLogged = isLogged;
         this.displayEmail = this.authService.tokenPayload?.email?? null;
         this.change.markForCheck();
-      }
+    }
+
+    
 }
