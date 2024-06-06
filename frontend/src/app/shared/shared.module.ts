@@ -9,12 +9,13 @@ import { DatepickerComponent } from "./components/datepicker/datepicker.componen
 import { SearchBoxComponent } from "./components/search-box/search-box.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LangpickerComponent } from "./components/langpicker/langpicker.component";
+import { CounterComponent } from "./components/counter/counter.component";
 
 
 
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent],
+    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent],
     exports: [LayoutComponent],
     imports: [
         RouterModule,
