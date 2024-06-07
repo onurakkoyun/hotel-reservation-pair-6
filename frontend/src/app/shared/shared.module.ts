@@ -10,17 +10,19 @@ import { SearchBoxComponent } from "./components/search-box/search-box.component
 import { HomeComponent } from "./components/home/home.component";
 import { LangpickerComponent } from "./components/langpicker/langpicker.component";
 import { CounterComponent } from "./components/counter/counter.component";
+import { PaginationComponent } from "./components/pagination/pagination.component";
+import { CardComponent } from "./components/card/card.component";
 
 
 
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent],
+    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent, CardComponent],
     exports: [LayoutComponent],
     imports: [
         RouterModule,
         CommonModule,
     ],
-  })
-  export class SharedModule { }
-  
+})
+export class SharedModule { }
+
