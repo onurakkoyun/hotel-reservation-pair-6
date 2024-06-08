@@ -18,6 +18,10 @@ iyzico.api.key=YOUR_IYZICO_API_KEY
 iyzico.secret.key=YOUR_IYZICO_SECRET_KEY
 iyzico.base.url=https://sandbox-api.iyzipay.com
 
+cloudinary.cloud.name=YOUR_CLOUD_NAME
+cloudinary.api.key=YOUR_API_KEY
+cloudinary.secret.key=YOUR_SECRET_KEY
+
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=YOUR_MAIL

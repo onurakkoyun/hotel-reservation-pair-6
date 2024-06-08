@@ -11,10 +11,11 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Hotel findByRooms_Id(long id);
 
-    @Query("SELECT h FROM Hotel h WHERE LOWER(h.hotelName) " +
-            "LIKE LOWER(CONCAT('%', :searchText, '%')) " +
+    @Query("SELECT h FROM Hotel h WHERE " +
+            "(:searchText IS NULL OR :searchText = '' OR " +
+            "LOWER(h.hotelName) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(h.city) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(h.province) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
-            "OR LOWER(h.country) LIKE LOWER(CONCAT('%', :searchText, '%'))")
+            "OR LOWER(h.country) LIKE LOWER(CONCAT('%', :searchText, '%')))")
     List<Hotel> searchHotels(@Param("searchText") String searchText);
 }

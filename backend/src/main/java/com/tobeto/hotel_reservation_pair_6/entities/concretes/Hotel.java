@@ -78,4 +78,7 @@ public class Hotel extends BaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "manager_id", referencedColumnName = "id")
 	private Manager manager;
+
+	@OneToMany(mappedBy = "hotel")
+	private List<Image> images;
 }

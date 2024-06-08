@@ -55,65 +55,10 @@ public class PaymentServiceImpl implements PaymentService{
         Guest guest = guestService.findById(createReservationRequest.getGuestId());
         Hotel hotel = hotelService.findByRooms_Id(createReservationRequest.getRoomId());
 
-        Options options = new Options();
-        options.setApiKey(apiKey);
-        options.setSecretKey(secretKey);
-        options.setBaseUrl(baseUrl);
+        Options options = createOptions();
 
-        CreatePaymentRequest iyzicoPaymentRequest = new CreatePaymentRequest();
-        iyzicoPaymentRequest.setLocale(Locale.TR.getValue());
-        iyzicoPaymentRequest.setConversationId("123456789");
-        iyzicoPaymentRequest.setPrice(new BigDecimal(amount));
-        iyzicoPaymentRequest.setPaidPrice(new BigDecimal(amount));
-        iyzicoPaymentRequest.setInstallment(1);
-        iyzicoPaymentRequest.setBasketId(hotel.getId().toString());
-        iyzicoPaymentRequest.setPaymentChannel(PaymentChannel.WEB.name());
-        iyzicoPaymentRequest.setPaymentGroup(PaymentGroup.PRODUCT.name());
-        iyzicoPaymentRequest.setCurrency(createReservationRequest.getCurrency().name());
-
-
-        Address address = new Address();
-        address.setAddress(guest.getFirstAddress() + guest.getSecondAddressLine());
-        address.setCity(guest.getProvince());
-        address.setZipCode(guest.getPostalCode());
-        address.setCountry(guest.getCountry());
-        address.setContactName(guest.getFirstName()+ " " + guest.getLastName());
-        iyzicoPaymentRequest.setShippingAddress(address);
-        iyzicoPaymentRequest.setBillingAddress(address);
-
-
-        List<BasketItem> basketItems = new ArrayList<>();
-        BasketItem basketItem = new BasketItem();
-        basketItem.setId(hotel.getId().toString());
-        basketItem.setName(hotel.getHotelName());
-        basketItem.setPrice(new BigDecimal(amount));
-        basketItem.setItemType(BasketItemType.PHYSICAL.name());
-        basketItem.setCategory1("Room reservation");
-        basketItems.add(basketItem);
-        iyzicoPaymentRequest.setBasketItems(basketItems);
-
-        Buyer buyer = new Buyer();
-        buyer.setId(guest.getId().toString());//guest.getId();
-        buyer.setName(guest.getFirstName());
-        buyer.setIdentityNumber("1234567891");
-        buyer.setSurname(guest.getLastName());
-        buyer.setGsmNumber(guest.getPhoneNumber());
-        buyer.setEmail(guest.getEmail());
-        buyer.setRegistrationAddress(guest.getFirstAddress() + " " + guest.getSecondAddressLine() + " "+ guest.getCity());
-        buyer.setCity(guest.getProvince());
-        buyer.setCountry(guest.getCountry());
-        buyer.setZipCode(guest.getPostalCode());
-        buyer.setGsmNumber(guest.getPhoneNumber());
-        iyzicoPaymentRequest.setBuyer(buyer);
-
-        PaymentCard paymentCard = new PaymentCard();
-        paymentCard.setCardHolderName(createReservationRequest.getCardHolderName());
-        paymentCard.setCardNumber(createReservationRequest.getCardNumber());
-        paymentCard.setExpireMonth(createReservationRequest.getExpirationMonth());
-        paymentCard.setExpireYear(createReservationRequest.getExpirationYear());
-        paymentCard.setCvc(createReservationRequest.getCvc());
-        paymentCard.setRegisterCard(0);
-        iyzicoPaymentRequest.setPaymentCard(paymentCard);
+        CreatePaymentRequest iyzicoPaymentRequest =
+                createPaymentRequest(createReservationRequest, amount, guest, hotel);
 
         com.iyzipay.model.Payment iyzicoPaymentResponse = com.iyzipay.model.Payment.create(iyzicoPaymentRequest, options);
 
@@ -146,6 +91,96 @@ public class PaymentServiceImpl implements PaymentService{
     public Payment findById(long paymentId) {
         return paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new BusinessException("Payment not found!"));
+    }
+
+    @Override
+    public Options createOptions() {
+        Options options = new Options();
+        options.setApiKey(apiKey);
+        options.setSecretKey(secretKey);
+        options.setBaseUrl(baseUrl);
+        return options;
+    }
+
+    @Override
+    public CreatePaymentRequest createPaymentRequest(CreateReservationRequest createReservationRequest, double amount, Guest guest, Hotel hotel) {
+        CreatePaymentRequest iyzicoPaymentRequest = new CreatePaymentRequest();
+        iyzicoPaymentRequest.setLocale(Locale.TR.getValue());
+        iyzicoPaymentRequest.setConversationId("123456789");
+        iyzicoPaymentRequest.setPrice(new BigDecimal(amount));
+        iyzicoPaymentRequest.setPaidPrice(new BigDecimal(amount));
+        iyzicoPaymentRequest.setInstallment(1);
+        iyzicoPaymentRequest.setBasketId(hotel.getId().toString());
+        iyzicoPaymentRequest.setPaymentChannel(PaymentChannel.WEB.name());
+        iyzicoPaymentRequest.setPaymentGroup(PaymentGroup.PRODUCT.name());
+        iyzicoPaymentRequest.setCurrency(createReservationRequest.getCurrency().name());
+
+        Address address = createAddress(guest);
+        iyzicoPaymentRequest.setShippingAddress(address);
+        iyzicoPaymentRequest.setBillingAddress(address);
+
+        List<BasketItem> basketItems = new ArrayList<>();
+        BasketItem basketItem = createBasketItem(hotel, amount);
+        basketItems.add(basketItem);
+        iyzicoPaymentRequest.setBasketItems(basketItems);
+
+        Buyer buyer = createBuyer(guest);
+        iyzicoPaymentRequest.setBuyer(buyer);
+
+        PaymentCard paymentCard = createPaymentCard(createReservationRequest);
+        iyzicoPaymentRequest.setPaymentCard(paymentCard);
+
+        return iyzicoPaymentRequest;
+
+    }
+
+    @Override
+    public Address createAddress(Guest guest) {
+        Address address = new Address();
+        address.setAddress(guest.getFirstAddress() + guest.getSecondAddressLine());
+        address.setCity(guest.getProvince());
+        address.setZipCode(guest.getPostalCode());
+        address.setCountry(guest.getCountry());
+        address.setContactName(guest.getFirstName() + " " + guest.getLastName());
+        return address;
+    }
+
+    @Override
+    public BasketItem createBasketItem(Hotel hotel, double amount) {
+        BasketItem basketItem = new BasketItem();
+        basketItem.setId(hotel.getId().toString());
+        basketItem.setName(hotel.getHotelName());
+        basketItem.setPrice(new BigDecimal(amount));
+        basketItem.setItemType(BasketItemType.PHYSICAL.name());
+        basketItem.setCategory1("Room reservation");
+        return basketItem;
+    }
+
+    @Override
+    public Buyer createBuyer(Guest guest) {
+        Buyer buyer = new Buyer();
+        buyer.setId(guest.getId().toString());
+        buyer.setName(guest.getFirstName());
+        buyer.setIdentityNumber("1234567891");
+        buyer.setSurname(guest.getLastName());
+        buyer.setGsmNumber(guest.getPhoneNumber());
+        buyer.setEmail(guest.getEmail());
+        buyer.setRegistrationAddress(guest.getFirstAddress() + " " + guest.getSecondAddressLine() + " " + guest.getCity());
+        buyer.setCity(guest.getProvince());
+        buyer.setCountry(guest.getCountry());
+        buyer.setZipCode(guest.getPostalCode());
+        return buyer;
+    }
+
+    @Override
+    public PaymentCard createPaymentCard(CreateReservationRequest createReservationRequest) {
+        PaymentCard paymentCard = new PaymentCard();
+        paymentCard.setCardHolderName(createReservationRequest.getCardHolderName());
+        paymentCard.setCardNumber(createReservationRequest.getCardNumber());
+        paymentCard.setExpireMonth(createReservationRequest.getExpirationMonth());
+        paymentCard.setExpireYear(createReservationRequest.getExpirationYear());
+        paymentCard.setCvc(createReservationRequest.getCvc());
+        return paymentCard;
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/hotels")
 public class HotelsController {
     private final HotelService hotelService;
+
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     private Result add(@RequestBody @Valid AddHotelRequest request){
@@ -23,7 +24,7 @@ public class HotelsController {
     }
 
     @GetMapping("/search")
-    private List<GetAllHotelsResponse> searchHotels(@RequestParam String query){
+    private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query){
         return hotelService.searchHotels(query);
     }
 }

@@ -2,7 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
-import com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.email.EmailConfiguration;
+import com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.email.EmailConfig;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.*;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.ReservationStatus;
@@ -10,6 +10,7 @@ import com.tobeto.hotel_reservation_pair_6.repositories.ReservationRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.*;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.requests.CreateReservationRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetAllReservationsResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetReservationReportResponse;
 import com.tobeto.hotel_reservation_pair_6.services.mappers.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ReservationServiceImpl implements ReservationService{
     private final PaymentService paymentService;
     private final GuestService guestService;
     private final RefundPaymentService refundPaymentService;
-    private final EmailConfiguration emailConfiguration;
+    private final EmailConfig emailConfig;
     private final RoomService roomService;
 
     @Transactional
@@ -85,10 +86,10 @@ public class ReservationServiceImpl implements ReservationService{
                 "<br/>Reservation Fee :&nbsp;" + request.getCurrency().name() + " " + calculateAmount;
 
 
-        emailConfiguration.sendEmail(room.getHotel().getManager().getEmail(),
+        emailConfig.sendEmail(room.getHotel().getManager().getEmail(),
                 "New Reservation Notification", managerEmailBody);
 
-        emailConfiguration.sendEmail(guest.getEmail(), "New Reservation Notification", guestEmailBody);
+        emailConfig.sendEmail(guest.getEmail(), "New Reservation Notification", guestEmailBody);
 
         return new SuccessResult("The reservation has been created successfully.");
     }
@@ -159,15 +160,26 @@ public class ReservationServiceImpl implements ReservationService{
                 "<br/>Email : " + reservation.getGuest().getEmail() +
                 "<br/>Refunded Fee : " + reservation.getCurrency() + " " + reservation.getAmount();
 
-        emailConfiguration.sendEmail(reservation.getGuest()
+        emailConfig.sendEmail(reservation.getGuest()
                 .getEmail(), "Your Reservation Cancelled", guestEmailBody);
 
-        emailConfiguration.sendEmail(reservation.getRoom()
+        emailConfig.sendEmail(reservation.getRoom()
                 .getHotel().getManager().getEmail(), "Room Reservation Cancelled", hotelEmailBody);
 
         reservationRepository.save(reservation);
 
         return new SuccessResult("The reservation canceled successfully.");
+    }
+
+    @Override
+    public List<GetReservationReportResponse> getReservationsByHotelAndDates(int hotelId, LocalDate startDate, LocalDate endDate) {
+
+        List<Reservation> reservations = reservationRepository.findReservationsByHotelAndDates(hotelId, startDate, endDate);
+
+        return reservations.stream().map(reservation -> {
+            GetReservationReportResponse response = ReservationMapper.INSTANCE.mapReservationToGetReservationReportResponse(reservation);
+            return response;
+        }).collect(Collectors.toList());
     }
 
 }

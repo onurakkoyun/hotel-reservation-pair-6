@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.responses;
 
+import com.tobeto.hotel_reservation_pair_6.services.dtos.imageDtos.responses.GetHotelImageResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAllHotelsResponse {
-    //TODO:Otele ait photolarda eklenecek.
-
     private int id;
 
     private int managerId;
@@ -41,4 +40,6 @@ public class GetAllHotelsResponse {
     private String country;
 
     List<GetHotelFeatureResponse> hotelFeatures;
+
+    List<GetHotelImageResponse> images;
 }
