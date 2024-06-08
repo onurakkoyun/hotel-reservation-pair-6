@@ -40,6 +40,16 @@ class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen l
   </div>
 </section> -->
 <!-- In your HTML file -->
-<!-- <div class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-</div> -->
-<app-card></app-card>
+<div class="container relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-4">
+  <div class="filter-component">
+    <app-filter></app-filter>
+</div>
+<div class="card-pagination-container">
+    <div class="card-component">
+        <app-card></app-card>
+    </div>
+    <div class="pagination-component py-8">
+        <app-pagination></app-pagination>
+    </div>
+</div>
+</div>

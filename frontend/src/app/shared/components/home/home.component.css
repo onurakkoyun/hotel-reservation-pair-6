@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+}
+
+.filter-component {
+    width: 20%; /* Adjust this value according to your needs */
+}
+
+.card-pagination-container {
+    display: flex;
+    flex-direction: column;
+    width: 60%; /* Adjust this value according to your needs */
+    align-items: center;
+}
+
+.card-component
+{
+    width: 90%;
+}
