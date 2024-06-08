@@ -66,7 +66,10 @@ public class SecurityConfiguration {
                                 .requestMatchers(GET, "/api/reservations/getAllByHotelId").hasRole(MANAGER.name())
                                 .requestMatchers(GET, "/api/reservations/getAllByGuestId").hasRole(GUEST.name())
                                 .requestMatchers(PUT, "/api/reservations/update-status").hasRole(MANAGER.name())
+                                .requestMatchers(PUT, "/api/reservations/report").hasRole(MANAGER.name())
                                 .requestMatchers(PUT, "/api/reservations/cancel").hasRole(GUEST.name())
+                                .requestMatchers(POST, "/api/images/upload-hotel").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/images/get/{hotelId}").hasRole(MANAGER.name())
 
                                 .anyRequest()
                                 .authenticated()

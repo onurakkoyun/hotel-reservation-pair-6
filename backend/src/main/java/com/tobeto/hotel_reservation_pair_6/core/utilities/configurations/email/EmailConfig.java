@@ -13,7 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 @Data
 @NoArgsConstructor
 @Configuration
-public class EmailConfiguration {
+public class EmailConfig {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -21,7 +21,7 @@ public class EmailConfiguration {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public EmailConfiguration(JavaMailSender javaMailSender, @Value("${spring.mail.username}") String fromEmail) {
+    public EmailConfig(JavaMailSender javaMailSender, @Value("${spring.mail.username}") String fromEmail) {
         this.javaMailSender = javaMailSender;
         this.fromEmail = fromEmail;
     }

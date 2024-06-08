@@ -7,8 +7,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
-
 @Mapper
 public interface HotelMapper {
     HotelMapper INSTANCE =  Mappers.getMapper(HotelMapper.class);
@@ -16,5 +14,6 @@ public interface HotelMapper {
     @Mapping(source = "managerId", target = "manager.id")
     Hotel mapAddHotelRequestToHotel(AddHotelRequest request);
 
-    List<GetAllHotelsResponse> mapHotelToGetAllHotelsResponse(List<Hotel> hotels);
+    @Mapping(source = "manager.id", target = "managerId")
+    GetAllHotelsResponse mapHotelToGetAllHotelsResponse(Hotel hotel);
 }

@@ -2,6 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
+import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Hotel;
 import com.tobeto.hotel_reservation_pair_6.repositories.HotelRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.HotelService;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -36,7 +38,7 @@ public class HotelServiceImpl implements HotelService{
 
     @Override
     public Hotel findById(int hotelId) {
-        return hotelRepository.findById(hotelId).orElseThrow();
+        return hotelRepository.findById(hotelId).orElseThrow(() -> new BusinessException("Hotel not found."));
     }
 
     @Override
@@ -44,8 +46,9 @@ public class HotelServiceImpl implements HotelService{
 
         List<Hotel> hotels = hotelRepository.searchHotels(searchText);
 
-        List<GetAllHotelsResponse> responses = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotels);
-
-        return responses;
+        return hotels.stream().map(hotel -> {
+            GetAllHotelsResponse response = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);
+            return response;
+        }).collect(Collectors.toList());
     }
 }
