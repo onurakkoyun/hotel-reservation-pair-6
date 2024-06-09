@@ -3,6 +3,7 @@ import { Router, RouterModule} from '@angular/router';
 import { AppModule } from './app.module';
 import { initFlowbite } from 'flowbite';
 import { isPlatformBrowser } from '@angular/common';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,15 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   title = 'hotel-reservation-frontend';
-
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
   
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone) {}
+
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      initFlowbite();
+      this.ngZone.runOutsideAngular(() => {
+        initFlowbite();
+      });
     }
   }
+
 }
