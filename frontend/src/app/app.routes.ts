@@ -4,6 +4,8 @@ import { RegisterComponent } from './components/user/register/register.component
 import { RegisterManagerComponent } from './components/user/registerManager/registerManager.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
+import { PaymentComponent } from './components/payment/payment/payment.component';
+import { HotelDetailComponent } from './components/hotel/hotel-detail/hotel-detail.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +16,14 @@ export const routes: Routes = [
               path: '',
               component: HomeComponent,
             },
+            {
+                path: 'payments',
+                component: PaymentComponent,
+            },
+            {
+                path: 'hotels',
+                component: HotelDetailComponent,
+            }
         ]
     },
     {
