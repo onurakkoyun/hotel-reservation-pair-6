@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
+import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,15 @@ public class RefundPayment extends BaseEntity<Long> {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
+
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 }

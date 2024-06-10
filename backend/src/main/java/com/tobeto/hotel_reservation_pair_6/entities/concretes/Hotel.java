@@ -81,4 +81,12 @@ public class Hotel extends BaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "hotel")
 	private List<Image> images;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "hotel")
+	private List<Payment> payments;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "hotel")
+	private List<RefundPayment> refundPayments;
 }

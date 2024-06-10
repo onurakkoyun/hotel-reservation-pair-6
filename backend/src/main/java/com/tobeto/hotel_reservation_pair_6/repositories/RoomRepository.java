@@ -10,15 +10,6 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    /*@Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId " +
-            "AND r.bookedRoomQuantity < r.quantity " +
-            "AND r.id NOT IN (SELECT res.room.id FROM Reservation res " +
-            "WHERE res.status NOT IN ('CANCELED_BY_HOTEL', 'CANCELED_BY_GUEST') " +
-            "AND (res.checkInDate < :checkOutDate AND res.checkOutDate > :checkInDate))")
-    List<Room> findAvailableRoomsByHotelIdAndDateRange(@Param("hotelId") int hotelId,
-                                                       @Param("checkInDate") LocalDate checkInDate,
-                                                       @Param("checkOutDate") LocalDate checkOutDate);*/
-
     @Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId AND r.quantity > " +
             "(SELECT COUNT(res) FROM Reservation res WHERE res.room.id = r.id AND " +
             "((res.checkInDate <= :endDate AND res.checkOutDate >= :startDate) OR " +

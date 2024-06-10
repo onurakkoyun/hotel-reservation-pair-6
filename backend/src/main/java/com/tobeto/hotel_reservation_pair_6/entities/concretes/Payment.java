@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 public class Payment extends BaseEntity<Long> {
 
     @Column(name = "payment_date")
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
 
     @Column(name = "amount")
     private double amount;
@@ -38,4 +39,8 @@ public class Payment extends BaseEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "guest_id", referencedColumnName = "id")
     private Guest guest;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotel;
 }

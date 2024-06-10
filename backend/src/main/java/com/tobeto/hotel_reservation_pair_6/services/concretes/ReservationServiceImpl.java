@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
+import com.tobeto.hotel_reservation_pair_6.core.results.ErrorResult;
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.email.EmailConfig;
@@ -30,6 +31,8 @@ public class ReservationServiceImpl implements ReservationService{
     private final EmailConfig emailConfig;
     private final RoomService roomService;
 
+    private final CurrencyExchangeService currencyExchangeService;
+
     @Transactional
     @Override
     public Result createReservation(CreateReservationRequest request){
@@ -42,6 +45,20 @@ public class ReservationServiceImpl implements ReservationService{
 
         long daysBetween = reservation.getCheckOutDate().toEpochDay() - reservation.getCheckInDate().toEpochDay();
         double calculateAmount = room.getDailyPrice() * daysBetween;
+
+        //Eğer oda fiyatının para birimi ile request'den gelen para birimi
+        //eşit değil ise currencyExchangeService'den parite alınarak hesaplama yapıldı.
+        if(!room.getCurrency().name().equals(reservation.getCurrency().name())){
+            double exchangeRate;
+            try {
+                exchangeRate = currencyExchangeService
+                        .getExchangeRate(room.getCurrency().name().toString(), reservation.getCurrency().name().toString());
+            } catch (RuntimeException e) {
+                return new ErrorResult( e.getMessage());
+            }
+
+            calculateAmount = calculateAmount * exchangeRate;
+        }
 
         reservation.setAmount(calculateAmount);
 

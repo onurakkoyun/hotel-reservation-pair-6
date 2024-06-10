@@ -46,6 +46,7 @@ public class SecurityConfiguration {
             "/api/guests/register",
             "/api/rooms/available-rooms",
             "/api/hotels/search",
+            "/api/financial-reports/net-income",
 
             //  "/api/**"
 
@@ -70,6 +71,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(PUT, "/api/reservations/cancel").hasRole(GUEST.name())
                                 .requestMatchers(POST, "/api/images/upload-hotel").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/images/get/{hotelId}").hasRole(MANAGER.name())
+                                .requestMatchers(GET, "/api/financial-reports/net-income").hasRole(MANAGER.name())
+                                .requestMatchers(PUT, "/api/guests/update").hasRole(GUEST.name())
+
 
                                 .anyRequest()
                                 .authenticated()

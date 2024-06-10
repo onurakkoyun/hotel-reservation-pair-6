@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService{
         String paymentTransactionId = iyzicoPaymentResponse.getPaymentItems().get(0).getPaymentTransactionId();
 
         Payment payment = new Payment();
-        payment.setPaymentDate(LocalDateTime.now());
+        payment.setPaymentDate(LocalDate.now());
         payment.setAmount(amount);
         payment.setCurrency(createReservationRequest.getCurrency());
         payment.setGuest(guest);
