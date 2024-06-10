@@ -8,6 +8,7 @@ import com.tobeto.hotel_reservation_pair_6.services.abstracts.AuthenticationServ
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.ManagerService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.authDtos.responses.AuthenticationResponse;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.RegisterManagerRequest;
+import com.tobeto.hotel_reservation_pair_6.services.mappers.ManagerMapper;
 import com.tobeto.hotel_reservation_pair_6.services.rules.abstracts.UserBusinessRuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
