@@ -16,6 +16,7 @@ export class CoreAuthService {
   }
 
   protected readonly _loggedOut = new Subject<void>();
+  
   public get loggedOut(): Observable<void> {
     return this._loggedOut.asObservable();
   }

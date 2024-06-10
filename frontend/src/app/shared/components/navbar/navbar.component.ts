@@ -27,5 +27,8 @@ export class NavbarComponent implements OnInit {
         this.change.markForCheck();
     }
 
-    
+    onLogoutClick(): void {
+        this.authService.logout();
+    }
+ 
 }

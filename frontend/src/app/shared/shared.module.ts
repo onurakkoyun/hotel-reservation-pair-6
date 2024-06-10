@@ -19,7 +19,7 @@ import { FilterComponent } from "./components/filter/filter.component";
 
 @NgModule({
     declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent, CardComponent, FilterComponent],
-    exports: [LayoutComponent],
+    exports: [LayoutComponent, CardComponent],
     imports: [
         RouterModule,
         CommonModule,
