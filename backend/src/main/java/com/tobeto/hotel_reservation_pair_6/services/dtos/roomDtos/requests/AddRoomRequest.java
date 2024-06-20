@@ -23,13 +23,13 @@ public class AddRoomRequest {
     @Positive(message = "Room quantity must be positive.")
     private int quantity;
 
-    @NotNull(message = "Room price can not be null.")
+    @Positive(message = "Room price must be positive.")
     private double dailyPrice;
 
-    @NotNull(message = "Room price currency can not be null.")
+    @NotNull(message = "Room price currency required.")
     private Currency currency;
 
-    @Positive(message = "Room capacity must be positive.")
+    @Positive(message = "Room capacity required.")
     private int capacity;
 
     @Positive(message = "Room square meter must be positive.")

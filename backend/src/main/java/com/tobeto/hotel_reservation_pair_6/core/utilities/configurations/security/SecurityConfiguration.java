@@ -46,7 +46,6 @@ public class SecurityConfiguration {
             "/api/guests/register",
             "/api/rooms/available-rooms",
             "/api/hotels/search",
-            "/api/financial-reports/net-income",
 
             //  "/api/**"
 
@@ -60,6 +59,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
+                                .requestMatchers(PUT, "/api/managers/update").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/hotels/add").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
@@ -73,8 +73,6 @@ public class SecurityConfiguration {
                                 .requestMatchers(POST, "/api/images/get/{hotelId}").hasRole(MANAGER.name())
                                 .requestMatchers(GET, "/api/financial-reports/net-income").hasRole(MANAGER.name())
                                 .requestMatchers(PUT, "/api/guests/update").hasRole(GUEST.name())
-
-
                                 .anyRequest()
                                 .authenticated()
                 )

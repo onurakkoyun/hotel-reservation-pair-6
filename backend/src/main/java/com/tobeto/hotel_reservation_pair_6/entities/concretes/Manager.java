@@ -17,8 +17,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@PrimaryKeyJoinColumn(name = "manager_id", referencedColumnName = "id")
+//@EqualsAndHashCode(callSuper = true)
+//@PrimaryKeyJoinColumn(name = "manager_id", referencedColumnName = "id")
 @Table(name = "managers")
 public class Manager extends User {
 
@@ -28,4 +28,8 @@ public class Manager extends User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "manager")
 	private List<Hotel> hotels;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "manager")
+	private List<SupportTicketReply> SupportTicketReplies;
 }

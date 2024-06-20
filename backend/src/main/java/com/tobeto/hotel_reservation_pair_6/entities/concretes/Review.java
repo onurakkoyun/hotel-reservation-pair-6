@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -15,6 +17,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "reviews")
 public class Review extends BaseEntity<Long>{
+
+	@Column(name = "creation_date")
+	private LocalDateTime creationDate;
+
+	@Column(name = "comment", nullable = false)
+	private String comment;
+
+	@Column(name = "rating", nullable = false)
+	private int rating;
 	
 	@ManyToOne
     @JoinColumn(name = "guest_id")
@@ -23,11 +34,7 @@ public class Review extends BaseEntity<Long>{
 	@ManyToOne
     @JoinColumn(name = "hotel_id")
 	private Hotel hotel;
-	
-	@ManyToOne
-    @JoinColumn(name = "reservation_id")
-	private Reservation reservation;
 
-	@Column(name = "comment")
-	private String comment;
+	@OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	private ReviewReply replyReview;
 }

@@ -2,6 +2,7 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
+import com.tobeto.hotel_reservation_pair_6.core.services.concretes.CloudinaryService;
 import com.tobeto.hotel_reservation_pair_6.core.services.concretes.JwtService;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Guest;
@@ -18,11 +19,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @Service
 public class GuestServiceImpl implements GuestService{
 
     private final JwtService jwtService;
+    private final CloudinaryService cloudinaryService;
     private final GuestRepository guestRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserBusinessRuleService userBusinessRuleService;
@@ -48,9 +52,22 @@ public class GuestServiceImpl implements GuestService{
     }
 
     @Override
-    public Result update(UpdateGuestRequest request) {
-        Guest guest = GuestMapper.INSTANCE.mapUpdateGuestRequestToGuest(request);
-        guestRepository.save(guest);
+    public Result update(UpdateGuestRequest request) throws IOException{
+        Guest existingGuest = guestRepository.findById(request.getId())
+                        .orElseThrow(() -> new BusinessException("Guest not found."));
+
+        if (request.getProfilePhoto() != null && !request.getProfilePhoto().isEmpty()) {
+            if (existingGuest.getProfilePhotoUrl() != null && !existingGuest.getProfilePhotoUrl().isEmpty()) {
+                String publicId = cloudinaryService.getPublicIdFromUrl(existingGuest.getProfilePhotoUrl());
+                cloudinaryService.deleteFile(publicId);
+            }
+            String profilePhotoUrl = cloudinaryService.uploadFile(request.getProfilePhoto());
+            existingGuest.setProfilePhotoUrl(profilePhotoUrl);
+        }
+
+        GuestMapper.INSTANCE.mapUpdateGuestRequestToGuest(request, existingGuest);
+
+        guestRepository.save(existingGuest);
         return new SuccessResult("Guest updated.");
     }
 

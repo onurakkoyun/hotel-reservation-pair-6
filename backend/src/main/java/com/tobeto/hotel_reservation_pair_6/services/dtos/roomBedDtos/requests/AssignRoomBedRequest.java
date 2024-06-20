@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.roomBedDtos.requests;
 
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,6 @@ import lombok.Setter;
 public class AssignRoomBedRequest {
     private int bedId;
 
+    @Positive(message = "Quantity must be positive.")
     private int quantity;
 }

@@ -80,7 +80,7 @@ public class Hotel extends BaseEntity<Integer> {
 	private Manager manager;
 
 	@OneToMany(mappedBy = "hotel")
-	private List<Image> images;
+	private List<HotelImage> hotelImages;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "hotel")

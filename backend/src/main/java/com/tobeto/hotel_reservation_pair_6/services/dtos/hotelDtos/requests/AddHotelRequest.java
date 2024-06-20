@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class AddHotelRequest {
     private String hotelName;
 
     @NotNull
-    private int managerId;
+    private long managerId;
 
     @NotNull(message = "Breakfast information must be selected.")
     private boolean isBreakfastAvailable;
@@ -46,5 +47,5 @@ public class AddHotelRequest {
     @NotNull(message = "Hotel country can not be empty.")
     private String country;
 
-    List<AssignHotelFeatureRequest> hotelFeatures;
+    private List<AssignHotelFeatureRequest> hotelFeatures;
 }

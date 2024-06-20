@@ -6,12 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateGuestRequest {
+    //TODO: ProfilePhotoUrl'i cloudinary'e eklemeyi configure et.
 
     private long id;
 
@@ -23,7 +25,7 @@ public class UpdateGuestRequest {
 
     private String phoneNumber;
 
-    private String profilePhotoUrl;
+    private MultipartFile profilePhoto;
 
     private String firstAddress;
 

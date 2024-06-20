@@ -62,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService{
 
         reservation.setAmount(calculateAmount);
 
-        Payment payment = paymentService.createPayment(request, calculateAmount);
+        Payment payment = paymentService.createPayment(request, calculateAmount);//Burada save ediliyor.
 
         reservation.setAmount(calculateAmount);
         reservation.setGuest(guest);
@@ -73,8 +73,6 @@ public class ReservationServiceImpl implements ReservationService{
         paymentService.save(payment);
 
         roomService.save(room); // Save room with updated bookedRoomQuantity
-
-        //reservationRepository.save(reservation);
 
         String managerEmailBody = "<strong>You have a new reservation!</strong><br/>" +
                 "Please confirm your reservation in the system.<br/><br/>" +
@@ -155,6 +153,7 @@ public class ReservationServiceImpl implements ReservationService{
         return new SuccessResult();
     }
 
+    //Cancel Reservation By Guest
     @Override
     public Result cancelReservation(long id) {
         Reservation reservation = reservationRepository.findById(id)

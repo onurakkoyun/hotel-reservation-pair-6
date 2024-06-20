@@ -19,16 +19,13 @@ import java.util.stream.Collectors;
 @Service
 public class HotelServiceImpl implements HotelService{
 
-    //TODO: Konum veya Otel adına göre tüm otelleri listeleyecek methodu oluştur.
-
     private final HotelRepository hotelRepository;
 
     @Override
-    public Result add(AddHotelRequest request) {
-       Hotel hotel = HotelMapper.INSTANCE.mapAddHotelRequestToHotel(request);
-
-       hotelRepository.save(hotel);
-       return new SuccessResult("Hotel added.");
+    public Result add(AddHotelRequest request)  {
+        Hotel hotel = HotelMapper.INSTANCE.mapAddHotelRequestToHotel(request);
+        hotelRepository.save(hotel);
+        return new SuccessResult("Hotel added.");
     }
 
     @Override
@@ -38,7 +35,8 @@ public class HotelServiceImpl implements HotelService{
 
     @Override
     public Hotel findById(int hotelId) {
-        return hotelRepository.findById(hotelId).orElseThrow(() -> new BusinessException("Hotel not found."));
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new BusinessException("Hotel not found."));
     }
 
     @Override
@@ -51,4 +49,5 @@ public class HotelServiceImpl implements HotelService{
             return response;
         }).collect(Collectors.toList());
     }
+
 }

@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -64,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService{
         com.iyzipay.model.Payment iyzicoPaymentResponse = com.iyzipay.model.Payment.create(iyzicoPaymentRequest, options);
 
         if (!"success".equalsIgnoreCase(iyzicoPaymentResponse.getStatus())) {
-            throw new BusinessException("Payment failed: " + iyzicoPaymentResponse.getErrorMessage());
+            throw new BusinessException("Payment failed : " + iyzicoPaymentResponse.getErrorMessage());
         }
 
         String paymentTransactionId = iyzicoPaymentResponse.getPaymentItems().get(0).getPaymentTransactionId();
@@ -75,6 +76,7 @@ public class PaymentServiceImpl implements PaymentService{
         payment.setCurrency(createReservationRequest.getCurrency());
         payment.setGuest(guest);
         payment.setPaymentTransactionId(paymentTransactionId);
+        payment.setHotel(hotel);
 
         paymentRepository.save(payment);
 
@@ -84,8 +86,7 @@ public class PaymentServiceImpl implements PaymentService{
 
 	@Override
 	public void save(Payment payment) {
-		// TODO Auto-generated method stub
-		
+        paymentRepository.save(payment);
 	}
 
     @Override
@@ -107,7 +108,7 @@ public class PaymentServiceImpl implements PaymentService{
     public CreatePaymentRequest createPaymentRequest(CreateReservationRequest createReservationRequest, double amount, Guest guest, Hotel hotel) {
         CreatePaymentRequest iyzicoPaymentRequest = new CreatePaymentRequest();
         iyzicoPaymentRequest.setLocale(Locale.TR.getValue());
-        iyzicoPaymentRequest.setConversationId("123456789");
+        iyzicoPaymentRequest.setConversationId(generateUniqueId());
         iyzicoPaymentRequest.setPrice(new BigDecimal(amount));
         iyzicoPaymentRequest.setPaidPrice(new BigDecimal(amount));
         iyzicoPaymentRequest.setInstallment(1);
@@ -182,6 +183,19 @@ public class PaymentServiceImpl implements PaymentService{
         paymentCard.setExpireYear(createReservationRequest.getExpirationYear());
         paymentCard.setCvc(createReservationRequest.getCvc());
         return paymentCard;
+    }
+
+    public static String generateUniqueId() {
+        Random random = new Random();
+        StringBuilder uniqueId = new StringBuilder();
+
+        // 9 haneli bir sayı oluşturuyoruz
+        while (uniqueId.length() < 9) {
+            int digit = random.nextInt(10); // 0-9 arası rastgele bir sayı
+            uniqueId.append(digit);
+        }
+
+        return uniqueId.toString();
     }
 
 }

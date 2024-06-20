@@ -1,10 +1,7 @@
 package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.ReservationStatus;
@@ -16,7 +13,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,8 +27,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "reservations")
 public class Reservation extends BaseEntity<Long> {
-	
-	//TODO: Ödeme alımı devreye alındığında düzenlenecek. (Payment)
 	
 	@Column(name = "created_date")
 	private LocalDate createdDate;
@@ -63,9 +57,4 @@ public class Reservation extends BaseEntity<Long> {
 	@ManyToOne
 	@JoinColumn(name = "room_id", referencedColumnName = "id")
 	private Room room;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "reservation")
-	private List<Review> reviews;
-
 }
