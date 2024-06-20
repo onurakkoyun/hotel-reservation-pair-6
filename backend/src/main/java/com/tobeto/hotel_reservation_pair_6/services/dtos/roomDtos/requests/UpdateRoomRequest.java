@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests;
 
+import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomBedDtos.requests.AssignRoomBedRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomFeatureDtos.requests.AssignRoomFeatureRequest;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +26,10 @@ public class UpdateRoomRequest {
     private int quantity;
 
     @Positive(message = "Room price must be positive.")
-    private double roomPrice;
+    private double dailyPrice;
+
+    @NotNull(message = "Room price currency required.")
+    private Currency currency;
 
     @Positive(message = "Room capacity must be positive.")
     private int capacity;

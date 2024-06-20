@@ -3,6 +3,7 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
 import com.tobeto.hotel_reservation_pair_6.core.results.SuccessResult;
 import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.BusinessException;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Bed;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.RoomBed;
 import com.tobeto.hotel_reservation_pair_6.repositories.ReservationRepository;
@@ -25,8 +26,6 @@ import java.util.stream.Collectors;
 @Service
 public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
-
-    private final ReservationRepository reservationRepository;
     private final BedService bedService;
 
     @Transactional
@@ -53,7 +52,7 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public Result update(UpdateRoomRequest request){
-        Room existingRoom = roomRepository.findById(request.getId())
+        var existingRoom = roomRepository.findById(request.getId())
                 .orElseThrow(() -> new BusinessException("Room not found."));
 
         existingRoom = RoomMapper.INSTANCE.mapUpdateRoomRequestToRoom(request);
@@ -62,7 +61,9 @@ public class RoomServiceImpl implements RoomService{
             Room finalExistingRoom = existingRoom;
             List<RoomBed> roomBeds = request.getRoomBeds().stream().map(roomBedDTO -> {
                 RoomBed roomBed = new RoomBed();
-                roomBed.setBed(bedService.findById(roomBedDTO.getBedId()).orElseThrow(() -> new RuntimeException("Bed not found")));
+                Bed bed = bedService.findById(roomBedDTO.getBedId())
+                        .orElseThrow(() -> new BusinessException("Bed not found."));
+                roomBed.setBed(bed);
                 roomBed.setQuantity(roomBedDTO.getQuantity());
                 roomBed.setRoom(finalExistingRoom);
                 return roomBed;
@@ -85,14 +86,15 @@ public class RoomServiceImpl implements RoomService{
         roomRepository.save(room);
     }
 
-    //TODO: Return tipi ListAvailableRoomResponse olacak
     @Override
     public List<GetRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
         List<Room> allRooms = roomRepository.findAvailableRoomsByHotelAndDates(hotelId, checkInDate, checkOutDate);
 
-        return allRooms.stream().map(room -> {
+        List<GetRoomResponse> responses = allRooms.stream().map(room -> {
             GetRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
             return availableRooms;
         }).collect(Collectors.toList());
+
+        return responses;
     }
 }

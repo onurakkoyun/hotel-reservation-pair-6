@@ -8,21 +8,26 @@ import com.tobeto.hotel_reservation_pair_6.services.dtos.guestDtos.requests.Upda
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/guests")
 public class GuestsController {
     private final GuestService guestService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    AuthenticationResponse register(@RequestBody @Valid RegisterGuestRequest request){
+    private AuthenticationResponse register(@RequestBody @Valid RegisterGuestRequest request){
         return guestService.register(request);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/update")
-    Result update(@RequestBody @Valid UpdateGuestRequest request) {
+
+    private Result update(@ModelAttribute @Valid UpdateGuestRequest request) throws IOException {
         return guestService.update(request);
     }
 }

@@ -27,4 +27,8 @@ public class Guest extends User{
     @JsonIgnore
     @OneToMany(mappedBy = "guest")
     private List<Review> reviews;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "guest")
+    private List<SupportTicket> supportTickets;
 }
