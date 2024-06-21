@@ -14,7 +14,7 @@ public class HotelImagesController {
 
     private final HotelImageService hotelImageService;
 
-    @GetMapping("/get/{hotelId}")
+    @GetMapping("/hotel/{hotelId}")
     public List<GetHotelImageResponse> getImagesByHotelId(@PathVariable int hotelId) {
         return hotelImageService.getImagesByHotelId(hotelId);
     }

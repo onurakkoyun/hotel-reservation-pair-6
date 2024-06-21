@@ -25,50 +25,28 @@ import java.io.IOException;
 @Service
 public class GuestServiceImpl implements GuestService{
 
-    private final JwtService jwtService;
-    private final CloudinaryService cloudinaryService;
     private final GuestRepository guestRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserBusinessRuleService userBusinessRuleService;
-    private final AuthenticationService authenticationService;
-
-    @Override
-    public AuthenticationResponse register(RegisterGuestRequest request) {
-        userBusinessRuleService.checkIfEmailAlreadyExists(request.getEmail());
-
-        userBusinessRuleService.checkIfPasswordsMatch(request.getPassword(), request.getPasswordConfirm());
-
-        Guest guest = GuestMapper.INSTANCE.mapRegisterGuestRequestToGuest(request);
-        guest.setPassword(passwordEncoder.encode(request.getPassword()));
-        guest.setRole(Role.GUEST);
-
-        var savedGuest = guestRepository.save(guest);
-        var jwtToken = jwtService.generateToken(guest);
-        var refreshToken = jwtService.generateRefreshToken(guest);
-
-        authenticationService.saveUserToken(savedGuest, jwtToken);
-
-        return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
-    }
 
     @Override
     public Result update(UpdateGuestRequest request) throws IOException{
         Guest existingGuest = guestRepository.findById(request.getId())
                         .orElseThrow(() -> new BusinessException("Guest not found."));
 
-        if (request.getProfilePhoto() != null && !request.getProfilePhoto().isEmpty()) {
-            if (existingGuest.getProfilePhotoUrl() != null && !existingGuest.getProfilePhotoUrl().isEmpty()) {
-                String publicId = cloudinaryService.getPublicIdFromUrl(existingGuest.getProfilePhotoUrl());
-                cloudinaryService.deleteFile(publicId);
-            }
-            String profilePhotoUrl = cloudinaryService.uploadFile(request.getProfilePhoto());
-            existingGuest.setProfilePhotoUrl(profilePhotoUrl);
-        }
+        String profilePhoto = userBusinessRuleService.handleProfilePhotoChange
+                (existingGuest.getId(), request.getProfilePhoto());
+
+        existingGuest.setProfilePhotoUrl(profilePhoto);
 
         GuestMapper.INSTANCE.mapUpdateGuestRequestToGuest(request, existingGuest);
 
         guestRepository.save(existingGuest);
         return new SuccessResult("Guest updated.");
+    }
+
+    @Override
+    public Guest save(Guest guest) {
+        return guestRepository.save(guest);
     }
 
     @Override
