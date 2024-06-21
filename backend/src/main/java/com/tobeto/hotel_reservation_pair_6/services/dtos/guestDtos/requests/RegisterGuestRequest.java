@@ -12,17 +12,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterGuestRequest {
-    @NotNull(message = "First name cannot be empty.")
+    @NotNull(message = "First name required!")
     private String firstName;
-    @NotNull(message = "Last name cannot be empty.")
+
+    @NotNull(message = "Last name required!")
     private String lastName;
-    @Email(message = "Enter a valid email format.")
+
+    @NotNull(message = "E-mail required!")
+    @Email(message = "Not a valid e-mail format!")
     private String email;
-    @NotNull(message = "Password cannot be empty.")
+
+    @NotNull(message = "Password required!")
     private String password;
-    @NotNull(message = "Re-password cannot be empty.")
+
+    @NotNull(message = "Password confirmation required!")
     private String passwordConfirm;
-    @NotNull(message = "Phone number cannot be empty.")
+
+    @NotNull(message = "Phone number required!")
     //@Pattern(regexp = "^\\\\+905[0-9]{2}-[0-9]{3}-[0-9]{4}$", message = "Enter a valid mobile phone number (Example: +905XX-XXX-XXXX)")
     private String phoneNumber;
 }

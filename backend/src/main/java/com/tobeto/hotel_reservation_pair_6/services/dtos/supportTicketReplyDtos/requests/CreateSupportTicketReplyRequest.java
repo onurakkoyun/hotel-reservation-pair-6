@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CreateSupportTicketReplyRequest {
 
-    @NotNull(message = "Message required.")
+    @NotNull(message = "Ticket message required!")
     private String message;
 
     private long supportTicketId;

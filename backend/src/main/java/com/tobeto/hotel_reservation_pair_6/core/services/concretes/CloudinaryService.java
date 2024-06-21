@@ -21,17 +21,6 @@ public class CloudinaryService {
         return uploadResult.get("url").toString();
     }
 
-    public List<String> uploadImages(MultipartFile[] files) throws IOException {
-
-        List<String> urls = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-            String url = uploadFile(file);
-            urls.add(url);
-        }
-        return urls;
-    }
-
     public void deleteFile(String publicId) throws IOException {
         cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
     }

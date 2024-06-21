@@ -26,33 +26,6 @@ public class HotelImageServiceImpl implements HotelImageService {
 
     private final HotelImageRepository hotelImageRepository;
 
-    private final HotelService hotelService;
-
-    private final CloudinaryService cloudinaryService;
-
-    @Override
-    public Result uploadHotelImages(MultipartFile[] files, int hotelId) throws IOException {
-        try {
-            Hotel hotel = hotelService.findById(hotelId);
-
-            List<HotelImage> hotelImages = new ArrayList<>();
-
-            for (MultipartFile file : files) {
-                String url = cloudinaryService.uploadFile(file);
-
-                HotelImage hotelImage = new HotelImage();
-                hotelImage.setUrl(url);
-                hotelImage.setHotel(hotel);
-
-                hotelImages.add(hotelImageRepository.save(hotelImage));
-
-            }
-            return new SuccessResult("Images uploaded.");
-        } catch (IOException e) {
-            return new ErrorResult("Hotel image upload failed : " + e.getMessage());
-        }
-    }
-
     @Override
     public List<GetHotelImageResponse> getImagesByHotelId(int hotelId) {
         List<HotelImage> hotelImages = hotelImageRepository.findByHotel_Id(hotelId);
@@ -62,5 +35,10 @@ public class HotelImageServiceImpl implements HotelImageService {
             return response;
         }).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public void saveAll(List<HotelImage> hotelImages) {
+        hotelImageRepository.saveAll(hotelImages);
     }
 }
