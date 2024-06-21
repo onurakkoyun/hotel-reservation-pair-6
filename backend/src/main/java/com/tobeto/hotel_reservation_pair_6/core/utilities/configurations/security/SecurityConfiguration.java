@@ -45,6 +45,12 @@ public class SecurityConfiguration {
             "/api/hotels/search",
             "/api/auth/**",
             //  "/api/**"
+<<<<<<< HEAD
+            "/actuator/**"
+
+
+=======
+>>>>>>> main
     };
 
     @Bean
