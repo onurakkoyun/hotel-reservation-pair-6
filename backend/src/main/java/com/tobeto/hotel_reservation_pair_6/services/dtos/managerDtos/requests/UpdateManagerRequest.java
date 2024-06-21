@@ -16,12 +16,13 @@ public class UpdateManagerRequest {
 
     private long id;
 
-    @NotNull(message = "First name cannot be empty.")
+    @NotNull(message = "First name required!")
     private String firstName;
 
-    @NotNull(message = "Last name cannot be empty.")
+    @NotNull(message = "Last name required!")
     private String lastName;
 
+    @NotNull(message = "Phone number required!")
     private String phoneNumber;
 
     private MultipartFile profilePhoto;

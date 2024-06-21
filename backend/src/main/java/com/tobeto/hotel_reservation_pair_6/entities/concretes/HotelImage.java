@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "images")
+@Table(name = "hotel_images")
 public class HotelImage extends BaseEntity<Long> {
     @Column(name = "url")
     private String url;

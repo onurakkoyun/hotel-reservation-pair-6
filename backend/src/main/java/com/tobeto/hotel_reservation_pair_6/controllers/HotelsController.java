@@ -20,7 +20,7 @@ public class HotelsController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    private Result add(@RequestParam @Valid AddHotelRequest request){
+    private Result add(@ModelAttribute @Valid AddHotelRequest request) throws IOException {
         return hotelService.add(request);
     }
 
