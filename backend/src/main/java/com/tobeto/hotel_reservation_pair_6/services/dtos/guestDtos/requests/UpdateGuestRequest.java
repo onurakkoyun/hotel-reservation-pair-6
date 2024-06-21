@@ -1,6 +1,5 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.guestDtos.requests;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

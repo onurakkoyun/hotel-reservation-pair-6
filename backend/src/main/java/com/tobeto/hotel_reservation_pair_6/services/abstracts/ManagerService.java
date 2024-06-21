@@ -9,7 +9,7 @@ import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.Up
 import java.io.IOException;
 
 public interface ManagerService {
-    AuthenticationResponse register(RegisterManagerRequest request);
+    Manager save(Manager manager);
 
     Result update(UpdateManagerRequest request) throws IOException;
 }
