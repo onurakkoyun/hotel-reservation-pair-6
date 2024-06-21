@@ -2,21 +2,32 @@ package com.tobeto.hotel_reservation_pair_6.services.concretes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tobeto.hotel_reservation_pair_6.core.services.concretes.JwtService;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Guest;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Manager;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Token;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.User;
+import com.tobeto.hotel_reservation_pair_6.entities.enums.Role;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.TokenType;
 import com.tobeto.hotel_reservation_pair_6.repositories.TokenRepository;
 import com.tobeto.hotel_reservation_pair_6.repositories.UserRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.AuthenticationService;
 
+import com.tobeto.hotel_reservation_pair_6.services.abstracts.GuestService;
+import com.tobeto.hotel_reservation_pair_6.services.abstracts.ManagerService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.authDtos.requests.AuthenticationRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.authDtos.responses.AuthenticationResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.guestDtos.requests.RegisterGuestRequest;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.managerDtos.requests.RegisterManagerRequest;
+import com.tobeto.hotel_reservation_pair_6.services.mappers.GuestMapper;
+import com.tobeto.hotel_reservation_pair_6.services.mappers.ManagerMapper;
+import com.tobeto.hotel_reservation_pair_6.services.rules.abstracts.UserBusinessRuleService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,7 +37,11 @@ import java.io.IOException;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository repository;
     private final TokenRepository tokenRepository;
+    private final GuestService guestService;
+    private final ManagerService managerService;
+    private final UserBusinessRuleService userBusinessRuleService;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -39,6 +54,44 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         revokeAllUserTokens(user);
 
         saveUserToken(user, jwtToken);
+
+        return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+    }
+
+    @Override
+    public AuthenticationResponse registerGuest(RegisterGuestRequest request) {
+        userBusinessRuleService.checkIfEmailAlreadyExists(request.getEmail());
+
+        userBusinessRuleService.checkIfPasswordsMatch(request.getPassword(), request.getPasswordConfirm());
+
+        Guest guest = GuestMapper.INSTANCE.mapRegisterGuestRequestToGuest(request);
+        guest.setPassword(passwordEncoder.encode(request.getPassword()));
+        guest.setRole(Role.GUEST);
+
+        var savedGuest = guestService.save(guest);
+        var jwtToken = jwtService.generateToken(guest);
+        var refreshToken = jwtService.generateRefreshToken(guest);
+
+        saveUserToken(savedGuest, jwtToken);
+
+        return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
+    }
+
+    @Override
+    public AuthenticationResponse registerManager(RegisterManagerRequest request) {
+        userBusinessRuleService.checkIfEmailAlreadyExists(request.getEmail());
+
+        userBusinessRuleService.checkIfPasswordsMatch(request.getPassword(), request.getPasswordConfirm());
+
+        Manager manager = ManagerMapper.INSTANCE.mapRegisterManagerRequestToManager(request);
+        manager.setPassword(passwordEncoder.encode(request.getPassword()));
+        manager.setRole(Role.MANAGER);
+
+        var savedManager = managerService.save(manager);
+        var jwtToken = jwtService.generateToken(manager);
+        var refreshToken = jwtService.generateRefreshToken(manager);
+
+        saveUserToken(savedManager, jwtToken);
 
         return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
     }

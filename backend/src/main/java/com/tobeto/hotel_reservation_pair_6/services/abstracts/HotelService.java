@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface HotelService {
-    Result add(AddHotelRequest request);
+    Result add(AddHotelRequest request) throws IOException;
 
     Hotel findByRooms_Id(long id);
 

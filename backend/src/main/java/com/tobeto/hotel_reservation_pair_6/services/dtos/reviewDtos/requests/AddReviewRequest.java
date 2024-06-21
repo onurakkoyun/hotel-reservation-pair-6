@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddReviewRequest {
 
-    @NotNull(message = "Comment required.")
+    @NotNull(message = "Comment required!")
     private String comment;
 
     @NotNull(message = "Rating required.")

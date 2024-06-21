@@ -18,12 +18,6 @@ import java.io.IOException;
 public class ManagersController {
     private final ManagerService managerService;
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/register")
-    private AuthenticationResponse register(@RequestBody @Valid RegisterManagerRequest request){
-        return managerService.register(request);
-    }
-
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/update")
     private Result update(@RequestBody @Valid UpdateManagerRequest request) throws IOException {

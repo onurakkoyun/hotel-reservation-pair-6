@@ -22,19 +22,19 @@ public class UpdateRoomRequest {
 
     private long id;
 
-    @Positive(message = "Room quantity must be positive.")
+    @Positive(message = "Quantity value must be positive!")
     private int quantity;
 
-    @Positive(message = "Room price must be positive.")
+    @Positive(message = "Daily price must be positive!")
     private double dailyPrice;
 
-    @NotNull(message = "Room price currency required.")
+    @NotNull(message = "Currency required!")
     private Currency currency;
 
-    @Positive(message = "Room capacity must be positive.")
+    @Positive(message = "Capacity must be positive!")
     private int capacity;
 
-    @Positive(message = "Room square meter must be positive.")
+    @Positive(message = "Square meter must be positive!")
     private int squareMeterSize;
 
     private int hotelId;

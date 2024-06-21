@@ -1,6 +1,5 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.guestDtos.requests;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,12 +16,13 @@ public class UpdateGuestRequest {
 
     private long id;
 
-    @NotNull(message = "First name cannot be empty.")
+    @NotNull(message = "First name required!")
     private String firstName;
 
-    @NotNull(message = "Last name cannot be empty.")
+    @NotNull(message = "Last name required!")
     private String lastName;
 
+    @NotNull(message = "Phone number required!")
     private String phoneNumber;
 
     private MultipartFile profilePhoto;

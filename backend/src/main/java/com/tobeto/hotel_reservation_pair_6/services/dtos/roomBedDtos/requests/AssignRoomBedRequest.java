@@ -13,6 +13,6 @@ import lombok.Setter;
 public class AssignRoomBedRequest {
     private int bedId;
 
-    @Positive(message = "Quantity must be positive.")
+    @Positive(message = "Quantity value must be positive!")
     private int quantity;
 }

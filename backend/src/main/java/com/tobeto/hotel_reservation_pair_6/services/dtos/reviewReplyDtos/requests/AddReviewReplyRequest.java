@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddReviewReplyRequest {
 
-    @NotNull(message = "Review response message required.")
+    @NotNull(message = "Response message required!")
     private String response;
 
     private long managerId;

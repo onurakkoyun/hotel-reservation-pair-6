@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.requests;
 
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.HotelImage;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelFeatureDtos.requests.AssignHotelFeatureRequest;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class AddHotelRequest {
     @NotNull
     private long managerId;
 
-    @NotNull(message = "Breakfast information must be selected.")
+    @NotNull(message = "Breakfast information required!")
     private boolean isBreakfastAvailable;
 
     private boolean IsBreakfastIncludedInPrice;
@@ -30,22 +31,24 @@ public class AddHotelRequest {
 
     private int starCount;
 
-    @NotNull(message = "Hotel address line can not be empty.")
+    @NotNull(message = "Address line required!")
     private String firstAddressLine;
 
     private String secondAddressLine;
 
-    @NotNull(message = "Hotel city can not be empty.")
+    @NotNull(message = "City required!")
     private String city;
 
-    @NotNull(message = "Hotel postal code can not be empty.")
+    @NotNull(message = "Postal code required!")
     private String postalCode;
 
-    @NotNull(message = "Hotel province can not be empty.")
+    @NotNull(message = "Province required!")
     private String province;
 
-    @NotNull(message = "Hotel country can not be empty.")
+    @NotNull(message = "Country required!")
     private String country;
+
+    private MultipartFile[] photos;
 
     private List<AssignHotelFeatureRequest> hotelFeatures;
 }

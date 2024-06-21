@@ -41,17 +41,18 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/api/auth/**",
-            "/api/managers/register",
-            "/api/guests/register",
             "/api/rooms/available-rooms",
             "/api/hotels/search",
-
+            "/api/auth/**",
             //  "/api/**"
+<<<<<<< HEAD
             "/actuator/**"
 
 
+=======
+>>>>>>> main
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -60,20 +61,23 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers(PUT, "/api/managers/update").hasRole(MANAGER.name())
+                                .requestMatchers(PUT,  "/api/managers/update").hasRole(MANAGER.name())
+                                .requestMatchers(PUT,  "/api/guests/update").hasRole(GUEST.name())
                                 .requestMatchers(POST, "/api/hotels/add").hasRole(MANAGER.name())
-                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
-                                .requestMatchers(POST, "/api/rooms/**").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/rooms/add").hasRole(MANAGER.name())
+                                .requestMatchers(POST, "/api/rooms/update").hasRole(MANAGER.name())
                                 .requestMatchers(POST, "/api/reservations/create").hasRole(GUEST.name())
-                                .requestMatchers(GET, "/api/reservations/getAllByHotelId").hasRole(MANAGER.name())
-                                .requestMatchers(GET, "/api/reservations/getAllByGuestId").hasRole(GUEST.name())
-                                .requestMatchers(PUT, "/api/reservations/update-status").hasRole(MANAGER.name())
-                                .requestMatchers(PUT, "/api/reservations/report").hasRole(MANAGER.name())
-                                .requestMatchers(PUT, "/api/reservations/cancel").hasRole(GUEST.name())
-                                .requestMatchers(POST, "/api/images/upload-hotel").hasRole(MANAGER.name())
-                                .requestMatchers(POST, "/api/images/get/{hotelId}").hasRole(MANAGER.name())
-                                .requestMatchers(GET, "/api/financial-reports/net-income").hasRole(MANAGER.name())
-                                .requestMatchers(PUT, "/api/guests/update").hasRole(GUEST.name())
+                                .requestMatchers(GET,  "/api/reservations/getAllByHotelId").hasRole(MANAGER.name())
+                                .requestMatchers(GET,  "/api/reservations/getAllByGuestId").hasRole(GUEST.name())
+                                .requestMatchers(PUT,  "/api/reservations/update-status").hasRole(MANAGER.name())
+                                .requestMatchers(PUT,  "/api/reservations/report").hasRole(MANAGER.name())
+                                .requestMatchers(PUT,  "/api/reservations/cancel").hasRole(GUEST.name())
+                                .requestMatchers(POST, "/api/hotel-images/hotel/{hotelId}").hasRole(MANAGER.name())
+                                .requestMatchers(GET,  "/api/financial-reports/net-income").hasRole(MANAGER.name())
+                                .requestMatchers(GET,  "/api/support-tickets/hotel/{hotelId}").hasRole(MANAGER.name())
+                                .requestMatchers(GET,  "/api/support-ticket-replies/reply").hasRole(MANAGER.name())
+                                .requestMatchers(GET,  "/api/support-tickets/create").hasRole(GUEST.name())
+                                .requestMatchers(GET,  "/api/support-tickets/guest/{guestId}").hasRole(GUEST.name())
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -85,7 +89,6 @@ public class SecurityConfiguration {
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
-
         return http.build();
     }
 }
