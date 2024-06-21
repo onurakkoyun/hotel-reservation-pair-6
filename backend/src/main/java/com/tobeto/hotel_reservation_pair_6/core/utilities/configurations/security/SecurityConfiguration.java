@@ -48,6 +48,7 @@ public class SecurityConfiguration {
             "/api/hotels/search",
 
             //  "/api/**"
+            "/actuator/**"
 
 
     };
