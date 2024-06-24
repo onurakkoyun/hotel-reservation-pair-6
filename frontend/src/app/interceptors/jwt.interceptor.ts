@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export function jwtInterceptor(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
   const authService = inject(AuthService);
   
-  if (req.url.endsWith('/login')) {
+  if (req.url.includes('auth') && !req.url.endsWith('logout')){
     // Don't add the Authorization header
     return next.handle(req);
   }

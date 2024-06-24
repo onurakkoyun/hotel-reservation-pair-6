@@ -47,7 +47,6 @@ public class SecurityConfiguration {
             //  "/api/**"
             "/actuator/**"
     };
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

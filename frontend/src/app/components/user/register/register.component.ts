@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,7 +25,7 @@ export class RegisterComponent {
       email: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       password: ['', [Validators.required]],
-      passwordConfirmation: ['', [Validators.required]]
+      passwordConfirm: ['', [Validators.required]]
     });
       
   }
@@ -46,7 +45,7 @@ export class RegisterComponent {
       phoneNumber: this.registerFormGroup.value.phoneNumber,
       email: this.registerFormGroup.value.email,
       password: this.registerFormGroup.value.password,
-      passwordConfirmation: this.registerFormGroup.value.passwordConfirmation
+      passwordConfirm: this.registerFormGroup.value.passwordConfirm
     };
     this.authService.register(registerCredentials).subscribe({
       complete: () => {

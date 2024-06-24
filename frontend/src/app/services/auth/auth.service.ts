@@ -8,6 +8,8 @@ import { LoginCredentials } from '../../models/login-credentials';
 import { environment } from '../../../environment/environment';
 import { RegisteredUser } from '../../models/registered-user';
 import { RegisterCredentials } from '../../models/register-credentials';
+import { RegisteredManager } from '../../models/registered-manager';
+import { RegisterManagerCredentials } from '../../models/register-manager-credentials';
 
 @Injectable({
   providedIn: 'root',
@@ -33,14 +35,43 @@ export class AuthService extends CoreAuthService {
 
   register(registerCredentials: RegisterCredentials): Observable<RegisteredUser> {
     return this.http.post<RegisteredUser>(
-      `${this.apiControllerUrl}/register`,
+      `${this.apiControllerUrl}/register-guest`,
       registerCredentials
     ).pipe(
       tap((registeredGuest) => {
         this.token = registeredGuest.access_token;
+        this.refreshToken = registeredGuest.refresh_token; 
         this._registered.next();
         this._isRegistered.next(true);
        })
+    );
+  }
+
+  registerManager(registerManagerCredentials: RegisterManagerCredentials): Observable<RegisteredManager> {
+    return this.http.post<RegisteredManager>(
+      `${this.apiControllerUrl}/register-manager`,
+      registerManagerCredentials
+    ).pipe(
+      tap((registeredManager) => {
+        this.token = registeredManager.access_token;
+        this.refreshToken = registeredManager.refresh_token;
+        this._registeredManager.next();
+        this._isRegisteredManager.next(true);
+       })
+    );
+  }
+
+  //TODO: There is no refresh-token endpoint in the backend
+  // Method to refresh the access token using the refresh_token
+  refreshAccessToken(): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiControllerUrl}/refresh-token`,
+      { refresh_token: this.refreshToken }
+    ).pipe(
+      tap((tokens) => {
+        this.token = tokens.access_token;
+        this.refreshToken = tokens.refresh_token;
+      })
     );
   }
 }

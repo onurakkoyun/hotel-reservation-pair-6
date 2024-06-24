@@ -42,6 +42,15 @@ export class CoreAuthService {
     return this._isRegistered.asObservable();
   }
 
+  protected readonly _registeredManager = new Subject<void>();
+  public get registeredManager(): Observable<void> {
+    return this._registeredManager.asObservable();
+  }
+
+  protected readonly _isRegisteredManager = new BehaviorSubject<boolean>(
+    this.isAuthenticated
+  );
+
   constructor(@Inject(DOCUMENT) protected document: Document) {}
 
   protected get localStorage(): Storage | undefined {
@@ -58,12 +67,20 @@ export class CoreAuthService {
     return payload;
   }
 
-  public get isAuthenticated(): boolean {
-    if (!this.token) return false;
-
+  isTokenExpired(): boolean {
+    // Implement logic to check if the current token is expired
     const nowUnixTimeInMilliseconds = Date.now();
     const nowUnitTimeInSeconds = Math.floor(nowUnixTimeInMilliseconds / 1000);
     if (nowUnitTimeInSeconds > this.tokenPayload!.exp) {
+      return true;
+    }
+    return false;
+  }
+
+  public get isAuthenticated(): boolean {
+    if (!this.token) return false;
+
+    if (this.isTokenExpired()) {
       this.logout();
       return false;
     }
@@ -71,17 +88,9 @@ export class CoreAuthService {
     return true;
   }
 
-  public isAuthorized(requiredRoleIds: number[]): boolean {
+  // Role-based authorization was taken out of the project
+  public isAuthorized(): boolean {
     if (!this.isAuthenticated) return false;
-
-    const tokenRoleIds = this.tokenPayload!.roles.map((role) => role.roleId);
-    if (
-      !requiredRoleIds.some((requiredRoleId) =>
-        tokenRoleIds.includes(requiredRoleId)
-      )
-    )
-      return false;
-
     return true;
   }
 
@@ -98,4 +107,13 @@ export class CoreAuthService {
   protected set token(token: string) {
     this.localStorage?.setItem('access_token', token);
   }
+
+  public get refreshToken(): string | null {
+    return this.localStorage?.getItem('refresh_token') ?? null;
+  }
+
+  protected set refreshToken(token: string) {
+    this.localStorage?.setItem('refresh_token', token);
+  }
+
 }
