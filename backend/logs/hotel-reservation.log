@@ -1,0 +1,266 @@
+2024-06-24 22:24:15 - HV000001: Hibernate Validator 8.0.1.Final
+2024-06-24 22:24:15 - Starting HotelReservationPair6Application using Java 21.0.2 with PID 42406 (/Users/zahideaksak/Documents/GitHub/hotel-reservation-pair-6/backend/target/classes started by zahideaksak in /Users/zahideaksak/Documents/GitHub/hotel-reservation-pair-6/backend)
+2024-06-24 22:24:15 - Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-06-24 22:24:15 - No active profile set, falling back to 1 default profile: "default"
+2024-06-24 22:24:15 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-24 22:24:15 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-24 22:24:16 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-24 22:24:16 - Finished Spring Data repository scanning in 48 ms. Found 19 JPA repository interfaces.
+2024-06-24 22:24:16 - Tomcat initialized with port 8080 (http)
+2024-06-24 22:24:16 - Initializing ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:24:16 - Starting service [Tomcat]
+2024-06-24 22:24:16 - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-24 22:24:16 - Initializing Spring embedded WebApplicationContext
+2024-06-24 22:24:16 - Root WebApplicationContext: initialization completed in 1152 ms
+2024-06-24 22:24:17 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-24 22:24:17 - HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-06-24 22:24:17 - HHH000026: Second-level cache disabled
+2024-06-24 22:24:17 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-24 22:24:17 - HikariPool-1 - Starting...
+2024-06-24 22:24:17 - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6d7f9bb8
+2024-06-24 22:24:17 - HikariPool-1 - Start completed.
+2024-06-24 22:24:17 - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-24 22:24:18 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-24 22:24:18 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-24 22:24:18 - Kullanıcı [anonim] yöntemi [userDetailsService] ile [[]] argümanları ile erişti
+2024-06-24 22:24:18 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-24 22:24:18 - Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2024-06-24 22:24:18 - Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2024-06-24 22:24:18 - Exception starting filter [jwtAuthenticationFilter]
+java.lang.NullPointerException: Cannot invoke "org.apache.commons.logging.Log.isDebugEnabled()" because "this.logger" is null
+	at org.springframework.web.filter.GenericFilterBean.init(GenericFilterBean.java:239)
+	at org.apache.catalina.core.ApplicationFilterConfig.initFilter(ApplicationFilterConfig.java:245)
+	at org.apache.catalina.core.ApplicationFilterConfig.<init>(ApplicationFilterConfig.java:102)
+	at org.apache.catalina.core.StandardContext.filterStart(StandardContext.java:3846)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4450)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:516)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:618)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.tobeto.hotel_reservation_pair_6.HotelReservationPair6Application.main(HotelReservationPair6Application.java:12)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+2024-06-24 22:24:18 - Filter 'webMvcObservationFilter' configured for use
+2024-06-24 22:24:18 - One or more Filters failed to start. Full details will be found in the appropriate container log file
+2024-06-24 22:24:18 - Context [] startup failed due to previous errors
+2024-06-24 22:24:18 - The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1070)
+ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+ java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+ java.base/java.lang.Thread.run(Thread.java:1583)
+2024-06-24 22:24:18 - The web application [ROOT] appears to have started a thread named [HikariPool-1 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)
+ java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1758)
+ java.base/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1069)
+ java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+ java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+ java.base/java.lang.Thread.run(Thread.java:1583)
+2024-06-24 22:24:18 - Starting ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:24:18 - Pausing ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:24:18 - Stopping service [Tomcat]
+2024-06-24 22:24:18 - Stopping ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:24:18 - Destroying ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:24:18 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2024-06-24 22:24:18 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-24 22:24:18 - HikariPool-1 - Shutdown initiated...
+2024-06-24 22:24:18 - HikariPool-1 - Shutdown completed.
+2024-06-24 22:24:18 - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-06-24 22:24:18 - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:618)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.tobeto.hotel_reservation_pair_6.HotelReservationPair6Application.main(HotelReservationPair6Application.java:12)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:516)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
+	... 11 common frames omitted
+Caused by: java.lang.IllegalStateException: StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[] failed to start
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.rethrowDeferredStartupExceptions(TomcatWebServer.java:209)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:131)
+	... 16 common frames omitted
+2024-06-24 22:25:17 - HV000001: Hibernate Validator 8.0.1.Final
+2024-06-24 22:25:17 - Starting HotelReservationPair6Application using Java 21.0.2 with PID 42460 (/Users/zahideaksak/Documents/GitHub/hotel-reservation-pair-6/backend/target/classes started by zahideaksak in /Users/zahideaksak/Documents/GitHub/hotel-reservation-pair-6/backend)
+2024-06-24 22:25:17 - Running with Spring Boot v3.3.0, Spring v6.1.8
+2024-06-24 22:25:17 - No active profile set, falling back to 1 default profile: "default"
+2024-06-24 22:25:17 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-24 22:25:17 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-24 22:25:17 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-24 22:25:17 - Finished Spring Data repository scanning in 48 ms. Found 19 JPA repository interfaces.
+2024-06-24 22:25:18 - Tomcat initialized with port 8080 (http)
+2024-06-24 22:25:18 - Initializing ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:25:18 - Starting service [Tomcat]
+2024-06-24 22:25:18 - Starting Servlet engine: [Apache Tomcat/10.1.24]
+2024-06-24 22:25:18 - Initializing Spring embedded WebApplicationContext
+2024-06-24 22:25:18 - Root WebApplicationContext: initialization completed in 1173 ms
+2024-06-24 22:25:18 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-24 22:25:18 - HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-06-24 22:25:18 - HHH000026: Second-level cache disabled
+2024-06-24 22:25:18 - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-24 22:25:18 - HikariPool-1 - Starting...
+2024-06-24 22:25:18 - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@38d3c5f6
+2024-06-24 22:25:18 - HikariPool-1 - Start completed.
+2024-06-24 22:25:18 - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-06-24 22:25:19 - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-24 22:25:19 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-24 22:25:19 - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-24 22:25:20 - Filter 'jwtAuthenticationFilter' configured for use
+2024-06-24 22:25:20 - Filter 'webMvcObservationFilter' configured for use
+2024-06-24 22:25:20 - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2024-06-24 22:25:20 - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2024-06-24 22:25:20 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-24 22:25:20 - 35 mappings in 'requestMappingHandlerMapping'
+2024-06-24 22:25:21 - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2024-06-24 22:25:21 - Exposing 15 endpoints beneath base path '/actuator'
+2024-06-24 22:25:21 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7cb6d30d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7dd2952b, org.springframework.security.web.context.SecurityContextHolderFilter@590979a, org.springframework.security.web.header.HeaderWriterFilter@3fd1e108, org.springframework.web.filter.CorsFilter@5c85718f, org.springframework.security.web.authentication.logout.LogoutFilter@73044216, com.tobeto.hotel_reservation_pair_6.core.filters.JwtAuthenticationFilter@264f441b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@392717bf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3d82fd1c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@66578512, org.springframework.security.web.session.SessionManagementFilter@2059c0f, org.springframework.security.web.access.ExceptionTranslationFilter@3419a49a, org.springframework.security.web.access.intercept.AuthorizationFilter@12ae4598]
+2024-06-24 22:25:21 - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-24 22:25:21 - ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-24 22:25:21 - LiveReload server is running on port 35729
+2024-06-24 22:25:21 - Starting ProtocolHandler ["http-nio-8080"]
+2024-06-24 22:25:21 - Tomcat started on port 8080 (http) with context path '/'
+2024-06-24 22:25:21 - Started HotelReservationPair6Application in 4.717 seconds (process running for 5.132)
+2024-06-24 22:25:21 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-24 22:25:21 - Initializing Servlet 'dispatcherServlet'
+2024-06-24 22:25:21 - Detected StandardServletMultipartResolver
+2024-06-24 22:25:21 - Detected AcceptHeaderLocaleResolver
+2024-06-24 22:25:21 - Detected FixedThemeResolver
+2024-06-24 22:25:21 - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@67a4506c
+2024-06-24 22:25:21 - Detected org.springframework.web.servlet.support.SessionFlashMapManager@189e1fef
+2024-06-24 22:25:21 - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-24 22:25:21 - Completed initialization in 3 ms
+2024-06-24 22:25:23 - Mail health check failed
+jakarta.mail.AuthenticationFailedException: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-424819224d9sm151593755e9.45 - gsmtp
+
+	at org.eclipse.angus.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:954)
+	at org.eclipse.angus.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:865)
+	at org.eclipse.angus.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:769)
+	at jakarta.mail.Service.connect(Service.java:345)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:480)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.testConnection(JavaMailSenderImpl.java:360)
+	at org.springframework.boot.actuate.mail.MailHealthIndicator.doHealthCheck(MailHealthIndicator.java:52)
+	at org.springframework.boot.actuate.health.AbstractHealthIndicator.health(AbstractHealthIndicator.java:82)
+	at org.springframework.boot.actuate.health.HealthIndicator.getHealth(HealthIndicator.java:37)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:82)
+	at org.springframework.boot.actuate.health.HealthEndpoint.getHealth(HealthEndpoint.java:41)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getLoggedHealth(HealthEndpointSupport.java:172)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:145)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getAggregateContribution(HealthEndpointSupport.java:156)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getContribution(HealthEndpointSupport.java:141)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:110)
+	at org.springframework.boot.actuate.health.HealthEndpointSupport.getHealth(HealthEndpointSupport.java:81)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:76)
+	at org.springframework.boot.actuate.health.HealthEndpoint.health(HealthEndpoint.java:66)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:281)
+	at org.springframework.boot.actuate.endpoint.invoke.reflect.ReflectiveOperationInvoker.invoke(ReflectiveOperationInvoker.java:74)
+	at org.springframework.boot.actuate.endpoint.annotation.AbstractDiscoveredOperation.invoke(AbstractDiscoveredOperation.java:60)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:124)
+	at org.springframework.boot.actuate.endpoint.jmx.EndpointMBean.invoke(EndpointMBean.java:97)
+	at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:803)
+	at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:802)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1472)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1310)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1405)
+	at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:829)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-06-24 22:25:47 - GET "/swagger-ui/index.html", parameters={}
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - GET "/swagger-ui/swagger-ui.css", parameters={}
+2024-06-24 22:25:47 - GET "/swagger-ui/index.css", parameters={}
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - GET "/swagger-ui/swagger-ui-bundle.js", parameters={}
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - GET "/swagger-ui/swagger-ui-standalone-preset.js", parameters={}
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - GET "/swagger-ui/swagger-initializer.js", parameters={}
+2024-06-24 22:25:47 - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - GET "/v3/api-docs/swagger-config", parameters={}
+2024-06-24 22:25:47 - Mapped to org.springdoc.webmvc.ui.SwaggerConfigResource#openapiJson(HttpServletRequest)
+2024-06-24 22:25:47 - Using 'application/json', given [*/*] and supported [application/json]
+2024-06-24 22:25:47 - Writing [{configUrl=/v3/api-docs/swagger-config, oauth2RedirectUrl=http://localhost:8080/swagger-ui/oauth2-re (truncated)...]
+2024-06-24 22:25:47 - Completed 200 OK
+2024-06-24 22:25:47 - GET "/v3/api-docs/All%20API's%20%F0%9F%93%A2", parameters={}
+2024-06-24 22:25:47 - Mapped to org.springdoc.webmvc.api.MultipleOpenApiWebMvcResource#openapiJson(HttpServletRequest, String, String, Locale)
+2024-06-24 22:25:48 - Init duration for springdoc-openapi is: 321 ms
+2024-06-24 22:25:48 - Using 'application/json', given [application/json, */*] and supported [application/json]
+2024-06-24 22:25:48 - Writing [{123, 34, 111, 112, 101, 110, 97, 112, 105, 34, 58, 34, 51, 46, 48, 46, 49, 34, 44, 34, 105, 110, 10 (truncated)...]
+2024-06-24 22:25:48 - Completed 200 OK
+2024-06-24 22:26:33 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-24 22:26:33 - HikariPool-1 - Shutdown initiated...
+2024-06-24 22:26:33 - HikariPool-1 - Shutdown completed.
