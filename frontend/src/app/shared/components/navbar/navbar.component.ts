@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
 
     private setLoggedState(isLogged: boolean): void {
         this.isLogged = isLogged;
-        this.displayEmail = this.authService.tokenPayload?.email?? null;
+        this.displayEmail = this.authService.tokenPayload?.sub?? null;
         this.change.markForCheck();
     }
 

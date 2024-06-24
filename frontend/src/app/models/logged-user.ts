@@ -1,4 +1,4 @@
 export interface LoggedUser {
-    success: boolean;
     access_token: string;
+    refresh_token: string;
   }
