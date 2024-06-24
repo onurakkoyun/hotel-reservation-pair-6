@@ -45,7 +45,7 @@ public class SecurityConfiguration {
             "/api/hotels/search",
             "/api/auth/**",
             //  "/api/**"
-            "/actuator/**"
+            "/actuator/**",
     };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

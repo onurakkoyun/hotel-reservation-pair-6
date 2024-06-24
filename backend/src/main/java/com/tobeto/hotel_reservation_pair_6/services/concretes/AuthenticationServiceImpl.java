@@ -83,6 +83,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         userBusinessRuleService.checkIfPasswordsMatch(request.getPassword(), request.getPasswordConfirm());
 
+        System.out.println();
+
         Manager manager = ManagerMapper.INSTANCE.mapRegisterManagerRequestToManager(request);
         manager.setPassword(passwordEncoder.encode(request.getPassword()));
         manager.setRole(Role.MANAGER);
