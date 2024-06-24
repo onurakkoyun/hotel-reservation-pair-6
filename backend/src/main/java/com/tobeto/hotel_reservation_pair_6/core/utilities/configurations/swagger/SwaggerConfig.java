@@ -52,7 +52,7 @@ public class SwaggerConfig {
                 .group("Manager JWT Token API's \uD83D\uDD10")
                 .pathsToMatch("/hotels/add", "/api/rooms/add", "/api/rooms/update",
                         "/api/reservations/getAllByHotelId", "/api/reservations/update-status",
-                        "/api/reservations/report", "/api/financial-reports/**",
+                        "/api/reservations/getReportByHotelId", "/api/financial-reports/**",
                         "/api/hotel-images/hotel/{hotelId}", "/api/support-tickets/hotel/{hotelId}",
                         "/api/support-ticket-replies/reply", "/api/managers/update")
                 .build();
