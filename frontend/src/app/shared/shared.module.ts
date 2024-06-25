@@ -13,12 +13,13 @@ import { CounterComponent } from "./components/counter/counter.component";
 import { PaginationComponent } from "./components/pagination/pagination.component";
 import { CardComponent } from "./components/card/card.component";
 import { FilterComponent } from "./components/filter/filter.component";
+import { DropdownMenuComponent } from "./components/dropdown-menu/dropdown-menu.component";
 
 
 
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent, CardComponent, FilterComponent],
+    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent, CardComponent, FilterComponent, DropdownMenuComponent],
     exports: [LayoutComponent, CardComponent],
     imports: [
         RouterModule,

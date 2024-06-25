@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
@@ -16,9 +16,14 @@ import { RegisterManagerCredentials } from '../../models/register-manager-creden
 })
 export class AuthService extends CoreAuthService {
   private apiControllerUrl = `${environment.apiUrl}/api/auth`;
+  loginSuccess = new EventEmitter<void>();
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document: Document) {
     super(document);
+  }
+
+  emitLoginSuccess(): void {
+    this.loginSuccess.emit();
   }
 
   login(loginCredentials: LoginCredentials): Observable<LoggedUser> {
@@ -31,6 +36,14 @@ export class AuthService extends CoreAuthService {
           this._isLogged.next(true);
         })
       );
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiControllerUrl}/logout`, {}).pipe(
+      tap(() => {
+        super.logoutHandler();
+      })
+    );
   }
 
   register(registerCredentials: RegisterCredentials): Observable<RegisteredUser> {
