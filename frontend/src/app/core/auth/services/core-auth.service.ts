@@ -81,7 +81,7 @@ export class CoreAuthService {
     if (!this.token) return false;
 
     if (this.isTokenExpired()) {
-      this.logout();
+      this.logoutHandler();
       return false;
     }
 
@@ -94,8 +94,9 @@ export class CoreAuthService {
     return true;
   }
 
-  public logout(): void {
+  public logoutHandler(): void {
     this.localStorage?.removeItem('access_token');
+    this.localStorage?.removeItem('refresh_token');
     this._loggedOut.next();
     this._isLogged.next(false);
   }
