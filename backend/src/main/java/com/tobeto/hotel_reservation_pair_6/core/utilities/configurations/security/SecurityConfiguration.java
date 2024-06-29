@@ -76,6 +76,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(GET,  "/api/support-tickets/create").hasRole(GUEST.name())
                                 .requestMatchers(GET,  "/api/support-tickets/guest/{guestId}").hasRole(GUEST.name())
                                 .requestMatchers(POST, "/api/reviews/add").hasRole(GUEST.name())
+                                .requestMatchers(GET, "/api/users/get-by-email").hasAnyRole(GUEST.name(), MANAGER.name())
                                 .anyRequest()
                                 .authenticated()
                 )
