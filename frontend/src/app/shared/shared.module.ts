@@ -14,16 +14,18 @@ import { PaginationComponent } from "./components/pagination/pagination.componen
 import { CardComponent } from "./components/card/card.component";
 import { FilterComponent } from "./components/filter/filter.component";
 import { DropdownMenuComponent } from "./components/dropdown-menu/dropdown-menu.component";
-
-
-
+import { NewFilterComponent } from "./components/new-filter/new-filter.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent, SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent, CardComponent, FilterComponent, DropdownMenuComponent],
+    declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent,
+        SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent,
+        CardComponent, FilterComponent, NewFilterComponent, DropdownMenuComponent],
     exports: [LayoutComponent, CardComponent],
     imports: [
         RouterModule,
         CommonModule,
+        FormsModule
     ],
 })
 export class SharedModule { }

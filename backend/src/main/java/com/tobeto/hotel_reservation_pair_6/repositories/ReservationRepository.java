@@ -19,4 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findReservationsByHotelAndDates(@Param("hotelId") Integer hotelId,
                                                       @Param("startDate") LocalDate startDate,
                                                       @Param("endDate") LocalDate endDate);
+
+    List<Reservation> findByRoom_Hotel_IdAndGuest_Id(int hotelId, long guestId);
 }

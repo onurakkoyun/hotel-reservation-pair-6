@@ -1,6 +1,7 @@
 package com.tobeto.hotel_reservation_pair_6.services.abstracts;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Reservation;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.requests.CreateReservationRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetAllReservationsResponse;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetReservationReportResponse;
@@ -19,6 +20,9 @@ public interface ReservationService {
 
     Result cancelReservation(long id);
 
-    List<GetReservationReportResponse> getReservationsByHotelAndDates(int hotelId, LocalDate startDate, LocalDate endDate);
+    List<GetReservationReportResponse> getReservationsByHotelAndDates(int hotelId, LocalDate startDate,
+                                                                      LocalDate endDate);
+
+    List<Reservation> findReservationsByHotelIdAndGuestId(int hotelId, long guetsId);
 
 }

@@ -24,8 +24,14 @@ public class HotelsController {
         return hotelService.add(request);
     }
 
+    @GetMapping("/get-all")
+    private List<GetAllHotelsResponse> getAllHotels(){
+        return hotelService.getAllHotels();
+    }
+
     @GetMapping("/search")
-    private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query){
-        return hotelService.searchHotels(query);
+    private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query,
+                                                    @RequestParam(required = false) int guestCount){
+        return hotelService.searchHotels(query, guestCount);
     }
 }

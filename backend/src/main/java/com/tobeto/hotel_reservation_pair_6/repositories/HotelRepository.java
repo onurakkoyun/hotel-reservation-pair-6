@@ -11,11 +11,12 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Hotel findByRooms_Id(long id);
 
-    @Query("SELECT h FROM Hotel h WHERE " +
+    @Query("SELECT DISTINCT h FROM Hotel h JOIN h.rooms r WHERE " +
             "(:searchText IS NULL OR :searchText = '' OR " +
             "LOWER(h.hotelName) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(h.city) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "OR LOWER(h.province) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
-            "OR LOWER(h.country) LIKE LOWER(CONCAT('%', :searchText, '%')))")
-    List<Hotel> searchHotels(@Param("searchText") String searchText);
+            "OR LOWER(h.country) LIKE LOWER(CONCAT('%', :searchText, '%'))) " +
+            "AND (:guestCount IS NULL OR r.capacity >= :guestCount)")
+    List<Hotel> searchHotels(@Param("searchText") String searchText, @Param("guestCount") int guestCount);
 }

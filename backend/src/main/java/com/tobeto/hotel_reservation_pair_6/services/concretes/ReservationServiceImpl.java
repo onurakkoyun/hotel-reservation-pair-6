@@ -198,4 +198,9 @@ public class ReservationServiceImpl implements ReservationService{
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Reservation> findReservationsByHotelIdAndGuestId(int hotelId, long guetsId) {
+        return reservationRepository.findByRoom_Hotel_IdAndGuest_Id(hotelId, guetsId);
+    }
+
 }
