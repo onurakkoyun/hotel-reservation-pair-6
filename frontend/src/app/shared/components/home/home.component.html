@@ -41,17 +41,15 @@ class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen l
 </section> -->
 <!-- In your HTML file -->
 
-<app-search-box></app-search-box>
-<div
-  class="relative mx-auto max-w-screen-full px-24 py-20 sm:px-32 lg:flex lg:h-auto lg:justify-items-start lg:px-36"
->
+<app-search-box (search)="onSearch($event)"></app-search-box>
+<div class="relative mx-auto max-w-screen-full px-24 py-20 sm:px-32 lg:flex lg:h-auto lg:justify-items-start lg:px-36">
   <div class="container w-full grid grid-cols-2 gap-10 md:grid-cols-2">
     <div class="w-1/5">
       <app-filter></app-filter>
     </div>
     <div class="w-4/5 max-w-3xl">
       <div class="">
-        <app-card></app-card>
+        <app-card [hotels]="hotels"></app-card>
       </div>
       <div class="py-8">
         <app-pagination></app-pagination>
