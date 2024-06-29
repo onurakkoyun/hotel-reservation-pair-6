@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
@@ -79,7 +79,7 @@ export class HotelService {
   private apiUrl = `${environment.apiUrl}/api/hotels`;
 
   constructor(private http: HttpClient) {}
-  
+
   getAllHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(`${this.apiUrl}/get-all`).pipe(
       map((hotels: Hotel[]) =>
@@ -88,6 +88,26 @@ export class HotelService {
             ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
             : undefined;
           hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
+          return hotel;
+        })
+      )
+    );
+  }
+  
+  searchHotels(query: string, guestCount: number): Observable<Hotel[]> {
+    return this.http.get<Hotel[]>(`${this.apiUrl}/search`, {
+      params: {
+        query: query,
+        guestCount: guestCount.toString()
+      }
+    }).pipe(
+      map((hotels: Hotel[]) =>
+        hotels.map((hotel) => {
+          hotel.lowestRoomPrice = hotel.rooms.length > 0 
+            ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
+            : undefined;
+          hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
+          console.log(hotel);
           return hotel;
         })
       )

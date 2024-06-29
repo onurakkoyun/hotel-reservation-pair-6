@@ -1,6 +1,6 @@
 <div class="flex justify-start ml-36 max-w-m space-y-3">
   <!-- Datepicker Component -->
-  <form class="search-container flex space-x-6">
+  <form [formGroup]="searchForm" class="search-container flex space-x-6" (ngSubmit)="onSearch()">
     <div class="relative">
       <div class="flex">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -15,6 +15,7 @@
           id="location-search"
           class="w-[286px] h-12 justify-self-start bg-white border border-gray-600 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Where are you going?"
+          formControlName="query"
           required
         />
       </div>

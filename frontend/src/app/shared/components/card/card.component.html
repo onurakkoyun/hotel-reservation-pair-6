@@ -12,6 +12,7 @@
         #carousel
         class="carousel relative w-full h-36 overflow-hidden rounded-tl-2xl rounded-bl-2xl md:h-56"
       >
+      <div *ngIf="hotel.hotelImages && hotel.hotelImages.length > 0">
         <div
           *ngFor="let hotelImage of hotel.hotelImages"
           class="hidden duration-700 ease-in-out"
@@ -23,6 +24,8 @@
             alt="..."
           />
         </div>
+        </div>
+        
       </div>
       <!-- Slider controls -->
       <button

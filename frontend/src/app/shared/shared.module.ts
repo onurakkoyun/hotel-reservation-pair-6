@@ -15,7 +15,7 @@ import { CardComponent } from "./components/card/card.component";
 import { FilterComponent } from "./components/filter/filter.component";
 import { DropdownMenuComponent } from "./components/dropdown-menu/dropdown-menu.component";
 import { NewFilterComponent } from "./components/new-filter/new-filter.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent,
@@ -25,6 +25,7 @@ import { FormsModule } from "@angular/forms";
     imports: [
         RouterModule,
         CommonModule,
+        ReactiveFormsModule,
         FormsModule
     ],
 })
