@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectionStrategy, Inject, OnInit, ChangeDetectorRef, PLATFORM_ID, NgZone } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, ChangeDetectionStrategy, Inject, OnInit, ChangeDetectorRef, PLATFORM_ID, NgZone, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { initDropdowns} from 'flowbite';
 import { AuthService } from '../../../services/auth/auth.service';
@@ -11,6 +11,10 @@ import { isPlatformBrowser } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownMenuComponent implements OnInit {
+    @Input() displayEmail: string | null = null;
+    @Input() firstName: string | null = null;
+    @Input() lastName: string | null = null;
+    
     constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone) { }
 
     ngOnInit() {

@@ -6,7 +6,7 @@
     </a>
     <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"> 
         @if (isLogged) {
-          <app-dropdown-menu></app-dropdown-menu>
+          <app-dropdown-menu [firstName]="firstName" [lastName]="lastName" [displayEmail]="displayEmail"></app-dropdown-menu>
         }
         @else
         {
