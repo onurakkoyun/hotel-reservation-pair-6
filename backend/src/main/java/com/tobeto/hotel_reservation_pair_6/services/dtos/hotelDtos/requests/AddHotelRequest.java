@@ -1,9 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.requests;
 
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.HotelImage;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelFeatureDtos.requests.AssignHotelFeatureRequest;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

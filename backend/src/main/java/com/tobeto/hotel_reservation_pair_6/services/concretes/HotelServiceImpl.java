@@ -68,9 +68,27 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public List<GetAllHotelsResponse> searchHotels(String searchText) {
+    public Hotel save(Hotel hotel) {
+        return hotelRepository.save(hotel);
+    }
 
-        List<Hotel> hotels = hotelRepository.searchHotels(searchText);
+
+
+    @Override
+    public List<GetAllHotelsResponse> getAllHotels() {
+
+        List<Hotel> hotels = hotelRepository.findAll();
+
+        return hotels.stream().map(hotel -> {
+            GetAllHotelsResponse response = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);
+            return response;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetAllHotelsResponse> searchHotels(String searchText, int guestCount) {
+
+        List<Hotel> hotels = hotelRepository.searchHotels(searchText, guestCount);
 
         return hotels.stream().map(hotel -> {
             GetAllHotelsResponse response = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);

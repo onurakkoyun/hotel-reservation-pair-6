@@ -1,8 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.reviewDtos.responses;
 
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetReviewsResponse {
+public class GetReviewResponse {
 
     private LocalDateTime creationDate;
 

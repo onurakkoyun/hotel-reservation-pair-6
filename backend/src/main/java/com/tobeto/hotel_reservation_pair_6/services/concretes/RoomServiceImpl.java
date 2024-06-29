@@ -6,7 +6,6 @@ import com.tobeto.hotel_reservation_pair_6.core.utilities.exceptions.types.Busin
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Bed;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.entities.concretes.RoomBed;
-import com.tobeto.hotel_reservation_pair_6.repositories.ReservationRepository;
 import com.tobeto.hotel_reservation_pair_6.repositories.RoomRepository;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.BedService;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.RoomService;

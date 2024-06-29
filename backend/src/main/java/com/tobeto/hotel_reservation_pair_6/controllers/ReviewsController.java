@@ -1,10 +1,9 @@
 package com.tobeto.hotel_reservation_pair_6.controllers;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
-import com.tobeto.hotel_reservation_pair_6.entities.concretes.Review;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.ReviewService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reviewDtos.requests.AddReviewRequest;
-import com.tobeto.hotel_reservation_pair_6.services.dtos.reviewDtos.responses.GetReviewsResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.reviewDtos.responses.GetReviewResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class ReviewsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/getByHotelId/{hotelId}")
-    private List<GetReviewsResponse> getReviwsByHotelId(@RequestParam int hotelId) {
+    private List<GetReviewResponse> getReviwsByHotelId(@RequestParam int hotelId) {
         return reviewService.getReviwsByHotelId(hotelId);
     }
 

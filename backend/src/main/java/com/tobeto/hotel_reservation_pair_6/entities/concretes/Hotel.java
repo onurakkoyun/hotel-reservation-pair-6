@@ -19,7 +19,8 @@ import lombok.Setter;
 @Table(name = "hotels")
 public class Hotel extends BaseEntity<Integer> {
 	
-	//TODO: Otel'e ait imageler eklenecek (ex: Cloudinary)
+	//TODO: Hotel için GetAllHotelsWithReviewsResponse nesnesi oluşturularak oteller listelenebilecek.
+	//TODO: yada Review sayısını bulan başka bir method oluşturulacak. sonra karar ver.
 
 	@Column(name = "hotel_name")
 	private String hotelName;
@@ -35,6 +36,9 @@ public class Hotel extends BaseEntity<Integer> {
 	
 	@Column(name = "star_count")
     private int starCount;
+
+	@Column(name = "rating_average")
+	private Double ratingAverage;
 
 	@Column(name = "first_address_line")
 	private String firstAddressLine;
@@ -54,12 +58,10 @@ public class Hotel extends BaseEntity<Integer> {
 	@Column(name = "country")
 	private String country;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "hotel")
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Room> rooms;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "hotel")
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
 
 	@ManyToMany(cascade = CascadeType.MERGE)

@@ -1,5 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses;
 
+import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomBedDtos.responses.GetRoomBedResponse;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomFeatureDtos.responses.GetRoomFeatureResponse;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ public class GetRoomResponse {
     private int quantity;
 
     private double dailyPrice;
+
+    private Currency currency;
 
     private int capacity;
 

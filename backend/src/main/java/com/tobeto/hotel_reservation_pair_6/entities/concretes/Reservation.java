@@ -1,20 +1,15 @@
 package com.tobeto.hotel_reservation_pair_6.entities.concretes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.entities.abstracts.BaseEntity;
 import com.tobeto.hotel_reservation_pair_6.entities.enums.ReservationStatus;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
