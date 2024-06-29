@@ -4,17 +4,23 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
+  NgZone,
+  OnInit,
   Output,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import {
+  initCarousels,
   Carousel,
   CarouselInterface,
   CarouselItem,
   CarouselOptions,
 } from 'flowbite';
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-card',
@@ -22,7 +28,7 @@ import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent implements AfterViewInit {
+export class CardComponent implements OnInit {
   @Input() title: string = '';
   @Input() ImageSrc: string = '';
   @Input() ImageAlt: string = '';
@@ -32,17 +38,22 @@ export class CardComponent implements AfterViewInit {
   @Input() ImageHeight: number = 400;
   @Output() buttonClick = new EventEmitter<void>();
 
-  @ViewChild('carousel', { static: false }) carouselElementRef:
+/*   @ViewChild('carousel', { static: false }) carouselElementRef:
     | ElementRef
     | undefined;
 
-  carousel: CarouselInterface | undefined;
+  carousel: CarouselInterface | undefined; */
 
   hotels: Hotel[] = [];
 
-  constructor(private hotelService: HotelService) {}
+  constructor(private hotelService: HotelService,@Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone) {}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.ngZone.runOutsideAngular(() => {
+        initCarousels();
+      });
+    }
     this.hotelService.getAllHotels().subscribe((data: Hotel[]) => {
       this.hotels = data;
     });
@@ -59,7 +70,9 @@ export class CardComponent implements AfterViewInit {
     };
   }
 
-  ngAfterViewInit() {
+  /* ngAfterViewInit() {
+
+
     setTimeout(() => {
       if (this.carouselElementRef && this.carouselElementRef.nativeElement) {
         this.initializeCarousel();
@@ -116,7 +129,7 @@ export class CardComponent implements AfterViewInit {
     };
 
     this.carousel = new Carousel(carouselElement, items, options);
-    this.carousel.cycle();
+    //this.carousel.cycle();
 
     const prevButton = carouselElement.querySelector('[data-carousel-prev]');
     const nextButton = carouselElement.querySelector('[data-carousel-next]');
@@ -135,7 +148,7 @@ export class CardComponent implements AfterViewInit {
       event.preventDefault();
       this.carousel?.next();
     });
-  }
+  } */
 
   getRatingText(ratingAverage: number): string {
     if (ratingAverage > 9) return 'Exceptional';

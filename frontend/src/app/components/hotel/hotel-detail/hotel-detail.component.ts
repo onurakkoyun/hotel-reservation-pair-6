@@ -50,9 +50,9 @@ export class HotelDetailComponent implements AfterViewInit {
     }).addTo(this.map);
 
     // Invalidate map size after a delay
-    setTimeout(() => {
+/*     setTimeout(() => {
       this.map.invalidateSize();
-    }, 0);
+    }, 0); */
 
     L.marker([51.5, -0.09], { icon: defaultIcon }).addTo(this.map)
       .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
