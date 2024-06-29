@@ -79,6 +79,7 @@ export class HotelService {
   private apiUrl = `${environment.apiUrl}/api/hotels`;
 
   constructor(private http: HttpClient) {}
+  
   getAllHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(`${this.apiUrl}/get-all`).pipe(
       map((hotels: Hotel[]) =>
