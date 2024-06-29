@@ -160,11 +160,9 @@ export class CardComponent implements OnInit {
   }
 
   getRatingClass(ratingAverage: number): string {
-    if (ratingAverage > 9) return 'bg-green-700';
+    if (ratingAverage > 9) return 'bg-green-600';
     if (ratingAverage > 8) return 'bg-green-600';
-    if (ratingAverage > 7) return 'bg-yellow-600';
-    if (ratingAverage > 6) return 'bg-orange-600';
-    if (ratingAverage > 4) return 'bg-red-600';
+    if (ratingAverage > 7) return 'bg-green-600';
     return 'bg-gray-600';
   }
   
