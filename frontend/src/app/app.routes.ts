@@ -6,6 +6,10 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { PaymentComponent } from './components/payment/payment/payment.component';
 import { HotelDetailComponent } from './components/hotel/hotel-detail/hotel-detail.component';
+import { ReservationListComponent } from './components/reservation/reservation-list/reservation-list.component';
+import { ReservationDetailComponent } from './components/reservation/reservation-detail/reservation-detail.component';
+import { ReviewComponent } from './components/review/review.component';
+import { DashboardComponent } from './components/reporting/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -21,9 +25,28 @@ export const routes: Routes = [
                 component: PaymentComponent,
             },
             {
-                path: 'hotels',
+                path: 'hotels/:id',
                 component: HotelDetailComponent,
+            },
+            {
+                path: 'reservations',
+                component: ReservationListComponent,
+            },
+            {
+                path: 'reservations/:id',
+                component: ReservationDetailComponent,
+            },
+            {
+                path: 'reviews/:hotelId',
+                component: ReviewComponent,
+            },
+            {
+                path: 'reports/:hotelId',
+                component: DashboardComponent,
+                canActivate: [],
             }
+
+
         ]
     },
     {
