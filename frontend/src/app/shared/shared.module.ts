@@ -16,18 +16,20 @@ import { FilterComponent } from "./components/filter/filter.component";
 import { DropdownMenuComponent } from "./components/dropdown-menu/dropdown-menu.component";
 import { NewFilterComponent } from "./components/new-filter/new-filter.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HotelListComponent } from "../components/hotel/hotel-list/hotel-list.component";
 
 @NgModule({
     declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent,
         SearchBoxComponent, HomeComponent, LangpickerComponent, CounterComponent, PaginationComponent,
-        CardComponent, FilterComponent, NewFilterComponent, DropdownMenuComponent],
+        CardComponent, FilterComponent, NewFilterComponent, DropdownMenuComponent, HotelListComponent],
     exports: [LayoutComponent, CardComponent],
     imports: [
         RouterModule,
         CommonModule,
         ReactiveFormsModule,
-        FormsModule
-    ],
+        FormsModule,
+        
+    ]
 })
 export class SharedModule { }
 

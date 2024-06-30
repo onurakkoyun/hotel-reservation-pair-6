@@ -4,6 +4,8 @@ import {
   Component,
   ChangeDetectorRef,
   OnInit,
+  Output,
+  Inject,
 } from '@angular/core';
 import { Hotel } from '../../../services/hotel/hotel.service';
 import { HotelService } from './../../../services/hotel/hotel.service';
@@ -15,24 +17,18 @@ import { HotelService } from './../../../services/hotel/hotel.service';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class HomeComponent implements OnInit {
-  hotels: Hotel[] = [];
 
   ngOnInit(): void {
-    this.hotelService.getAllHotels().subscribe((data: Hotel[]) => {
-      this.hotels = data;
-    });
+
   }
 
-  constructor(
-    private hotelService: HotelService
+  constructor(@Inject(HotelService) private hotelService: HotelService
     //private change: ChangeDetectorRef
   ) {}
 
-  onSearch(searchData: { query: string; guestCount: number }) {
+  onSearch(searchData: { location: string, checkIn: Date, checkOut: Date, guestCount: number }) {
     this.hotelService
-      .searchHotels(searchData.query, searchData.guestCount)
-      .subscribe((data: Hotel[]) => {
-        this.hotels = data;
-      });
+      .setSearchQuery(searchData.location, searchData.checkIn, searchData.checkOut, searchData.guestCount);
+    this.hotelService.searchHotels();
   }
 }
