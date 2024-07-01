@@ -156,6 +156,6 @@ export class HotelService {
         return hotel;
       })
       )
-    );
+    );;
   }
 }

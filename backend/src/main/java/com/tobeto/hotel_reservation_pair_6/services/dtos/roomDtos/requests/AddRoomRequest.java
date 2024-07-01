@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class AddRoomRequest {
     private int hotelId;
 
     private int roomTypeId;
+
+    private MultipartFile[] photos;
 
     List<AssignRoomBedRequest> roomBeds;
 

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -32,7 +33,9 @@ public class HotelsController {
 
     @GetMapping("/search")
     private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query,
-                                                    @RequestParam(required = false) int guestCount){
-        return hotelService.searchHotels(query, guestCount);
+                                                    @RequestParam(required = false) int guestCount,
+                                                    @RequestParam LocalDate startDate,
+                                                    @RequestParam LocalDate endDate){
+        return hotelService.searchHotels(query, guestCount, startDate, endDate);
     }
 }
