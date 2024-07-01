@@ -13,7 +13,7 @@ export class CounterComponent {
     @Input() initialValue: number = 2;
     @Output() countChange = new EventEmitter<number>();
   
-    public guestCount = new FormControl(this.initialValue, Validators.required); // Validators eklendi
+    public guestCount = new FormControl(this.initialValue); // Validators eklendi
   
     constructor() {
       this.guestCount.valueChanges.subscribe((value) => {

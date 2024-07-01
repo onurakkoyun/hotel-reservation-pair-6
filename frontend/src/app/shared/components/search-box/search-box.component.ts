@@ -17,14 +17,14 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
   @Output() search = new EventEmitter<{ location: string, checkIn: Date, checkOut: Date, guestCount: number }>();
-
+  value = 'Clear me';
 
   constructor(private fb: FormBuilder) {
     this.searchForm = this.fb.group({
-      location: ['', Validators.required],
+      location: [''],
       checkIn: [null, Validators.required],
       checkOut: [null, Validators.required],
-      guestCount: [1, Validators.required]
+      guestCount: [1]
     });
   }
 
