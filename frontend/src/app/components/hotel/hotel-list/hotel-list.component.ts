@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { initCarousels } from 'flowbite';
 
 @Component({
   selector: 'app-hotel-list',

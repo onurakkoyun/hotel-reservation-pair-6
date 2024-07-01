@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { cp } from 'fs';
+
 
 export interface Hotel {
   id: number;
@@ -124,7 +124,6 @@ export class HotelService {
             ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
             : undefined;
           hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
-          console.log("blabla");
         });
         return hotels; // Ensure the modified hotels array is returned
       })
@@ -143,8 +142,10 @@ export class HotelService {
     return this.http.get<Hotel[]>(`${this.apiUrl}/search`, {
       params: new HttpParams({
         fromObject: {
-          query: this.location.value,
-          guestCount: this.guestCount.value,
+          query: this.location.value ? this.location.value : '',
+          startDate: this.checkIn.value ? this.checkIn.value.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+          endDate: this.checkOut.value ? this.checkOut.value.toISOString().slice(0, 10) : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().slice(0, 10),
+          guestCount: this.guestCount.value ? this.guestCount.value.toString() : '1',
         },
       }),
     }).pipe(

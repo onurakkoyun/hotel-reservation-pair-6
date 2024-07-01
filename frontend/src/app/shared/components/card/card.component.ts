@@ -20,6 +20,7 @@ import {
   CarouselItem,
   CarouselOptions,
 } from 'flowbite';
+import type { InstanceOptions } from 'flowbite';
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -31,13 +32,18 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() hotel: Hotel = {} as Hotel;
-  @Input() carouselId: string = '';
   @ViewChild('carousel') carousel: ElementRef | undefined;
+  @ViewChild('prev') prev: ElementRef | undefined;
+  @ViewChild('next') next: ElementRef | undefined;
+  @Input() carouselId: string = '';
   @Output() buttonClick = new EventEmitter<void>();
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone, private cdr: ChangeDetectorRef) {
+    
+  }
 
   ngOnInit(): void {
+
   }
 
   onButtonClick() {
@@ -46,9 +52,38 @@ export class CardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      initCarousels();
+      //initCarousels();
+      const items: CarouselItem[] = Array.from(this.carousel?.nativeElement.querySelectorAll('[data-carousel-item]'))
+      .filter((node): node is HTMLElement => node instanceof HTMLElement)
+      .map((el: HTMLElement, index: number) => ({
+        position: index,
+        el: el
+      }));
+  
+        // object options with default values
+      const options: CarouselOptions = {
+
+        };
+  
+  
+        const instanceOptions: InstanceOptions = {
+          id: 'controls-carousel-' + this.carouselId,
+          override: true
+        };
+        
+        const carousel: CarouselInterface = new Carousel(this.carousel?.nativeElement as HTMLElement, items, options, instanceOptions);
+
+        this.prev?.nativeElement.addEventListener('click', () => {
+          carousel.prev();
+        });
+
+        this.next?.nativeElement.addEventListener('click', () => {
+          carousel.next();
+        });
+
+        //this.cdr.detectChanges();;
+      }
     }
-  }
 
   getRatingText(ratingAverage: number): string {
     if (ratingAverage > 9) return 'Exceptional';
