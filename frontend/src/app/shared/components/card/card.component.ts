@@ -1,10 +1,8 @@
 import {
   AfterViewInit,
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   ElementRef,
   EventEmitter,
   Inject,
@@ -36,8 +34,6 @@ export class CardComponent implements OnInit, AfterViewInit {
   @Input() carouselId: string = '';
   @ViewChild('carousel') carousel: ElementRef | undefined;
   @Output() buttonClick = new EventEmitter<void>();
-
-  @ViewChild('carousel', { static: false }) carousel: ElementRef | undefined;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
