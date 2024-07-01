@@ -1,1 +1,3 @@
-
+<div *ngFor="let hotel of hotels; let i = index">
+    <app-card [hotel]="hotel" [carouselId]="'controls-carousel-' + i"></app-card>
+  </div>

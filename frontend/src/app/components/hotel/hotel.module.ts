@@ -8,11 +8,10 @@ import { ReviewComponent } from "../review/review.component";
 
 
 @NgModule({
-    declarations: [RoomDetailComponent, HotelDetailComponent],
+    declarations: [RoomDetailComponent, HotelDetailComponent, ReviewComponent],
     imports: [
         CommonModule,
         SharedModule,
-        ReviewComponent
     ]
 })
 export class HotelModule { }

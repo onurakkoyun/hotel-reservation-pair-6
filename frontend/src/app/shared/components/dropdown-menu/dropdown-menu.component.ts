@@ -15,7 +15,7 @@ export class DropdownMenuComponent implements OnInit {
     @Input() firstName: string | null = null;
     @Input() lastName: string | null = null;
     
-    constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone) { }
+    constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone, private change: ChangeDetectorRef) { }
 
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
@@ -29,6 +29,7 @@ export class DropdownMenuComponent implements OnInit {
         this.authService.logout().subscribe({
             complete: () => {
                 console.log('Logout successful');
+                this.change.markForCheck();
                 this.router.navigate(['/']);
             }
         });

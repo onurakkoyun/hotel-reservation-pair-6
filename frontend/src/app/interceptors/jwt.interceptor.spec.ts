@@ -5,7 +5,7 @@ import { jwtInterceptor } from './jwt.interceptor';
 
 describe('jwtInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => jwtInterceptor(req, next));
+    TestBed.runInInjectionContext(() => jwtInterceptor(req, next.caller()));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

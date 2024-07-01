@@ -1,5 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, Inject, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-detail',
@@ -8,9 +10,18 @@ import { AfterViewInit, Component, Inject, PLATFORM_ID } from '@angular/core';
 })
 export class HotelDetailComponent implements AfterViewInit {
   private map: any;
+  hotel: Hotel = {} as Hotel;
 
+  constructor(@Inject(HotelService) private hotelService: HotelService, private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  ngOnInit(): void {
+/*     const hotelId = this.route.snapshot.paramMap.get('id');
+    if (hotelId) {
+      this.hotelService.getHotelById(hotelId).subscribe((hotel) => {
+        this.hotel = hotel;
+      });
+    } */
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {

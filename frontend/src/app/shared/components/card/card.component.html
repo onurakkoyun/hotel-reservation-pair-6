@@ -1,9 +1,9 @@
-<div *ngFor="let hotel of hotels">
+<div>
   <div
     class="flex flex-col items-center mb-4 bg-white border border-gray-200 rounded-2xl shadow md:flex-row md:max-w-full dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
   >
     <div
-      id="controls-carousel"
+      [id]="carouselId"
       class="relative w-full h-96 md:h-auto md:w-72 lg:w-[372px] md:rounded-none md:rounded-s-lg"
       data-carousel="static"
     >
@@ -31,6 +31,7 @@
       <button
         type="button"
         data-carousel-prev
+        position="left"
         class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none"
       >
         <span
@@ -57,6 +58,7 @@
       <button
         type="button"
         data-carousel-next
+        position="right"
         class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none"
       >
         <span
@@ -83,7 +85,7 @@
     </div>
     <!-- Features -->
     <a
-      href="/"
+      [routerLink]="['/hotels', hotel.id]"
       class="w-full flex flex-col justify-between pl-4 leading-normal fixed-size"
     >
       <!-- Text -->
