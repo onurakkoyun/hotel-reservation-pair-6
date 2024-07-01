@@ -10,7 +10,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class CounterComponent { 
 
-    @Input() initialValue: number = 1;
+    @Input() initialValue: number = 2;
     @Output() countChange = new EventEmitter<number>();
   
     public guestCount = new FormControl(this.initialValue, Validators.required); // Validators eklendi
