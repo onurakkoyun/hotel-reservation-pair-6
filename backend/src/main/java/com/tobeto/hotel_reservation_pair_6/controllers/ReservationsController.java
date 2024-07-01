@@ -1,7 +1,6 @@
 package com.tobeto.hotel_reservation_pair_6.controllers;
 
 import com.tobeto.hotel_reservation_pair_6.core.results.Result;
-import com.tobeto.hotel_reservation_pair_6.entities.enums.ReservationStatus;
 import com.tobeto.hotel_reservation_pair_6.services.abstracts.ReservationService;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.requests.CreateReservationRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.responses.GetAllReservationsResponse;

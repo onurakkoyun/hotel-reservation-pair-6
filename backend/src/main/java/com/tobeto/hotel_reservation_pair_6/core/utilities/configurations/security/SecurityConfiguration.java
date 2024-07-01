@@ -1,8 +1,8 @@
 package com.tobeto.hotel_reservation_pair_6.core.utilities.configurations.security;
 
 import com.tobeto.hotel_reservation_pair_6.core.filters.JwtAuthenticationFilter;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import static com.tobeto.hotel_reservation_pair_6.entities.enums.Role.*;
 
 import static org.springframework.http.HttpMethod.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -53,6 +54,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(req ->
