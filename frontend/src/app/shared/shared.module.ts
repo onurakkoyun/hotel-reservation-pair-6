@@ -4,8 +4,9 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { LayoutComponent } from "./components/layout/layout.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
-import { DatepickerComponent } from "./components/datepicker/datepicker.component";
+import {JsonPipe} from '@angular/common';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { SearchBoxComponent } from "./components/search-box/search-box.component";
 import { HomeComponent } from "./components/home/home.component";
 import { LangpickerComponent } from "./components/langpicker/langpicker.component";
@@ -17,6 +18,8 @@ import { DropdownMenuComponent } from "./components/dropdown-menu/dropdown-menu.
 import { NewFilterComponent } from "./components/new-filter/new-filter.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HotelListComponent } from "../components/hotel/hotel-list/hotel-list.component";
+import { DatepickerComponent } from "./components/datepicker/datepicker.component";
+
 
 @NgModule({
     declarations: [NavbarComponent, FooterComponent, LayoutComponent, DatepickerComponent,
@@ -28,7 +31,9 @@ import { HotelListComponent } from "../components/hotel/hotel-list/hotel-list.co
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        
+        MatFormFieldModule,
+        MatDatepickerModule, 
+        JsonPipe
     ]
 })
 export class SharedModule { }

@@ -14,12 +14,14 @@ import { HotelService } from './../../../services/hotel/hotel.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
-
+    this.hotelService.getAllHotels().subscribe((hotels) => {
+      this.hotelService.updateHotels(hotels);
+    });
   }
 
   constructor(@Inject(HotelService) private hotelService: HotelService
@@ -29,6 +31,9 @@ export class HomeComponent implements OnInit {
   onSearch(searchData: { location: string, checkIn: Date, checkOut: Date, guestCount: number }) {
     this.hotelService
       .setSearchQuery(searchData.location, searchData.checkIn, searchData.checkOut, searchData.guestCount);
-    this.hotelService.searchHotels();
+
+    this.hotelService.searchHotels().subscribe((hotels) => {
+      this.hotelService.updateHotels(hotels);
+    })
   }
 }

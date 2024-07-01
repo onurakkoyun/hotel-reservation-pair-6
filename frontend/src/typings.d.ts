@@ -1,1 +1,1 @@
-declare module 'flowbite-datepicker/Datepicker';
+declare module 'flowbite-datepicker';

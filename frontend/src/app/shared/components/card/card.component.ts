@@ -27,7 +27,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() hotel: Hotel = {} as Hotel;

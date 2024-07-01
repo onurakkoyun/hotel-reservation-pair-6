@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
 import { cp } from 'fs';
 
@@ -78,11 +78,13 @@ export interface GetHotelImageResponse {
 export class HotelService {
 
   private apiUrl = `${environment.apiUrl}/api/hotels`;
-
   private location = new BehaviorSubject<string>('');
   private checkIn = new BehaviorSubject<Date>(new Date());
   private checkOut = new BehaviorSubject<Date>(new Date());
   private guestCount = new BehaviorSubject<number>(1);
+
+  private _hotels: BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
+  private _searchedhotels: BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
 
 /*   currentLocation = this.location.asObservable();
   currentCheckIn = this.checkIn.asObservable();
@@ -90,6 +92,22 @@ export class HotelService {
   currentGuestCount = this.guestCount.asObservable(); */
 
   constructor(private http: HttpClient) {}
+
+  updateHotels(hotels: Hotel[]): void {
+    this._hotels.next(hotels);
+  }
+
+  get hotels(): Observable<Hotel[]> {
+    return this._hotels.asObservable();
+  }
+
+  updateSearchedHotels(hotels: Hotel[]): void {
+    this._searchedhotels.next(hotels);
+  }
+
+  get searchedHotels(): Observable<Hotel[]> {
+    return this._searchedhotels.asObservable();
+  }
 
   setSearchQuery(location: string, checkIn: Date, checkOut: Date, guestCount: number) {
     this.location.next(location);
@@ -100,35 +118,28 @@ export class HotelService {
 
   getAllHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(`${this.apiUrl}/get-all`).pipe(
-      map((hotels: Hotel[]) =>
-        hotels.map((hotel) => {
+      map((hotels: Hotel[]) => {
+        hotels.forEach((hotel) => {
           hotel.lowestRoomPrice = hotel.rooms.length > 0 
             ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
             : undefined;
           hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
-          return hotel;
-        })
-      )
+          console.log("blabla");
+        });
+        return hotels; // Ensure the modified hotels array is returned
+      })
     );
   }
 
-  getHotelById(id: string): Observable<Hotel> {
-    return this.http.get<Hotel>(`${this.apiUrl}/get-hotel/${id}`).pipe(
-      map((hotel: Hotel) => {
-        hotel.lowestRoomPrice = hotel.rooms.length > 0 
-          ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
-          : undefined;
-        hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
-        return hotel;
-      })
+  getHotelById(id: number): Observable<Hotel> {
+    return this.hotels.pipe(
+      filter((hotels) => hotels.map((hotel) => hotel.id).includes(id)),
+      map((hotels) => hotels.find((hotel) => hotel.id === id) as Hotel)
     );
   }
   
 
-  searchHotels(): Observable<Hotel[]> {
-
-    //const checkInDate = this.checkIn.value instanceof Date ? this.checkIn.value : new Date(this.checkIn.value);
-    //const checkOutDate = this.checkOut.value instanceof Date ? this.checkOut.value : new Date(this.checkOut.value);
+  searchHotels(): Observable<Hotel[]>  {
     return this.http.get<Hotel[]>(`${this.apiUrl}/search`, {
       params: new HttpParams({
         fromObject: {
@@ -137,15 +148,13 @@ export class HotelService {
         },
       }),
     }).pipe(
-      map((hotels: Hotel[]) =>
-        hotels.map((hotel) => {
-          hotel.lowestRoomPrice = hotel.rooms.length > 0 
-            ? Math.min(...hotel.rooms.map((room) => room.dailyPrice))
-            : undefined;
-          hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
-          console.log("blabla", hotel);
-          return hotel;
-        })
+      map((hotels: Hotel[]) => hotels.map((hotel) => {
+        hotel.lowestRoomPrice = hotel.rooms.length > 0
+          ? Math.min(...hotel.rooms.map(room => room.dailyPrice))
+          : undefined;
+        hotel.currency = hotel.rooms.length > 0 ? hotel.rooms[0].currency : undefined;
+        return hotel;
+      })
       )
     );
   }

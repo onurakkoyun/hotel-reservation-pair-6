@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatepickerComponent } from '../datepicker/datepicker.component';
 import { CounterComponent } from '../counter/counter.component';
+import { DatepickerComponent } from '../datepicker/datepicker.component';
+
+
 
 @Component({
     selector: 'app-search-box',
@@ -32,12 +34,12 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.datepickerComponent.checkIn.valueChanges.subscribe((value) => {
-      this.searchForm.get('checkIn')?.setValue(value);
+    this.datepickerComponent.enddateChange.subscribe((value) => {
+      this.searchForm.get('checkOut')?.setValue(value);
     });
 
-    this.datepickerComponent.checkOut.valueChanges.subscribe((value) => {
-      this.searchForm.get('checkOut')?.setValue(value);
+    this.datepickerComponent.startdateChange.subscribe((value) => {
+      this.searchForm.get('checkIn')?.setValue(value);
     });
 
     this.counterComponent.countChange.subscribe((value) => {

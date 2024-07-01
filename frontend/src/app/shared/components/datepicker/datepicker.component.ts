@@ -1,51 +1,38 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'app-datepicker',
     templateUrl: './datepicker.component.html',
     styleUrl: './datepicker.component.css',
+    providers: [provideNativeDateAdapter()],
     changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
-export class DatepickerComponent implements AfterViewInit {
-    @ViewChild('datepickerStart') datepickerStart: ElementRef | undefined;
-    @ViewChild('datepickerEnd') datepickerEnd: ElementRef | undefined;
-
-    @Output() dateChange = new EventEmitter<Date>();
-    
-    public checkIn = new FormControl<Date | null>(null);
-    public checkOut = new FormControl<Date | null>(null);
-
-/*     range = new FormGroup({
+export class DatepickerComponent implements OnInit {
+    public readonly range = new FormGroup({
         start: new FormControl<Date | null>(null),
         end: new FormControl<Date | null>(null),
-      }); */
+      });
 
-    constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-        this.checkIn.valueChanges.subscribe((value) => {
-            if (value !== null) {
-                this.dateChange.emit(value);
-            }
+    @Output() startdateChange = new EventEmitter<Date>();
+    @Output() enddateChange = new EventEmitter<Date>();
+
+    ngOnInit() {
+        this.range.get('start')?.valueChanges.subscribe((newStartDate) => {
+          if (newStartDate) {
+            this.startdateChange.emit(newStartDate);
+            console.log(newStartDate);
+          }
         });
+    
 
-        this.checkOut.valueChanges.subscribe((value) => {
-            if (value !== null) {
-                this.dateChange.emit(value);
-            }
+      this.range.get('end')?.valueChanges.subscribe((newEndDate) => {
+          if (newEndDate) {
+            this.enddateChange.emit(newEndDate);
+            console.log(newEndDate);
+          }
         });
     }
-
-    async ngAfterViewInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            const Datepicker = (await import('flowbite-datepicker/Datepicker')).default;
-            new Datepicker(this.datepickerStart?.nativeElement, {
-                // Options
-            });
-            new Datepicker(this.datepickerEnd?.nativeElement, {
-                // Options
-            });
-        }
-    }
-
-}
+ }
