@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CounterComponent } from '../counter/counter.component';
@@ -18,14 +17,14 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
   @Output() search = new EventEmitter<{ location: string, checkIn: Date, checkOut: Date, guestCount: number }>();
-
+  value = 'Clear me';
 
   constructor(private fb: FormBuilder) {
     this.searchForm = this.fb.group({
-      location: ['', Validators.required],
+      location: [''],
       checkIn: [null, Validators.required],
       checkOut: [null, Validators.required],
-      guestCount: [1, Validators.required]
+      guestCount: [1]
     });
   }
 
@@ -48,19 +47,19 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   }
 
   get location() {
-    return this.searchForm.get('location')?.value || '';
+    return this.searchForm.get('location')?.value;
   }
 
   get checkIn() {
-    return this.searchForm.get('checkIn')?.value || '06/01/2022';
+    return this.searchForm.get('checkIn')?.value;
   }
 
   get checkOut() {
-    return this.searchForm.get('checkOut')?.value || '06/02/2022';
+    return this.searchForm.get('checkOut')?.value;
   }
 
   get guestCount() {
-    return this.searchForm.get('guestCount')?.value || 1;
+    return this.searchForm.get('guestCount')?.value;
   }
 
   onSearch() {

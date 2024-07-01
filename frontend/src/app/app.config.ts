@@ -8,5 +8,5 @@ import { provideAuthErrorRedirectUrl } from './core/auth/providers/auth.provider
 import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHttpClient(withFetch()), provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideAuthErrorRedirectUrl('/login'),]
+  providers: [provideHttpClient(withFetch()), provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideAuthErrorRedirectUrl('/login'), provideAnimationsAsync(),]
 };

@@ -19,6 +19,9 @@ import { NewFilterComponent } from "./components/new-filter/new-filter.component
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HotelListComponent } from "../components/hotel/hotel-list/hotel-list.component";
 import { DatepickerComponent } from "./components/datepicker/datepicker.component";
+import { MatButtonModule } from "@angular/material/button";
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -33,7 +36,11 @@ import { DatepickerComponent } from "./components/datepicker/datepicker.componen
         FormsModule,
         MatFormFieldModule,
         MatDatepickerModule, 
-        JsonPipe
+        JsonPipe,
+        MatFormFieldModule, 
+        MatInputModule, 
+        MatButtonModule, 
+        MatIconModule
     ]
 })
 export class SharedModule { }

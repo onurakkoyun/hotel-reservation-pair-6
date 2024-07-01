@@ -207,7 +207,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material@17.3.10":
+"@angular/material@^17.3.10":
   version "17.3.10"
   resolved "https://registry.npmjs.org/@angular/material/-/material-17.3.10.tgz"
   integrity sha512-hHMQES0tQPH5JW33W+mpBPuM8ybsloDTqFPuRV8cboDjosAWfJhzAKF3ozICpNlUrs62La/2Wu/756GcQrxebg==
