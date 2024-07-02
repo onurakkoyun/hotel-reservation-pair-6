@@ -18,7 +18,6 @@ import { LoginCredentials } from '../../../models/login-credentials';
 export class LoginComponent {
   now = new Date();
   loginFormGroup: FormGroup;
-  loginSuccess = new EventEmitter<void>();
 
   constructor(
     private router: Router,
@@ -38,7 +37,7 @@ export class LoginComponent {
     };
     this.authService.login(loginCredentials).subscribe({
       complete: () => {
-        this.loginSuccess.emit();
+        this.authService.emitLoginSuccess();
         console.log('Login successful');
         this.router.navigate(['/']);
       },

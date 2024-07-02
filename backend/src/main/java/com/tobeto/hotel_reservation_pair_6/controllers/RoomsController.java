@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RoomsController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    private Result add(@RequestBody @Valid AddRoomRequest request){
+    private Result add(@RequestBody @Valid AddRoomRequest request) throws IOException {
         return roomService.add(request);
     }
 
@@ -33,8 +34,9 @@ public class RoomsController {
 
     @GetMapping("/available-rooms")
     public List<GetRoomResponse> getAvailableRooms(@RequestParam("hotelId") int hotelId,
+                                                   @RequestParam("guestCount") int guestCount,
                                                    @RequestParam("checkInDate") LocalDate checkInDate,
                                                    @RequestParam("checkOutDate") LocalDate checkOutDate) {
-        return roomService.getAvailableRooms(hotelId, checkInDate, checkOutDate);
+        return roomService.getAvailableRooms(hotelId, guestCount, checkInDate, checkOutDate);
     }
 }

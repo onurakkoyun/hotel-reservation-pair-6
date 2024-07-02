@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,9 +69,29 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
-    public List<GetAllHotelsResponse> searchHotels(String searchText) {
+    public Hotel save(Hotel hotel) {
+        return hotelRepository.save(hotel);
+    }
 
-        List<Hotel> hotels = hotelRepository.searchHotels(searchText);
+
+
+    @Override
+    public List<GetAllHotelsResponse> getAllHotels() {
+
+        List<Hotel> hotels = hotelRepository.findAll();
+
+        return hotels.stream().map(hotel -> {
+            GetAllHotelsResponse response = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);
+            return response;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetAllHotelsResponse> searchHotels(String searchText, int guestCount,
+                                                   LocalDate startDate, LocalDate endDate) {
+
+        List<Hotel> hotels = hotelRepository.searchHotelsWithAvailableRooms(searchText, guestCount,
+                startDate, endDate);
 
         return hotels.stream().map(hotel -> {
             GetAllHotelsResponse response = HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);

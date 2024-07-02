@@ -22,7 +22,7 @@ import { ModelsModule } from './models/models.module';
 import { UtilitiesModule } from './utilities/utilities.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
-
+import { AppComponent } from './app.component';
 
 
 // AoT requires an exported function for factories
@@ -58,6 +58,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
-  bootstrap:[]
+  bootstrap:[AppComponent]
 })
 export class AppModule { }

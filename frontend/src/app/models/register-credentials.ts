@@ -4,5 +4,5 @@ export interface RegisterCredentials {
     email: string,
     phoneNumber: string,
     password: string,
-    passwordConfirmation: string
+    passwordConfirm: string
   }

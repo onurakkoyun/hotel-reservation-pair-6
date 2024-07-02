@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,16 @@ public class HotelsController {
         return hotelService.add(request);
     }
 
+    @GetMapping("/get-all")
+    private List<GetAllHotelsResponse> getAllHotels(){
+        return hotelService.getAllHotels();
+    }
+
     @GetMapping("/search")
-    private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query){
-        return hotelService.searchHotels(query);
+    private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query,
+                                                    @RequestParam(required = false) int guestCount,
+                                                    @RequestParam LocalDate startDate,
+                                                    @RequestParam LocalDate endDate){
+        return hotelService.searchHotels(query, guestCount, startDate, endDate);
     }
 }

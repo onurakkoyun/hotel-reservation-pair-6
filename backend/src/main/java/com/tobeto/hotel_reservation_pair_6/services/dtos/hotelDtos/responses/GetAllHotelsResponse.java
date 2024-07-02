@@ -1,6 +1,10 @@
 package com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.responses;
 
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Review;
+import com.tobeto.hotel_reservation_pair_6.entities.concretes.Room;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelImageDtos.responses.GetHotelImageResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.reviewDtos.responses.GetReviewResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetRoomResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +31,8 @@ public class GetAllHotelsResponse {
 
     private int starCount;
 
+    private Double ratingAverage;
+
     private String firstAddressLine;
 
     private String secondAddressLine;
@@ -39,7 +45,11 @@ public class GetAllHotelsResponse {
 
     private String country;
 
-    List<GetHotelFeatureResponse> hotelFeatures;
+    private List<GetRoomResponse> rooms;
 
-    List<GetHotelImageResponse> images;
+    private List<GetReviewResponse> reviews;
+
+    private List<GetHotelFeatureResponse> hotelFeatures;
+
+    private List<GetHotelImageResponse> hotelImages;
 }

@@ -1,7 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { first } from 'rxjs';
+import { AuthService } from '../../../services/auth/auth.service';
+import { TermsConditionsComponent } from '../../gdpr/terms-conditions/terms-conditions.component';
+import { PrivacyPolicyComponent } from '../../gdpr/privacy-policy/privacy-policy.component';
+import { RegisterManagerCredentials } from '../../../models/register-manager-credentials';
 
 @Component({
     selector: 'app-register-manager',
@@ -9,21 +13,58 @@ import { first } from 'rxjs';
     styleUrl: './registerManager.component.scss'
 })
 export class RegisterManagerComponent {
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
-    phoneNumber: string | undefined;
-    hotelName: string | undefined;
-    companyName: string | undefined;
-    password: string | undefined;
-    confirmPassword: string | undefined;
+    now = new Date();
+    registerManagerFormGroup: FormGroup;
+    registerManagerSuccess = new EventEmitter<void>();
 
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private router: Router, @Inject(AuthService)private authService: AuthService) {
+        this.registerManagerFormGroup = this.formBuilder.group({
+          firstName: ['', [Validators.required]],
+          lastName: ['', [Validators.required]],
+          companyName: ['', [Validators.required]],
+          email: ['', [Validators.required]],
+          phoneNumber: ['', [Validators.required]],
+          password: ['', [Validators.required]],
+          passwordConfirm: ['', [Validators.required]]
+        });
+          
+      }
 
-    onSubmit() {
-        this.http.post('api/managers/register', { firstName: this.firstName, lastName: this.lastName, email: this.email, phoneNumber: this.phoneNumber, hotelName: this.hotelName, companyName: this.companyName, password: this.password, confirmPassword: this.confirmPassword })
-            .subscribe(() => this.router.navigate(['/']));
-    }
+      openTermsConditions() {
+        this.dialog.open(TermsConditionsComponent);
+      }
+      
+      openPrivacyPolicy() {
+        this.dialog.open(PrivacyPolicyComponent);
+      }
+
+      registerManager() {
+        const registerManagerCredentials: RegisterManagerCredentials = {
+          firstName: this.registerManagerFormGroup.value.firstName,
+          lastName: this.registerManagerFormGroup.value.lastName,
+          companyName: this.registerManagerFormGroup.value.companyName,
+          phoneNumber: this.registerManagerFormGroup.value.phoneNumber,
+          email: this.registerManagerFormGroup.value.email,
+          password: this.registerManagerFormGroup.value.password,
+          passwordConfirm: this.registerManagerFormGroup.value.passwordConfirm
+        };
+        this.authService.registerManager(registerManagerCredentials).subscribe({
+          complete: () => {
+            this.registerManagerSuccess.emit();
+            console.log('Registration of Manager successful');
+            this.router.navigate(['/']);
+          },
+        });
+      }
+    
+      onRegisterManagerFormSubmit() {
+        if (this.registerManagerFormGroup.invalid) {
+          console.error('Invalid form');
+          return;
+        }
+    
+        this.registerManager();
+      }
 }
 

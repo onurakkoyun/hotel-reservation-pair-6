@@ -6,11 +6,12 @@ import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.AddRo
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.requests.UpdateRoomRequest;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses.GetRoomResponse;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface RoomService {
-    Result add(AddRoomRequest request);
+    Result add(AddRoomRequest request) throws IOException;
 
     Result update(UpdateRoomRequest request);
 
@@ -18,5 +19,6 @@ public interface RoomService {
 
     void save(Room room);
 
-    List<GetRoomResponse> getAvailableRooms(int hotelId, LocalDate checkInDate, LocalDate checkOutDate);
+    List<GetRoomResponse> getAvailableRooms(int hotelId, int guestCount,
+                                            LocalDate checkInDate, LocalDate checkOutDate);
 }

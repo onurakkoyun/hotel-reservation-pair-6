@@ -40,17 +40,20 @@ class="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen l
   </div>
 </section> -->
 <!-- In your HTML file -->
-<app-search-box></app-search-box>
-<div class="container relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-4">
-  <div class="filter-component">
-    <app-filter></app-filter>
-</div>
-<div class="card-pagination-container">
-    <div class="card-component">
-        <app-card></app-card>
+
+<app-search-box (search)="onSearch($event)"></app-search-box>
+<div class="relative mx-auto max-w-screen-full px-24 py-20 sm:px-32 lg:flex lg:h-auto lg:justify-items-start lg:px-36">
+  <div class="container w-full grid grid-cols-2 gap-10 md:grid-cols-2">
+    <div class="w-1/5">
+      <app-filter></app-filter>
     </div>
-    <div class="pagination-component py-8">
+    <div class="w-4/5 max-w-3xl">
+      <div class="">
+        <app-hotel-list></app-hotel-list>
+      </div>
+      <div class="py-8">
         <app-pagination></app-pagination>
+      </div>
     </div>
-</div>
+  </div>
 </div>

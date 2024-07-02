@@ -41,8 +41,7 @@ public class UserBusinessRuleImpl implements UserBusinessRuleService {
                 String publicId = cloudinaryService.getPublicIdFromUrl(existingUser.get().getProfilePhotoUrl());
                 cloudinaryService.deleteFile(publicId);
             }
-            String profilePhotoUrl = cloudinaryService.uploadFile(profilePhoto);
-            return profilePhotoUrl;
+            return cloudinaryService.uploadFile(profilePhoto);
         }
 
         return null;

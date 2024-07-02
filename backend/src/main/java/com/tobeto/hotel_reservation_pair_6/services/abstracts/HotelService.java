@@ -6,6 +6,7 @@ import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.requests.AddH
 import com.tobeto.hotel_reservation_pair_6.services.dtos.hotelDtos.responses.GetAllHotelsResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface HotelService {
@@ -15,5 +16,10 @@ public interface HotelService {
 
     Hotel findById(int hotelId);
 
-    List<GetAllHotelsResponse> searchHotels(String searchText);
+    Hotel save(Hotel hotel);
+
+    List<GetAllHotelsResponse> getAllHotels();
+
+    List<GetAllHotelsResponse> searchHotels(String searchText, int guestCount,
+                                            LocalDate startDate, LocalDate endDate);
 }

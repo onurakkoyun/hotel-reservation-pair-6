@@ -31,4 +31,11 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 
 management.endpoints.web.exposure.include=*
+<<<<<<< HEAD
 management.endpoint.health.show-details=always
+=======
+management.endpoint.health.show-details=always
+
+frontend.url=http://localhost:4200
+spring.output.ansi.enabled=always
+>>>>>>> main
