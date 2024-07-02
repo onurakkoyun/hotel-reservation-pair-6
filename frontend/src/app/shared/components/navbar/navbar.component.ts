@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
     displayEmail: string = '';
     firstName: string = '';
     lastName: string = '';
+    isManager: boolean = false;
     phoneNumber: string = '';
 
     constructor(private router: Router, @Inject(AuthService) private authService: AuthService,
@@ -24,7 +25,7 @@ export class NavbarComponent implements OnInit {
         this.authService.isLogged.subscribe((isLogged) => {
             this.setLoggedState(isLogged);
             if (isLogged) {
-                this.setUserName(this.displayEmail);
+                this.setInfo(this.displayEmail);
             }
         });
     }
@@ -34,11 +35,14 @@ export class NavbarComponent implements OnInit {
         this.displayEmail = this.authService.tokenPayload?.sub?? '';
     }
 
-    private setUserName(email: string): void {
+    private setInfo(email: string): void {
         const token = this.authService.token ?? '';
         this.userService.getGuestDetailsByEmail(token, email).subscribe((user) => {
             this.firstName = user.firstName;
             this.lastName = user.lastName;
+            this.isManager = user.role == 'MANAGER';
+            console.log(user.role);
+            console.log(this.isManager);
             this.change.markForCheck(); // Signal change detection
         });
     }

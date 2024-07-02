@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
@@ -78,43 +78,13 @@ export interface GetHotelImageResponse {
 export class HotelService {
 
   private apiUrl = `${environment.apiUrl}/api/hotels`;
-  private location = new BehaviorSubject<string>('');
-  private checkIn = new BehaviorSubject<Date>(new Date());
-  private checkOut = new BehaviorSubject<Date>(new Date());
-  private guestCount = new BehaviorSubject<number>(1);
 
-  private _hotels: BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
-  private _searchedhotels: BehaviorSubject<Hotel[]> = new BehaviorSubject<Hotel[]>([]);
+  searchEvent = new EventEmitter<{ location: string, checkIn: Date, checkOut: Date, guestCount: number }>();
+  filterEvent = new EventEmitter<{ star1: boolean, star2: boolean, star3: boolean, star4: boolean, star5: boolean, priceFrom: number, priceTo: number}>();
+  resetEvent = new EventEmitter<{ star1: boolean, star2: boolean, star3: boolean, star4: boolean, star5: boolean, priceFrom: number, priceTo: number}>();
 
-/*   currentLocation = this.location.asObservable();
-  currentCheckIn = this.checkIn.asObservable();
-  currentCheckOut = this.checkOut.asObservable();
-  currentGuestCount = this.guestCount.asObservable(); */
 
   constructor(private http: HttpClient) {}
-
-  updateHotels(hotels: Hotel[]): void {
-    this._hotels.next(hotels);
-  }
-
-  get hotels(): Observable<Hotel[]> {
-    return this._hotels.asObservable();
-  }
-
-  updateSearchedHotels(hotels: Hotel[]): void {
-    this._searchedhotels.next(hotels);
-  }
-
-  get searchedHotels(): Observable<Hotel[]> {
-    return this._searchedhotels.asObservable();
-  }
-
-  setSearchQuery(location: string, checkIn: Date, checkOut: Date, guestCount: number) {
-    this.location.next(location);
-    this.checkIn.next(checkIn);
-    this.checkOut.next(checkOut);
-    this.guestCount.next(guestCount);
-  }
 
   getAllHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(`${this.apiUrl}/get-all`).pipe(
@@ -130,22 +100,22 @@ export class HotelService {
     );
   }
 
-  getHotelById(id: number): Observable<Hotel> {
+/*   getHotelById(id: number): Observable<Hotel> {
     return this.hotels.pipe(
       filter((hotels) => hotels.map((hotel) => hotel.id).includes(id)),
       map((hotels) => hotels.find((hotel) => hotel.id === id) as Hotel)
     );
-  }
+  } */
   
 
-  searchHotels(): Observable<Hotel[]>  {
+  searchHotels(location: string, checkIn: Date, checkOut: Date, guestCount: number): Observable<Hotel[]>  {
     return this.http.get<Hotel[]>(`${this.apiUrl}/search`, {
       params: new HttpParams({
         fromObject: {
-          query: this.location.value ? this.location.value : '',
-          startDate: this.checkIn.value ? this.checkIn.value.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
-          endDate: this.checkOut.value ? this.checkOut.value.toISOString().slice(0, 10) : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().slice(0, 10),
-          guestCount: this.guestCount.value ? this.guestCount.value.toString() : '1',
+          query: location,
+          startDate: checkIn.toISOString().slice(0, 10),
+          endDate:  checkOut.toISOString().slice(0, 10),
+          guestCount: guestCount.toString(),
         },
       }),
     }).pipe(
@@ -158,5 +128,33 @@ export class HotelService {
       })
       )
     );;
+  }
+
+  filterHotels(hotels: Hotel[], star1: boolean, star2: boolean, star3: boolean, star4: boolean, star5: boolean, priceFrom: number, priceTo: number): Hotel[] {
+    return hotels.filter(hotel => {
+        const matchesStarRating = this.matchesStarRating(hotel, star1, star2, star3, star4, star5);
+        const matchesPriceRange = this.matchesPriceRange(hotel, priceFrom, priceTo);
+        return matchesStarRating && matchesPriceRange;
+    });
+  }
+
+  private matchesStarRating(hotel: Hotel, star1: boolean, star2: boolean, star3: boolean, star4: boolean, star5: boolean): boolean {
+    const starCount = hotel.starCount;
+    return (
+      (star1 && starCount === 1) ||
+      (star2 && starCount === 2) ||
+      (star3 && starCount === 3) ||
+      (star4 && starCount === 4) ||
+      (star5 && starCount === 5) ||
+      (!star1 && !star2 && !star3 && !star4 && !star5) // No star rating selected
+    );
+  }
+
+  private matchesPriceRange(hotel: Hotel, priceFrom: number, priceTo: number): boolean {
+    const price = hotel.lowestRoomPrice || 0;
+    return (
+      (priceFrom ? price >= priceFrom : true) &&
+      (priceTo ? price <= priceTo : true)
+    );
   }
 }

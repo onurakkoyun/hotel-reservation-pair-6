@@ -1,7 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CounterComponent } from '../counter/counter.component';
 import { DatepickerComponent } from '../datepicker/datepicker.component';
+import { HotelService } from '../../../services/hotel/hotel.service';
 
 
 
@@ -16,10 +17,9 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   @ViewChild(DatepickerComponent) datepickerComponent!: DatepickerComponent;
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
-  @Output() search = new EventEmitter<{ location: string, checkIn: Date, checkOut: Date, guestCount: number }>();
   value = 'Clear me';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, @Inject(HotelService) private hotelService: HotelService){
     this.searchForm = this.fb.group({
       location: [''],
       checkIn: [null, Validators.required],
@@ -47,19 +47,19 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   }
 
   get location() {
-    return this.searchForm.get('location')?.value;
+    return this.searchForm.get('location')?.value || '';
   }
 
   get checkIn() {
-    return this.searchForm.get('checkIn')?.value;
+    return this.searchForm.get('checkIn')?.value || new Date();
   }
 
   get checkOut() {
-    return this.searchForm.get('checkOut')?.value;
+    return this.searchForm.get('checkOut')?.value || new Date(new Date().setDate(new Date().getDate() + 1));
   }
 
   get guestCount() {
-    return this.searchForm.get('guestCount')?.value;
+    return this.searchForm.get('guestCount')?.value || 2;
   }
 
   onSearch() {
@@ -67,7 +67,7 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
     const checkIn =  this.checkIn;
     const checkOut =  this.checkOut;
     const guestCount = this.guestCount;
-    this.search.emit({ location, checkIn, checkOut, guestCount });
-    console.log({ location, checkIn, checkOut, guestCount });
+    this.hotelService.searchEvent.emit({ location, checkIn, checkOut, guestCount });
+    //console.log({ location, checkIn, checkOut, guestCount });
   }
 }
