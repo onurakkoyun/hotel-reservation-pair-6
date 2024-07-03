@@ -44,6 +44,10 @@ export const routes: Routes = [
                 path: 'reports/:hotelId',
                 component: DashboardComponent,
                 canActivate: [],
+            },
+            {
+                path: 'management/:managerId',
+                component: DashboardComponent,
             }
 
 

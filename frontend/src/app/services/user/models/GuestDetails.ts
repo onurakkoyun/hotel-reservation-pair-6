@@ -1,4 +1,5 @@
 export interface GuestDetails {
+    "id": number;
     "firstName": string,
     "lastName": string,
     "email": string,

@@ -13,6 +13,7 @@ import { UserService } from '../../../services/user/user.service';
 export class NavbarComponent implements OnInit {
     isLogged : boolean = false;
     displayEmail: string = '';
+    id : number = -1;
     firstName: string = '';
     lastName: string = '';
     isManager: boolean = false;
@@ -41,6 +42,7 @@ export class NavbarComponent implements OnInit {
             this.firstName = user.firstName;
             this.lastName = user.lastName;
             this.isManager = user.role == 'MANAGER';
+            this.id = user.id;
             this.change.markForCheck(); // Signal change detection
         });
     }
