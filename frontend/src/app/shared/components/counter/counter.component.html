@@ -2,18 +2,17 @@
     <mat-icon>remove</mat-icon>
 </button>
 <mat-form-field>
-    <input #input matInput type="number" [formControl]="guestCount">
-<!--     <div class="flex space-x-2">
+    <div class="flex space-x-2">
         <div>
-            <mat-icon>people_outline</mat-icon>
+            <mat-icon style="color:steelblue;">people_outline</mat-icon>
         </div>
-        <div>
+        <div style="color: #757575;">
             Guests:
         </div>
         <div>
             <input #input matInput type="number" [formControl]="guestCount">
         </div>
-        </div> -->
+    </div>
 </mat-form-field>
 <button type="button" mat-mini-fab (click)="increment()">
     <mat-icon>add</mat-icon>

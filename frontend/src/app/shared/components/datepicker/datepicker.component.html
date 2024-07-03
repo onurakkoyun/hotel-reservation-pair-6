@@ -4,7 +4,7 @@
     <input matStartDate formControlName="start" placeholder="Start date" required>
     <input matEndDate formControlName="end" placeholder="End date" required>
   </mat-date-range-input>
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker-toggle matIconSuffix [for]="picker" style="color:steelblue;"></mat-datepicker-toggle>
   <mat-date-range-picker #picker></mat-date-range-picker>
 
   <mat-error *ngIf="range.get('start')?.hasError('required')">Start date is required</mat-error>

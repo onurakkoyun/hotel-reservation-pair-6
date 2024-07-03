@@ -24,14 +24,14 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   @ViewChild(DatepickerComponent) datepickerComponent!: DatepickerComponent;
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
-  value = 'Clear me';
-
+  locationControl = this.fb.control('');
+  value = 'Clear';
   constructor(
     private fb: FormBuilder,
     @Inject(HotelService) private hotelService: HotelService
   ) {
     this.searchForm = this.fb.group({
-      location: [''],
+      location: this.locationControl,
       checkIn: [null, Validators.required],
       checkOut: [null, Validators.required],
       guestCount: [1],
@@ -71,6 +71,11 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
 
   get guestCount() {
     return this.searchForm.get('guestCount')?.value || 2;
+  }
+
+  clearLocation() {
+    this.locationControl.setValue('');
+    this.onSearch();
   }
 
   onSearch() {
