@@ -10,12 +10,13 @@
       <!-- Carousel wrapper -->
       <div
         #carousel
-        class="carousel relative w-full h-36 overflow-hidden rounded-tl-2xl rounded-bl-2xl md:h-56"
+        class="relative w-full h-36 overflow-hidden rounded-tl-2xl rounded-bl-2xl md:h-56"
       >
         <ng-container *ngIf="hotel.hotelImages && hotel.hotelImages.length > 0">
           <div
             *ngFor="let hotelImage of hotel.hotelImages; let i = index"
             class="duration-700 ease-in-out"
+            #carouselItem
             data-carousel-item
           >
             <img
@@ -29,9 +30,8 @@
       <!-- Slider controls -->
       <button
         type="button"
-        #prev
+        (click)="onPrev()"
         data-carousel-prev
-        position="left"
         class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none"
       >
         <span
@@ -57,9 +57,8 @@
       </button>
       <button
         type="button"
-        #next
+        (click)="onNext()"
         data-carousel-next
-        position="right"
         class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-2 cursor-pointer group focus:outline-none"
       >
         <span

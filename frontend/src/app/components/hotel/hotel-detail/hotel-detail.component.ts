@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   Inject,
   Input,
@@ -18,27 +19,28 @@ import { ActivatedRoute } from '@angular/router';
 export class HotelDetailComponent implements OnInit, AfterViewInit {
   private map: any;
   hotel: Hotel = {} as Hotel;
-  hotelImages: string[] = [];
 
   constructor(
     private hotelService: HotelService,
     private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private change: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    const hotelId = this.route.snapshot.paramMap.get('id');
-    if (hotelId) {
-      this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {
-        this.hotel = hotel;
-      });
-    }
   }
-
+  
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then((L) => {
         this.initMap(L);
+      });
+    }
+    const hotelId = this.route.snapshot.paramMap.get('id');
+    if (hotelId) {
+      this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {
+        this.hotel = hotel;
+        this.change.detectChanges();
       });
     }
   }
