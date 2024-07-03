@@ -41,8 +41,6 @@ export class NavbarComponent implements OnInit {
             this.firstName = user.firstName;
             this.lastName = user.lastName;
             this.isManager = user.role == 'MANAGER';
-            console.log(user.role);
-            console.log(this.isManager);
             this.change.markForCheck(); // Signal change detection
         });
     }
