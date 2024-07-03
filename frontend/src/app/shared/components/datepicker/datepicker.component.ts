@@ -12,8 +12,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Ou
 })
 export class DatepickerComponent implements OnInit {
   public readonly range = new FormGroup({
-    start: new FormControl<Date | null>(null, Validators.required),
-    end: new FormControl<Date | null>(null, Validators.required),
+    start: new FormControl<Date>(new Date(), Validators.required),
+    end: new FormControl<Date>(new Date(new Date().setDate(new Date().getDate() + 1)), Validators.required),
   });
 
   @Output() startdateChange = new EventEmitter<Date>();
