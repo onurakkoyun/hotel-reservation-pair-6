@@ -16,6 +16,7 @@ export class UserService {
   private _email = new BehaviorSubject<string>('');
   private _phoneNumber = new BehaviorSubject<string>('');
   private _companyName = new BehaviorSubject<string>('');
+  private _role = new BehaviorSubject<string>('GUEST');
 
   constructor(private http: HttpClient) { }
 
@@ -50,6 +51,7 @@ export class UserService {
         tap((guestDetails) => {
           this._firstName.next(guestDetails.firstName);
           this._lastName.next(guestDetails.lastName);
+          this._role.next(guestDetails.role);
         })
       );
     }

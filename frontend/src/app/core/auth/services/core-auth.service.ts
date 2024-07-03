@@ -51,6 +51,10 @@ export class CoreAuthService {
     this.isAuthenticated
   );
 
+  public get isRegisteredManager(): Observable<boolean> {
+    return this._isRegisteredManager.asObservable();
+  }
+
   constructor(@Inject(DOCUMENT) protected document: Document) {}
 
   protected get localStorage(): Storage | undefined {

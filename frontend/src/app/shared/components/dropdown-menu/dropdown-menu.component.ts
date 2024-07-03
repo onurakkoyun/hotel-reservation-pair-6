@@ -14,6 +14,7 @@ export class DropdownMenuComponent implements OnInit {
     @Input() displayEmail: string | null = null;
     @Input() firstName: string | null = null;
     @Input() lastName: string | null = null;
+    @Input() isManager: boolean | null = null;
     
     constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone, private change: ChangeDetectorRef) { }
 
