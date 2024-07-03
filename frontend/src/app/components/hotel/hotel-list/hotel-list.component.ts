@@ -45,12 +45,10 @@ export class HotelListComponent implements OnInit, AfterViewInit {
     this.loadHotels();
     this.searchHotels();
     this.applyFilters();
-    this.resetFilters();
   }
 
   loadHotels(): void {
     this.hotelService.getAllHotels().subscribe((hotels) => {
-      //console.log(hotels);
       this.hotels = hotels;
       this.change.detectChanges();
     });
@@ -73,24 +71,9 @@ export class HotelListComponent implements OnInit, AfterViewInit {
     });
   }
 
+
   applyFilters(): void {
     this.hotelService.filterEvent.subscribe((filterQuery) => {
-      this.hotels = this.hotelService.filterHotels(
-        this.hotels,
-        filterQuery.star1,
-        filterQuery.star2,
-        filterQuery.star3,
-        filterQuery.star4,
-        filterQuery.star5,
-        filterQuery.priceFrom,
-        filterQuery.priceTo
-      );
-      this.change.detectChanges();
-    });
-  }
-
-  resetFilters(): void {
-    this.hotelService.resetEvent.subscribe((filterQuery) => {
       this.hotelService
         .searchHotels(
           this.searchQuery.location,

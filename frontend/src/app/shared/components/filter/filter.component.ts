@@ -34,6 +34,7 @@ export class FilterComponent {
       }
     }
     this.selectedStar = selectedStar;
+    this.emitFilterEvent();
   }
 
   resetFilters() {
@@ -41,29 +42,12 @@ export class FilterComponent {
       this.filterForm.get(`star${i}`)?.setValue(false);
     }
     this.updateSelectedStar();
-    this.hotelService.resetEvent.emit({
-      star1: this.star1,
-      star2: this.star2,
-      star3: this.star3,
-      star4: this.star4,
-      star5: this.star5,
-      priceFrom: this.priceFrom,
-      priceTo: this.priceTo
-    });
   }
 
   resetPriceFilters() {
     this.filterForm.get('priceFrom')?.setValue(0);
     this.filterForm.get('priceTo')?.setValue(0);
-    this.hotelService.resetEvent.emit({
-      star1: this.star1,
-      star2: this.star2,
-      star3: this.star3,
-      star4: this.star4,
-      star5: this.star5,
-      priceFrom: this.priceFrom,
-      priceTo: this.priceTo
-    });
+    this.emitFilterEvent();
   } 
 
   get priceFrom() {
@@ -94,8 +78,7 @@ export class FilterComponent {
     return this.filterForm.get('star5')?.value;
   }
 
-
-  onFilter() {
+  emitFilterEvent() {
     this.hotelService.filterEvent.emit({
       star1: this.star1,
       star2: this.star2,
@@ -105,5 +88,10 @@ export class FilterComponent {
       priceFrom: this.priceFrom,
       priceTo: this.priceTo
     });
+    //console.log({ star1: this.star1, star2: this.star2, star3: this.star3, star4: this.star4, star5: this.star5, priceFrom: this.priceFrom, priceTo: this.priceTo });
+  }
+
+  onFilter() {
+    this.emitFilterEvent();
   }
 }
