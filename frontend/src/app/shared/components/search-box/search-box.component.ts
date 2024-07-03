@@ -1,36 +1,44 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CounterComponent } from '../counter/counter.component';
 import { DatepickerComponent } from '../datepicker/datepicker.component';
 import { HotelService } from '../../../services/hotel/hotel.service';
 
-
-
 @Component({
-    selector: 'app-search-box',
-    templateUrl: './search-box.component.html',
-    styleUrls: ['./search-box.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-search-box',
+  templateUrl: './search-box.component.html',
+  styleUrls: ['./search-box.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBoxComponent implements AfterViewInit, OnInit { 
+export class SearchBoxComponent implements AfterViewInit, OnInit {
   public searchForm: FormGroup; // FormGroup tanımlandı
   @ViewChild(DatepickerComponent) datepickerComponent!: DatepickerComponent;
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
   value = 'Clear me';
 
-  constructor(private fb: FormBuilder, @Inject(HotelService) private hotelService: HotelService){
+  constructor(
+    private fb: FormBuilder,
+    @Inject(HotelService) private hotelService: HotelService
+  ) {
     this.searchForm = this.fb.group({
       location: [''],
       checkIn: [null, Validators.required],
       checkOut: [null, Validators.required],
-      guestCount: [1]
+      guestCount: [1],
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.datepickerComponent.enddateChange.subscribe((value) => {
@@ -55,7 +63,10 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   }
 
   get checkOut() {
-    return this.searchForm.get('checkOut')?.value || new Date(new Date().setDate(new Date().getDate() + 1));
+    return (
+      this.searchForm.get('checkOut')?.value ||
+      new Date(new Date().setDate(new Date().getDate() + 1))
+    );
   }
 
   get guestCount() {
@@ -64,10 +75,15 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
 
   onSearch() {
     const location = this.location;
-    const checkIn =  this.checkIn;
-    const checkOut =  this.checkOut;
+    const checkIn = this.checkIn;
+    const checkOut = this.checkOut;
     const guestCount = this.guestCount;
-    this.hotelService.searchEvent.emit({ location, checkIn, checkOut, guestCount });
+    this.hotelService.searchEvent.emit({
+      location,
+      checkIn,
+      checkOut,
+      guestCount,
+    });
     //console.log({ location, checkIn, checkOut, guestCount });
   }
 }

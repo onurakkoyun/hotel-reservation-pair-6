@@ -73,6 +73,13 @@ public class HotelServiceImpl implements HotelService{
         return hotelRepository.save(hotel);
     }
 
+    @Override
+    public GetAllHotelsResponse getHotelById(int id) {
+        Hotel hotel = hotelRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Hotel not found."));
+
+        return HotelMapper.INSTANCE.mapHotelToGetAllHotelsResponse(hotel);
+    }
 
 
     @Override

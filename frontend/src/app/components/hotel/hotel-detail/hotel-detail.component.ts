@@ -1,26 +1,38 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrl: './hotel-detail.component.scss'
+  styleUrl: './hotel-detail.component.scss',
 })
-export class HotelDetailComponent implements AfterViewInit {
+export class HotelDetailComponent implements OnInit, AfterViewInit {
   private map: any;
   hotel: Hotel = {} as Hotel;
+  hotelImages: string[] = [];
 
-  constructor(@Inject(HotelService) private hotelService: HotelService, private route: ActivatedRoute, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(
+    private hotelService: HotelService,
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-/*     const hotelId = this.route.snapshot.paramMap.get('id');
+    const hotelId = this.route.snapshot.paramMap.get('id');
     if (hotelId) {
-      this.hotelService.getHotelById(hotelId).subscribe((hotel) => {
+      this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {
         this.hotel = hotel;
       });
-    } */
+    }
   }
 
   ngAfterViewInit(): void {
@@ -32,7 +44,7 @@ export class HotelDetailComponent implements AfterViewInit {
   }
 
   //TODO: Replace the latitude and longitude with your hotel's latitude and longitude from backend
-/*   this.hotelService.getHotelDetails(hotelId).subscribe((hotel) => {
+  /*   this.hotelService.getHotelDetails(hotelId).subscribe((hotel) => {
     import('leaflet').then((L) => {
         this.initMap(L, hotel.latitude, hotel.longitude);
     });
@@ -53,7 +65,7 @@ export class HotelDetailComponent implements AfterViewInit {
       shadowSize: [41, 41], // size of the shadow
       iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
       shadowAnchor: [14, 41], // the same for the shadow
-      popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
+      popupAnchor: [1, -34], // point from which the popup should open relative to the iconAnchor
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -61,11 +73,12 @@ export class HotelDetailComponent implements AfterViewInit {
     }).addTo(this.map);
 
     // Invalidate map size after a delay
-/*     setTimeout(() => {
+    /*     setTimeout(() => {
       this.map.invalidateSize();
     }, 0); */
 
-    L.marker([51.5, -0.09], { icon: defaultIcon }).addTo(this.map)
+    L.marker([51.5, -0.09], { icon: defaultIcon })
+      .addTo(this.map)
       .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
       .openPopup();
   }

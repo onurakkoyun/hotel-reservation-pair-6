@@ -1,7 +1,7 @@
 <div class="flex justify-center">
 
   <form [formGroup]="searchForm" class="search-container flex space-x-6" (ngSubmit)="onSearch()">
-    <mat-form-field class="location-field">
+    <mat-form-field class="location-field" #locationField>
       <mat-label>
         <div class="flex space-x-2">
           <div>

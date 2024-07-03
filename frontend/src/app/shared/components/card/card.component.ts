@@ -60,29 +60,22 @@ export class CardComponent implements OnInit, AfterViewInit {
         el: el
       }));
   
-        // object options with default values
-      const options: CarouselOptions = {
+      const options: CarouselOptions = {};
+      const instanceOptions: InstanceOptions = {
+        id: 'controls-carousel-' + this.carouselId,
+        override: true
+      };
+      
+      const carousel: CarouselInterface = new Carousel(this.carousel?.nativeElement as HTMLElement, items, options, instanceOptions);
 
-        };
-  
-  
-        const instanceOptions: InstanceOptions = {
-          id: 'controls-carousel-' + this.carouselId,
-          override: true
-        };
-        
-        const carousel: CarouselInterface = new Carousel(this.carousel?.nativeElement as HTMLElement, items, options, instanceOptions);
+      this.prev?.nativeElement.addEventListener('click', () => {
+        carousel.prev();
+      });
 
-        this.prev?.nativeElement.addEventListener('click', () => {
-          carousel.prev();
-        });
-
-        this.next?.nativeElement.addEventListener('click', () => {
-          carousel.next();
-        });
-
-        //this.cdr.detectChanges();;
-      }
+      this.next?.nativeElement.addEventListener('click', () => {
+        carousel.next();
+      });
+    }
     }
 
   getRatingText(ratingAverage: number): string {

@@ -30,6 +30,11 @@ public class HotelsController {
         return hotelService.getAllHotels();
     }
 
+    @GetMapping("/get-by-id/{id}")
+    private GetAllHotelsResponse getHotelById(@PathVariable int id){
+        return hotelService.getHotelById(id);
+    }
+
     @GetMapping("/search")
     private List<GetAllHotelsResponse> searchHotels(@RequestParam(required = false) String query,
                                                     @RequestParam(required = false) int guestCount,

@@ -1,33 +1,22 @@
-<div style="width: 50%; margin: auto;">
-    <div class="grid grid-cols-2 gap-4">
-        <div>
-            <img class="h-full max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
-            </div>
-            <div class="col-span-1">
-                <div class="grid gap-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                            </div>
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                                </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                                        </div>
-                                        <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
+<div>
+  <app-hotel-photo-modal [hotel]="hotel || []"></app-hotel-photo-modal>
+  <div>
+    <div style="width: 50%; margin: auto; margin-top: 12px">
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">
+          {{ hotel.hotelName }}
+        </h2>
+      </div>
+
+      <div><app-room-detail></app-room-detail></div>
+
+      <div>
+        <div
+          id="map"
+          style="height: 300px; width: 50%; margin-top: 12px; z-index: 10"
+        ></div>
+      </div>
+      <div><app-review class="my-12"></app-review></div>
     </div>
-</div>
-<div style="width: 50%; margin: auto; margin-top: 12px;">
-    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Hotel Name</h2>
-    <app-room-detail></app-room-detail>
-    <div id="map" style="height: 300px; width: 50%; margin-top: 12px;"></div>
-    <app-review class="my-12"></app-review>
+  </div>
 </div>

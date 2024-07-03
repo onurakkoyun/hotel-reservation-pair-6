@@ -46,6 +46,7 @@ public class SecurityConfiguration {
             "/api/rooms/available-rooms",
             "/api/hotels/search",
             "/api/hotels/get-all",
+            "/api/hotels/get-by-id/{id}",
             "/api/auth/**",
             "/api/reviews/getByHotelId/{hotelId}",
             //  "/api/**"
