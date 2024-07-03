@@ -27,9 +27,8 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
     private change: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-  }
-  
+  ngOnInit(): void {}
+
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then((L) => {
@@ -83,5 +82,23 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
       .addTo(this.map)
       .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
       .openPopup();
+  }
+
+  getRatingText(ratingAverage: number): string {
+    if (ratingAverage > 9) return 'Exceptional';
+    if (ratingAverage > 8) return 'Wonderful';
+    if (ratingAverage > 7) return 'Good';
+    if (ratingAverage > 6) return 'Normal';
+    if (ratingAverage > 4) return 'Bad';
+    return 'Not rated';
+  }
+
+  getRatingClass(ratingAverage: number): string {
+    if (ratingAverage > 9) return 'bg-green-700';
+    if (ratingAverage > 8) return 'bg-green-600';
+    if (ratingAverage > 7) return 'bg-yellow-600';
+    if (ratingAverage > 6) return 'bg-orange-600';
+    if (ratingAverage > 4) return 'bg-red-600';
+    return 'bg-gray-600';
   }
 }
