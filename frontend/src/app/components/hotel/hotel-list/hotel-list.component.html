@@ -1,9 +1,8 @@
 @if(hotels.length > 0) {
 <div *ngFor="let hotel of hotels; let i = index">
-      <app-card [hotel]="hotel" [carouselId]="'controls-carousel-' + i"></app-card>
+  <app-card [hotel]="hotel" [carouselId]="'controls-carousel-' + i"></app-card>
 </div>
-}
-@else {
+} @else {
 <div class="flex justify-center">
   <h1>No hotels found</h1>
 </div>

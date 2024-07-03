@@ -30,6 +30,9 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 
+#your-front-end-localhost-server
+cors.allowedOrigin=http://localhost:4200
+
 management.endpoints.web.exposure.include=*
 management.endpoint.health.show-details=always
 

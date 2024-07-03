@@ -18,6 +18,8 @@ public interface HotelService {
 
     Hotel save(Hotel hotel);
 
+    GetAllHotelsResponse getHotelById(int id);
+
     List<GetAllHotelsResponse> getAllHotels();
 
     List<GetAllHotelsResponse> searchHotels(String searchText, int guestCount,

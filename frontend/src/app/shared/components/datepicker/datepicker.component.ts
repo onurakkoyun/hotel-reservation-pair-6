@@ -1,4 +1,4 @@
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output } from '@angular/core';
 
@@ -11,28 +11,29 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Ou
 
 })
 export class DatepickerComponent implements OnInit {
-    public readonly range = new FormGroup({
-        start: new FormControl<Date | null>(null),
-        end: new FormControl<Date | null>(null),
-      });
+  public readonly range = new FormGroup({
+    start: new FormControl<Date | null>(null, Validators.required),
+    end: new FormControl<Date | null>(null, Validators.required),
+  });
 
-    @Output() startdateChange = new EventEmitter<Date>();
-    @Output() enddateChange = new EventEmitter<Date>();
+  @Output() startdateChange = new EventEmitter<Date>();
+  @Output() enddateChange = new EventEmitter<Date>();
 
-    ngOnInit() {
-        this.range.get('start')?.valueChanges.subscribe((newStartDate) => {
-          if (newStartDate) {
-            this.startdateChange.emit(newStartDate);
-            console.log(newStartDate);
-          }
-        });
-    
+  today = new Date();
 
-      this.range.get('end')?.valueChanges.subscribe((newEndDate) => {
-          if (newEndDate) {
-            this.enddateChange.emit(newEndDate);
-            console.log(newEndDate);
-          }
-        });
-    }
+  ngOnInit() {
+    this.range.get('start')?.valueChanges.subscribe((newStartDate) => {
+      if (newStartDate) {
+        this.startdateChange.emit(newStartDate);
+        console.log(newStartDate);
+      }
+    });
+
+    this.range.get('end')?.valueChanges.subscribe((newEndDate) => {
+      if (newEndDate) {
+        this.enddateChange.emit(newEndDate);
+        console.log(newEndDate);
+      }
+    });
+  }
  }

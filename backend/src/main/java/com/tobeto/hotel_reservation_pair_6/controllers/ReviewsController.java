@@ -25,7 +25,7 @@ public class ReviewsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/getByHotelId/{hotelId}")
-    private List<GetReviewResponse> getReviwsByHotelId(@RequestParam int hotelId) {
+    private List<GetReviewResponse> getReviewsByHotelId(@PathVariable int hotelId) {
         return reviewService.getReviwsByHotelId(hotelId);
     }
 
