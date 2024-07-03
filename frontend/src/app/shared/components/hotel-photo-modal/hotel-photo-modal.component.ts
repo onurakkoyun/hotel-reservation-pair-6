@@ -30,9 +30,8 @@ export class HotelPhotoModalComponent implements AfterViewChecked {
 
 
   ngAfterViewChecked() {
-
-    if (isPlatformBrowser(this.platformId)) {
-      if (!this.carouselItemsProcessed) {
+    if (!this.carouselItemsProcessed) {
+      if (isPlatformBrowser(this.platformId)) {
         this.processCarouselItems();
       }
     }
