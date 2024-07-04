@@ -33,7 +33,6 @@ export class HotelListComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(HotelService) private hotelService: HotelService,
-    private router: Router,
     private change: ChangeDetectorRef
   ) {}
 
@@ -70,7 +69,6 @@ export class HotelListComponent implements OnInit, AfterViewInit {
         });
     });
   }
-
 
   applyFilters(): void {
     this.hotelService.filterEvent.subscribe((filterQuery) => {

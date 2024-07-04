@@ -10,32 +10,55 @@ import {
 } from '@angular/core';
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { ActivatedRoute } from '@angular/router';
+import {
+  GetRoomResponse,
+  RoomService,
+} from '../../../services/room/room.service';
 
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrl: './hotel-detail.component.scss',
+  styleUrl: './hotel-detail.component.css',
 })
 export class HotelDetailComponent implements OnInit, AfterViewInit {
   private map: any;
   hotel: Hotel = {} as Hotel;
+  availableRooms: GetRoomResponse[] = [];
 
   constructor(
     private hotelService: HotelService,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private change: ChangeDetectorRef
+    private change: ChangeDetectorRef,
+    private roomService: RoomService
   ) {}
 
   ngOnInit(): void {
+    const hotelId = 5; // Bu değeri dinamik olarak alabilirsiniz
+    const guestCount = 2; // Bu değeri dinamik olarak alabilirsiniz
+    const checkInDate = '2024-07-10'; // Bu değeri dinamik olarak alabilirsiniz
+    const checkOutDate = '2024-07-17'; // Bu değeri dinamik olarak alabilirsiniz
+
+    this.roomService
+      .getAvailableRooms(hotelId, guestCount, checkInDate, checkOutDate)
+      .subscribe(
+        (rooms) => {
+          this.availableRooms = rooms;
+          console.log(rooms);
+        },
+        (error) => {
+          console.error('Error fetching available rooms', error);
+        }
+      );
   }
-  
+
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then((L) => {
         this.initMap(L);
       });
     }
+
     const hotelId = this.route.snapshot.paramMap.get('id');
     if (hotelId) {
       this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {
@@ -83,5 +106,23 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
       .addTo(this.map)
       .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
       .openPopup();
+  }
+
+  getRatingText(ratingAverage: number): string {
+    if (ratingAverage > 9) return 'Exceptional';
+    if (ratingAverage > 8) return 'Wonderful';
+    if (ratingAverage > 7) return 'Good';
+    if (ratingAverage > 6) return 'Normal';
+    if (ratingAverage > 4) return 'Bad';
+    return 'Not rated';
+  }
+
+  getRatingClass(ratingAverage: number): string {
+    if (ratingAverage > 9) return 'bg-green-700';
+    if (ratingAverage > 8) return 'bg-green-600';
+    if (ratingAverage > 7) return 'bg-yellow-600';
+    if (ratingAverage > 6) return 'bg-orange-600';
+    if (ratingAverage > 4) return 'bg-red-600';
+    return 'bg-gray-600';
   }
 }
