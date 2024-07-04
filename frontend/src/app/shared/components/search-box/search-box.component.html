@@ -1,23 +1,29 @@
 <div class="flex justify-center">
-  <form
-    [formGroup]="searchForm"
-    class="search-container flex space-x-6"
-    (ngSubmit)="onSearch()"
-  >
+
+  <form [formGroup]="searchForm" class="search-container flex space-x-6" (ngSubmit)="onSearch()">
     <mat-form-field class="location-field" #locationField>
       <mat-label>
         <div class="flex space-x-2">
           <div>
-            <mat-icon>room</mat-icon>
+            <mat-icon style="color:steelblue;">room</mat-icon>
           </div>
-          <div>Where are you going?</div>
+          <div>
+            Where are you going?
+          </div>
         </div>
       </mat-label>
-      <input matInput type="text" formControlName="location" />
-      @if (value) {
-      <button matSuffix mat-icon-button aria-label="Clear" (click)="value = ''">
-        <mat-icon>close</mat-icon>
-      </button>
+      <input matInput type="text" formControlName="location">
+      @if (locationControl.value) {
+        <button type="button" matSuffix mat-icon-button aria-label="Clear" (click)="clearLocation()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+      @else {
+        <span style="visibility: hidden;">
+          <button type="button" matSuffix mat-icon-button aria-label="Clear" disabled>
+            <mat-icon>close</mat-icon>
+          </button>
+        </span>
       }
     </mat-form-field>
 
@@ -51,7 +57,7 @@
     </div> -->
 
     <app-counter></app-counter>
-    <app-datepicker></app-datepicker>
+    <app-datepicker class="flex"></app-datepicker>
 
     <button mat-fab aria-label="Search">
       <mat-icon>search</mat-icon>

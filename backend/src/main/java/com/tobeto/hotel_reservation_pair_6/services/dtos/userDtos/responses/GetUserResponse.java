@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GetUserResponse {
 
+    private Long id;
+
     private String firstName;
 
     private String lastName;
