@@ -12,53 +12,51 @@ import { ReviewComponent } from './components/review/review.component';
 import { DashboardComponent } from './components/reporting/dashboard/dashboard.component';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
         path: '',
-        component: LayoutComponent,
-        children: [
-            {
-              path: '',
-              component: HomeComponent,
-            },
-            {
-                path: 'payments',
-                component: PaymentComponent,
-            },
-            {
-                path: 'hotels/:id',
-                component: HotelDetailComponent,
-            },
-            {
-                path: 'reservations',
-                component: ReservationListComponent,
-            },
-            {
-                path: 'reservations/:id',
-                component: ReservationDetailComponent,
-            },
-            {
-                path: 'reviews/:hotelId',
-                component: ReviewComponent,
-            },
-            {
-                path: 'reports/:hotelId',
-                component: DashboardComponent,
-                canActivate: [],
-            }
-
-
-        ]
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
-    {
-        path: 'guests/register',
-        component: RegisterComponent,
-    },
-    {
-        path: 'managers/register',
-        component: RegisterManagerComponent,
-    },
+        component: HomeComponent,
+      },
+      {
+        path: 'payments',
+        component: PaymentComponent,
+      },
+      {
+        path: 'hotels/:id',
+        component: HotelDetailComponent,
+      },
+      {
+        path: 'reservations',
+        component: ReservationListComponent,
+      },
+      {
+        path: 'reservations/:id',
+        component: ReservationDetailComponent,
+      },
+      {
+        path: 'reviews/:hotelId',
+        component: ReviewComponent,
+      },
+      {
+        path: 'reports/:hotelId',
+        component: DashboardComponent,
+        canActivate: [],
+      },
+    ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'guests/register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'managers/register',
+    component: RegisterManagerComponent,
+  },
 ];

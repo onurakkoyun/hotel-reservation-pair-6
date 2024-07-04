@@ -1,26 +1,27 @@
 <div class="flex justify-center">
-
-  <form [formGroup]="searchForm" class="search-container flex space-x-6" (ngSubmit)="onSearch()">
+  <form
+    [formGroup]="searchForm"
+    class="search-container flex space-x-6"
+    (ngSubmit)="onSearch()"
+  >
     <mat-form-field class="location-field" #locationField>
       <mat-label>
         <div class="flex space-x-2">
           <div>
             <mat-icon>room</mat-icon>
           </div>
-          <div>
-            Where are you going?
-          </div>
+          <div>Where are you going?</div>
         </div>
       </mat-label>
-      <input matInput type="text" formControlName="location">
+      <input matInput type="text" formControlName="location" />
       @if (value) {
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
-        </button>
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
       }
     </mat-form-field>
 
-<!--     <div class="relative">
+    <!--     <div class="relative">
       <div class="flex">
         <div
           class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
@@ -56,7 +57,7 @@
       <mat-icon>search</mat-icon>
     </button>
 
-<!--     <div class="flex relative px-5">
+    <!--     <div class="flex relative px-5">
       <button
         type="submit"
         class="absolute top-0 end-0 h-full p-4 text-sm font-medium text-white bg-pink-700 rounded-full border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
