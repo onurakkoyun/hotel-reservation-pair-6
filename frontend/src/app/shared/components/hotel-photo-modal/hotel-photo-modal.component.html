@@ -1,5 +1,5 @@
 <div
-  class="block w-1/2 mx-auto space-y-4 md:flex md:space-y-0 md:space-x-4 rtl:space-x-reverse"
+  class="block w-[1024px] mx-auto space-y-4 md:flex md:space-y-0 md:space-x-4 rtl:space-x-reverse"
 >
   <div
     *ngIf="hotel.hotelImages && hotel.hotelImages.length > 0"
@@ -10,21 +10,25 @@
   >
     <div class="grid grid-cols-2 gap-[1px]">
       <div>
-        <img class="h-full max-w-90" [src]="hotel.hotelImages[0].url" alt="" />
+        <img
+          class="h-full max-w-full rounded"
+          [src]="hotel.hotelImages[0].url"
+          alt=""
+        />
       </div>
       <div class="col-span-1">
         <div class="grid gap-[2px]">
           <div class="grid grid-cols-2 gap-[1px]">
             <div *ngIf="hotel.hotelImages[1]">
               <img
-                class="h-auto max-w-full"
+                class="h-auto max-w-full rounded"
                 [src]="hotel.hotelImages[1].url"
                 alt=""
               />
             </div>
             <div *ngIf="hotel.hotelImages[2]">
               <img
-                class="h-auto max-w-full"
+                class="h-auto max-w-full rounded"
                 [src]="hotel.hotelImages[2].url"
                 alt=""
               />
@@ -33,14 +37,14 @@
           <div class="grid grid-cols-2 gap-[1px]">
             <div *ngIf="hotel.hotelImages[3]">
               <img
-                class="h-auto max-w-full"
+                class="h-auto max-w-full rounded"
                 [src]="hotel.hotelImages[3].url"
                 alt=""
               />
             </div>
             <div *ngIf="hotel.hotelImages[4]">
               <img
-                class="h-auto max-w-full"
+                class="h-auto max-w-full rounded"
                 [src]="hotel.hotelImages[4].url"
                 alt=""
               />

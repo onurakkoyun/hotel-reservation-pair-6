@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReviewComponent } from '../review/review.component';
+import { RoomListComponent } from './room-list/room-list.component';
 
 @NgModule({
-  declarations: [RoomDetailComponent, HotelDetailComponent, ReviewComponent],
+  declarations: [HotelDetailComponent, ReviewComponent, RoomListComponent],
   imports: [CommonModule, SharedModule],
 })
 export class HotelModule {}

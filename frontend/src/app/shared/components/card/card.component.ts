@@ -36,33 +36,40 @@ export class CardComponent implements OnInit, AfterViewInit {
   @Input() hotel: Hotel = {} as Hotel;
   @Input() carouselId: string = '';
   @ViewChild('carousel') carousel: ElementRef | undefined;
-  @ViewChildren('carouselItem') carouselItems: QueryList<ElementRef> | undefined;
+  @ViewChildren('carouselItem') carouselItems:
+    | QueryList<ElementRef>
+    | undefined;
   carouselcomponent: CarouselInterface | undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private cdr: ChangeDetectorRef) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       //initCarousels();
-      const items: CarouselItem[] = this.carouselItems!.toArray()
-        .map((elRef: ElementRef, index: number) => ({
+      const items: CarouselItem[] = this.carouselItems!.toArray().map(
+        (elRef: ElementRef, index: number) => ({
           position: index,
-          el: elRef.nativeElement
-        }));
+          el: elRef.nativeElement,
+        })
+      );
 
       const options: CarouselOptions = {};
       const instanceOptions: InstanceOptions = {
         id: 'controls-carousel-' + this.carouselId,
-        override: true
+        override: true,
       };
 
-      this.carouselcomponent = new Carousel(this.carousel?.nativeElement as HTMLElement, items, options, instanceOptions);
+      this.carouselcomponent = new Carousel(
+        this.carousel?.nativeElement as HTMLElement,
+        items,
+        options,
+        instanceOptions
+      );
     }
   }
 
@@ -105,4 +112,3 @@ export class CardComponent implements OnInit, AfterViewInit {
     }
   }
 }
-

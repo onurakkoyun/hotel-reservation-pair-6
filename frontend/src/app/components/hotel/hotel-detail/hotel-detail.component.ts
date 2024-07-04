@@ -10,24 +10,47 @@ import {
 } from '@angular/core';
 import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { ActivatedRoute } from '@angular/router';
+import {
+  GetRoomResponse,
+  RoomService,
+} from '../../../services/room/room.service';
 
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrl: './hotel-detail.component.scss',
+  styleUrl: './hotel-detail.component.css',
 })
 export class HotelDetailComponent implements OnInit, AfterViewInit {
   private map: any;
   hotel: Hotel = {} as Hotel;
+  availableRooms: GetRoomResponse[] = [];
 
   constructor(
     private hotelService: HotelService,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private change: ChangeDetectorRef
+    private change: ChangeDetectorRef,
+    private roomService: RoomService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const hotelId = 5; // Bu değeri dinamik olarak alabilirsiniz
+    const guestCount = 2; // Bu değeri dinamik olarak alabilirsiniz
+    const checkInDate = '2024-07-10'; // Bu değeri dinamik olarak alabilirsiniz
+    const checkOutDate = '2024-07-17'; // Bu değeri dinamik olarak alabilirsiniz
+
+    this.roomService
+      .getAvailableRooms(hotelId, guestCount, checkInDate, checkOutDate)
+      .subscribe(
+        (rooms) => {
+          this.availableRooms = rooms;
+          console.log(rooms);
+        },
+        (error) => {
+          console.error('Error fetching available rooms', error);
+        }
+      );
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -35,6 +58,7 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
         this.initMap(L);
       });
     }
+
     const hotelId = this.route.snapshot.paramMap.get('id');
     if (hotelId) {
       this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {

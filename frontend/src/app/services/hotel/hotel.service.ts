@@ -111,7 +111,6 @@ export class HotelService {
     );
   }
 
-
   /*   getHotelById(id: number): Observable<Hotel> {
     return this.hotels.pipe(
       filter((hotels) => hotels.map((hotel) => hotel.id).includes(id)),
@@ -119,10 +118,9 @@ export class HotelService {
     );
   } */
 
-    getHotelById(id: number): Observable<Hotel> {
-      return this.http.get<Hotel>(`${this.apiUrl}/get-by-id/${id}`);
-    }
-
+  getHotelById(id: number): Observable<Hotel> {
+    return this.http.get<Hotel>(`${this.apiUrl}/get-by-id/${id}`);
+  }
 
   searchHotels(
     location: string,

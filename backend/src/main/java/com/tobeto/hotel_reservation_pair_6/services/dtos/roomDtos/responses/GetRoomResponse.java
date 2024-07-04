@@ -3,6 +3,7 @@ package com.tobeto.hotel_reservation_pair_6.services.dtos.roomDtos.responses;
 import com.iyzipay.model.Currency;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomBedDtos.responses.GetRoomBedResponse;
 import com.tobeto.hotel_reservation_pair_6.services.dtos.roomFeatureDtos.responses.GetRoomFeatureResponse;
+import com.tobeto.hotel_reservation_pair_6.services.dtos.roomImageDtos.responses.GetRoomImageResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public class GetRoomResponse {
     private int roomTypeId;
 
     private String roomTypeName;
+
+    private List<GetRoomImageResponse> roomImages;
 
     private List<GetRoomBedResponse> roomBeds;
 
