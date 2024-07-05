@@ -41,7 +41,7 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.datepickerComponent.enddateChange.subscribe((value) => {
@@ -82,10 +82,17 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   }
 
   onSearch() {
+    // Get the local time zone offset in minutes
+    const timezoneOffset = new Date().getTimezoneOffset() * 60000; // Convert to milliseconds
+
+    // Adjust the dates for the time zone offset before converting to ISO string
+    const adjustedCheckIn = new Date(this.checkIn.getTime() - timezoneOffset);
+    const adjustedCheckOut = new Date(this.checkOut.getTime() - timezoneOffset);
+
     const searchQuery = {
       query: this.query,
-      checkIn: this.checkIn.toISOString().slice(0, 10),
-      checkOut: this.checkOut.toISOString().slice(0, 10),
+      checkIn: adjustedCheckIn.toISOString().slice(0, 10),
+      checkOut: adjustedCheckOut.toISOString().slice(0, 10),
       guestCount: this.guestCount,
     };
     this.hotelService.searchEvent.emit({

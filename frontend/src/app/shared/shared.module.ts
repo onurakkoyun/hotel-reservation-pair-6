@@ -23,6 +23,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { HotelPhotoModalComponent } from './components/hotel-photo-modal/hotel-photo-modal.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CUSTOM_DATE_FORMATS, CustomDateAdapter } from './components/datepicker/customdateadapter';
+
+
 
 @NgModule({
   declarations: [
@@ -56,5 +60,11 @@ import { HotelPhotoModalComponent } from './components/hotel-photo-modal/hotel-p
     MatButtonModule,
     MatIconModule,
   ],
+  providers: [
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' } // Adjust the locale if needed
+  ],
+
 })
 export class SharedModule {}
