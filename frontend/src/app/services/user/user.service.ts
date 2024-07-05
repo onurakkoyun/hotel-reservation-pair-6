@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { GuestDetails } from './models/GuestDetails';
 import { ManagerDetails } from './models/ManagerDetails';
@@ -16,7 +16,8 @@ export class UserService {
   private _email = new BehaviorSubject<string>('');
   private _phoneNumber = new BehaviorSubject<string>('');
   private _companyName = new BehaviorSubject<string>('');
-  private _role = new BehaviorSubject<string>('');
+  private _role = new BehaviorSubject<string>('GUEST');
+
 
   constructor(private http: HttpClient) { }
 
@@ -67,6 +68,7 @@ export class UserService {
         this._lastName.next(managerDetails.lastName);
         this._email.next(managerDetails.email);
         this._companyName.next(managerDetails.companyName);
+        this._role.next(managerDetails.role);
       })
     );
   }

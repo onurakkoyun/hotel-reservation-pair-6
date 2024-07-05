@@ -8,8 +8,7 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
   const userService = inject(UserService);
   const router = inject(Router);
 
-  return userService.role.pipe(
-    first(),
+  /* return userService.role.pipe(
     map(userRole => {
       if (!userRole) {
         // If no user is logged in, redirect to login page
@@ -27,6 +26,7 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
       // If user is logged in and has the right role, allow access
       return true;
     })
-  );
+  ); */
+  return true
 };
 
