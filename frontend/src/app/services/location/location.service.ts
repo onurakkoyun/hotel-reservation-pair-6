@@ -28,11 +28,10 @@ export class LocationService {
   constructor(private http: HttpClient) { }
 
 
-  getLatLong(address: string): Observable<Location>  {
+  getLatLong(postalCode: string): Observable<Location>  {
 
-    address = address.split(' ')[0];
-    if (address) {
-      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    if (postalCode) {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(postalCode)}`;
       return this.http.get<Location[]>(url).pipe(
         map(data => {
           if (data.length > 0) {
@@ -43,7 +42,7 @@ export class LocationService {
         })
       );
     } else {
-      throw new Error('No address provided');
+      throw new Error('No postalCode provided');
     }
   }
 }
