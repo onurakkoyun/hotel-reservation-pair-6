@@ -141,9 +141,34 @@ public class ReservationServiceImpl implements ReservationService{
 
         if (isApproved){
             reservation.setStatus(ReservationStatus.APPROVED_BY_HOTEL);
+            emailConfig.sendEmail(reservation.getGuest()
+                    .getEmail(), "Your Reservation Approved!",
+                    "Your reservation has been confirmed by the hotel.");
+            emailConfig.sendEmail(reservation.getRoom()
+                    .getHotel().getManager().getEmail(), "Room Reservation Approved!",
+                    "Your reservation has been confirmed successfully.");
         }
         else {
             reservation.setStatus(ReservationStatus.CANCELED_BY_HOTEL);
+
+            String guestEmailBody ="<strong>Your reservation has been cancelled by Hotel!</strong><br/>" +
+                    "<strong><u>Hotel Information</u></strong>" +
+                    "<br/>Hotel name : " + reservation.getRoom().getHotel().getHotelName() +
+                    "<br/>Email : " + reservation.getRoom().getHotel().getManager().getEmail() +
+                    "<br/>Refunded Fee : " + reservation.getCurrency() + " " + reservation.getAmount();
+
+            String hotelEmailBody ="<strong>Room reservation has been cancelled!</strong><br/>" +
+                    "<strong><u>Guest Information</u></strong><br/>" +
+                    "Fullname : " + reservation.getGuest().getFirstName() + " " + reservation.getGuest()
+                    .getLastName() +
+                    "<br/>Email : " + reservation.getGuest().getEmail() +
+                    "<br/>Refunded Fee : " + reservation.getCurrency() + " " + reservation.getAmount();
+
+            emailConfig.sendEmail(reservation.getGuest()
+                    .getEmail(), "Your Reservation Cancelled", guestEmailBody);
+
+            emailConfig.sendEmail(reservation.getRoom()
+                    .getHotel().getManager().getEmail(), "Room Reservation Cancelled", hotelEmailBody);
 
             refundPaymentService.createRefund(reservation.getPayment().getId(), reservation.getAmount());
         }
@@ -169,7 +194,7 @@ public class ReservationServiceImpl implements ReservationService{
                 "<br/>Email : " + reservation.getRoom().getHotel().getManager().getEmail() +
                 "<br/>Refunded Fee : " + reservation.getCurrency() + " " + reservation.getAmount();
 
-        String hotelEmailBody ="<strong>Room reservation has been cancelled!</strong><br/>" +
+        String hotelEmailBody ="<strong>Room reservation has been cancelled by guest!</strong><br/>" +
                 "<strong><u>Guest Information</u></strong><br/>" +
                 "Fullname : " + reservation.getGuest().getFirstName() + " " + reservation.getGuest()
                 .getLastName() +
