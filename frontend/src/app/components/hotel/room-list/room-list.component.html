@@ -81,6 +81,29 @@
                   </div>
                 </div>
               </div>
+              <div class="mt-4">
+                <div class="text-xs text-gray-500">
+                  Daily price&nbsp;:&nbsp;{{ room.dailyPrice }}&nbsp;{{
+                    room.currency
+                  }}
+                </div>
+                <div class="flex justify-between">
+                  <div class="flex items-center">
+                    {{ days }}&nbsp;night(s)&nbsp;price&nbsp;:&nbsp;
+                    <span class="font-bold">
+                      {{ days | multiply:room.dailyPrice  }} <!-- calculateTotalPrice(room.dailyPrice)  -->
+                      {{ room.currency }}</span
+                    >
+                  </div>
+                  <div>
+                    <button
+                      class="px-4 py-2 text-white font-medium bg-blue-500 rounded-full"
+                    >
+                      Reserve
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </a>
         </div>

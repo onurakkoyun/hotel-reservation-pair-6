@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Inject,
@@ -12,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CounterComponent } from '../counter/counter.component';
 import { DatepickerComponent } from '../datepicker/datepicker.component';
 import { HotelService } from '../../../services/hotel/hotel.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-box',
@@ -24,17 +26,18 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
   @ViewChild(DatepickerComponent) datepickerComponent!: DatepickerComponent;
   @ViewChild(CounterComponent) counterComponent!: CounterComponent;
 
-  locationControl = this.fb.control('');
-  value = 'Clear';
+  queryControl = this.fb.control('');
+
   constructor(
     private fb: FormBuilder,
-    @Inject(HotelService) private hotelService: HotelService
+    @Inject(HotelService) private hotelService: HotelService,
+    private router: Router
   ) {
     this.searchForm = this.fb.group({
-      location: this.locationControl,
+      query: this.queryControl,
       checkIn: [null, Validators.required],
       checkOut: [null, Validators.required],
-      guestCount: [1],
+      guestCount: [2],
     });
   }
 
@@ -54,8 +57,8 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
     });
   }
 
-  get location() {
-    return this.searchForm.get('location')?.value || '';
+  get query() {
+    return this.searchForm.get('query')?.value || '';
   }
 
   get checkIn() {
@@ -73,22 +76,24 @@ export class SearchBoxComponent implements AfterViewInit, OnInit {
     return this.searchForm.get('guestCount')?.value || 2;
   }
 
-  clearLocation() {
-    this.locationControl.setValue('');
+  clearQuery() {
+    this.queryControl.setValue('');
     this.onSearch();
   }
 
   onSearch() {
-    const location = this.location;
-    const checkIn = this.checkIn;
-    const checkOut = this.checkOut;
-    const guestCount = this.guestCount;
+    const searchQuery = {
+      query: this.query,
+      checkIn: this.checkIn.toISOString().slice(0, 10),
+      checkOut: this.checkOut.toISOString().slice(0, 10),
+      guestCount: this.guestCount,
+    };
     this.hotelService.searchEvent.emit({
-      location,
-      checkIn,
-      checkOut,
-      guestCount,
+      ...searchQuery,
     });
-    //console.log({ location, checkIn, checkOut, guestCount });
+    // Navigating with query parameters
+    this.router.navigate(['search'], { // Assuming '/search' is your search page route
+      queryParams: { ...searchQuery }
+    });
   }
 }

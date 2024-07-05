@@ -10,4 +10,5 @@ import { GetRoomResponse } from '../../../services/room/room.service';
 })
 export class RoomListComponent {
   @Input() availableRooms: GetRoomResponse[] = [];
+  @Input() days = 0;
 }
