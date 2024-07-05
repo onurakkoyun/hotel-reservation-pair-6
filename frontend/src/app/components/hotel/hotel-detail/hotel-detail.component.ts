@@ -81,7 +81,7 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
       popupAnchor: [2, -34], // point from which the popup should open relative to the iconAnchor
     });
 
-    this.locationService.getLatLong(this.hotel.firstAddressLine).subscribe({
+    this.locationService.getLatLong(this.hotel.postalCode).subscribe({
       next: (location) => {
         const coor = [parseFloat(location.lat), parseFloat(location.lon)];
         this.map = L.map('map').setView(
