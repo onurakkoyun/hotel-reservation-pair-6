@@ -11,6 +11,9 @@ import { ReservationDetailComponent } from './components/reservation/reservation
 import { ReviewComponent } from './components/review/review.component';
 import { DashboardComponent } from './components/reporting/dashboard/dashboard.component';
 import { SettingsComponent } from './components/user/settings/settings.component';
+import { NotFoundComponent } from './components/uncharted/not-found/not-found.component';
+import { UnauthorizedComponent } from './components/uncharted/unauthorized/unauthorized.component';
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
     {
@@ -49,17 +52,21 @@ export const routes: Routes = [
             {
                 path: 'reports/:hotelId',
                 component: DashboardComponent,
-                canActivate: [],
+                canActivate: [roleGuard],
+                data: { roles: ['MANAGER'] },
             },
             {
                 path: 'management/:managerId',
                 component: DashboardComponent,
+                canActivate: [roleGuard],
+                data: { roles: ['MANAGER'] },
             },
             {
                 path: 'settings/:userId',
                 component: SettingsComponent,
-            }
-
+                canActivate: [roleGuard],
+                data: { roles: ['GUEST', 'MANAGER'] },
+            },
 
         ]
     },
@@ -74,5 +81,13 @@ export const routes: Routes = [
     {
         path: 'managers/register',
         component: RegisterManagerComponent,
+    },
+    {
+        path: 'unauthorized',
+        component: UnauthorizedComponent, // Your 401 Unauthorized component
+    },
+    {
+        path: '**',
+        component: NotFoundComponent, // Your 404 Not Found component
     },
 ];

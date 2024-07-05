@@ -16,7 +16,7 @@ export class UserService {
   private _email = new BehaviorSubject<string>('');
   private _phoneNumber = new BehaviorSubject<string>('');
   private _companyName = new BehaviorSubject<string>('');
-  private _role = new BehaviorSubject<string>('GUEST');
+  private _role = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) { }
 
@@ -40,12 +40,13 @@ export class UserService {
     return this._companyName.asObservable();
   }
 
-  getGuestDetailsByEmail(access_token: string, email: string): Observable<GuestDetails> {
+  get role(): Observable<string> {
+    return this._role.asObservable();
+  }
+
+  getGuestDetailsByEmail(email: string): Observable<GuestDetails> {
       const params = new HttpParams().set('email', email); // Use HttpParams to add query parameters
       return this.http.get<GuestDetails>(`${this.apiControllerUrl}/get-by-email`, {
-        headers: {
-          'Authorization': `Bearer ${access_token}`,
-        },
         params: params // Attach the email as a query parameter
       }).pipe(
         tap((guestDetails) => {
@@ -56,13 +57,9 @@ export class UserService {
       );
     }
 
-  getManagerDetailsByEmail(access_token: string, email: string): Observable<ManagerDetails> {
+  getManagerDetailsByEmail(email: string): Observable<ManagerDetails> {
     const params = new HttpParams().set('email', email); // Use HttpParams to add query parameters
     return this.http.get<ManagerDetails>(`${this.apiControllerUrl}/get-by-email`, {
-      headers: {
-        // Assuming loginCredentials need to be sent as headers. Adjust as necessary.
-        'Authorization': `Bearer ${access_token}`, // Example, adjust based on your auth method
-      },
       params: params // Attach the email as a query parameter
     }).pipe(
       tap((managerDetails) => {

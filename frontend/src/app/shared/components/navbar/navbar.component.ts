@@ -37,8 +37,7 @@ export class NavbarComponent implements OnInit {
     }
 
     private setInfo(email: string): void {
-        const token = this.authService.token ?? '';
-        this.userService.getGuestDetailsByEmail(token, email).subscribe((user) => {
+        this.userService.getGuestDetailsByEmail(email).subscribe((user) => {
             this.firstName = user.firstName;
             this.lastName = user.lastName;
             this.isManager = user.role == 'MANAGER';

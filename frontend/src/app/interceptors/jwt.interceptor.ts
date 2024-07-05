@@ -5,16 +5,22 @@ import { Observable } from 'rxjs';
 
 export function jwtInterceptor(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
   const authService = inject(AuthService);
-  
+  const token = authService.token;
+
   if (req.url.includes('auth') && !req.url.endsWith('logout')){
     // Don't add the Authorization header
     return next.handle(req);
   }
 
-  const newReq = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${authService.token}`),
-  });
-  return next.handle(newReq);
+  if (token) {
+    console.log('Adding token to request');
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+  return next.handle(req);
 };
 
 export class JwtInterceptor implements HttpInterceptor {
