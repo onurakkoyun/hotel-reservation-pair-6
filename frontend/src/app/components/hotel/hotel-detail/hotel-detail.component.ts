@@ -30,6 +30,7 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
   checkInDate = this.route.snapshot.queryParamMap.get('checkIn')!;
   checkOutDate = this.route.snapshot.queryParamMap.get('checkOut')!;
   hotelId = this.route.snapshot.paramMap.get('id')!;
+  days = this.daysBetweenDates(this.checkInDate, this.checkOutDate);  
 
   constructor(
     private hotelService: HotelService,
@@ -109,6 +110,14 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
     }, 0); */
 
 
+  }
+
+  daysBetweenDates(checkInDate: string, checkOutDate: string): number {
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+    const diffTime = Math.abs(checkOut.getTime() - checkIn.getTime());
+    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return days;
   }
 
   getRatingText(ratingAverage: number): string {
