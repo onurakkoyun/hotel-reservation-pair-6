@@ -10,6 +10,7 @@ import { ReservationListComponent } from './components/reservation/reservation-l
 import { ReservationDetailComponent } from './components/reservation/reservation-detail/reservation-detail.component';
 import { ReviewComponent } from './components/review/review.component';
 import { DashboardComponent } from './components/reporting/dashboard/dashboard.component';
+import { SettingsComponent } from './components/user/settings/settings.component';
 
 export const routes: Routes = [
     {
@@ -53,6 +54,10 @@ export const routes: Routes = [
             {
                 path: 'management/:managerId',
                 component: DashboardComponent,
+            },
+            {
+                path: 'settings/:userId',
+                component: SettingsComponent,
             }
 
 
