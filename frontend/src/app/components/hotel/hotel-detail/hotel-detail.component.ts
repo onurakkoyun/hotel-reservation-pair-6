@@ -5,6 +5,7 @@ import {
   Component,
   Inject,
   Input,
+  NgZone,
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
@@ -14,6 +15,7 @@ import {
   GetRoomResponse,
   RoomService,
 } from '../../../services/room/room.service';
+import { LocationService } from '../../../services/location/location.service';
 
 @Component({
   selector: 'app-hotel-detail',
@@ -24,88 +26,89 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
   private map: any;
   hotel: Hotel = {} as Hotel;
   availableRooms: GetRoomResponse[] = [];
+  guestCount = +this.route.snapshot.queryParamMap.get('guestCount')!;
+  checkInDate = this.route.snapshot.queryParamMap.get('checkIn')!;
+  checkOutDate = this.route.snapshot.queryParamMap.get('checkOut')!;
+  hotelId = this.route.snapshot.paramMap.get('id')!;
 
   constructor(
     private hotelService: HotelService,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(LocationService) private locationService: LocationService,
     private change: ChangeDetectorRef,
-    private roomService: RoomService
-  ) {}
+    private roomService: RoomService,
+    private ngZone: NgZone
+  ) { }
 
   ngOnInit(): void {
-    const hotelId = 5; // Bu değeri dinamik olarak alabilirsiniz
-    const guestCount = 2; // Bu değeri dinamik olarak alabilirsiniz
-    const checkInDate = '2024-07-10'; // Bu değeri dinamik olarak alabilirsiniz
-    const checkOutDate = '2024-07-17'; // Bu değeri dinamik olarak alabilirsiniz
 
-    this.roomService
-      .getAvailableRooms(hotelId, guestCount, checkInDate, checkOutDate)
-      .subscribe(
-        (rooms) => {
-          this.availableRooms = rooms;
-          console.log(rooms);
-        },
-        (error) => {
-          console.error('Error fetching available rooms', error);
-        }
-      );
   }
 
   ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      import('leaflet').then((L) => {
-        this.initMap(L);
-      });
-    }
+    this.hotelService.getHotelById(+this.hotelId).subscribe((hotel) => {
+      this.hotel = hotel;
+      if (isPlatformBrowser(this.platformId)) {
+        this.ngZone.runOutsideAngular(() => {
+          import('leaflet').then((L) => {
+            this.initMap(L);
+          });
+        });
+      }
+      this.change.detectChanges();
+    });
 
-    const hotelId = this.route.snapshot.paramMap.get('id');
-    if (hotelId) {
-      this.hotelService.getHotelById(+hotelId).subscribe((hotel) => {
-        this.hotel = hotel;
+
+    this.roomService
+      .getAvailableRooms(+this.hotelId, this.guestCount, this.checkInDate, this.checkOutDate).subscribe((rooms) => {
+        this.availableRooms = rooms;
         this.change.detectChanges();
       });
-    }
+
+
   }
 
-  //TODO: Replace the latitude and longitude with your hotel's latitude and longitude from backend
-  /*   this.hotelService.getHotelDetails(hotelId).subscribe((hotel) => {
-    import('leaflet').then((L) => {
-        this.initMap(L, hotel.latitude, hotel.longitude);
-    });
-  });
-
-  private initMap(L: any, latitude: number, longitude: number): void {
-    this.map = L.map('map').setView([latitude, longitude], 13);
-    // rest of the code...
-  } */
-
   private initMap(L: any): void {
-    this.map = L.map('map').setView([51.505, -0.09], 13); // replace with your hotel's latitude and longitude
 
     const defaultIcon = L.icon({
       iconUrl: 'assets/images/marker-icon.png',
       shadowUrl: 'assets/images/marker-shadow.png',
-      iconSize: [25, 41], // size of the icon
+      iconSize: [15, 21], // size of the icon
       shadowSize: [41, 41], // size of the shadow
       iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
       shadowAnchor: [14, 41], // the same for the shadow
-      popupAnchor: [1, -34], // point from which the popup should open relative to the iconAnchor
+      popupAnchor: [2, -34], // point from which the popup should open relative to the iconAnchor
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(this.map);
+    this.locationService.getLatLong(this.hotel.firstAddressLine).subscribe({
+      next: (location) => {
+        const coor = [parseFloat(location.lat), parseFloat(location.lon)];
+        this.map = L.map('map').setView(
+          coor,
+          13
+        );
+        //
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+        }).addTo(this.map);
+        //
+        L.marker(coor, { icon: defaultIcon })
+          .addTo(this.map)
+          .bindPopup(`${this.hotel.hotelName}`)
+          .openPopup();
+      },
+      error: (error) => {
+        console.error('Error fetching location', error);
+      }
+    });
+
 
     // Invalidate map size after a delay
     /*     setTimeout(() => {
       this.map.invalidateSize();
     }, 0); */
 
-    L.marker([51.5, -0.09], { icon: defaultIcon })
-      .addTo(this.map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
+
   }
 
   getRatingText(ratingAverage: number): string {

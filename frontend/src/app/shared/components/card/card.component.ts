@@ -34,6 +34,13 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class CardComponent implements OnInit, AfterViewInit {
   @Input() hotel: Hotel = {} as Hotel;
+  @Input()
+  searchQuery!: {
+    query: string;
+    checkIn: string;
+    checkOut: string;
+    guestCount: number;
+  };
   @Input() carouselId: string = '';
   @ViewChild('carousel') carousel: ElementRef | undefined;
   @ViewChildren('carouselItem') carouselItems:

@@ -20,28 +20,29 @@ import { NavigationEnd, Router } from '@angular/router';
 export class HotelListComponent implements OnInit, AfterViewInit {
   hotels: Hotel[] = [];
   searchQuery: {
-    location: string;
-    checkIn: Date;
-    checkOut: Date;
+    query: string;
+    checkIn: string;
+    checkOut: string;
     guestCount: number;
   } = {
-    location: '',
-    checkIn: new Date(),
-    checkOut: new Date(),
-    guestCount: 1,
+    query: '',
+    checkIn: new Date().toISOString().slice(0, 10),
+    checkOut: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().slice(0, 10),
+    guestCount: 2,
   };
 
   constructor(
     @Inject(HotelService) private hotelService: HotelService,
-    private change: ChangeDetectorRef
+    private change: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadHotels();
+    //this.loadHotels();
   }
 
   ngAfterViewInit(): void {
-    this.loadHotels();
+    //this.loadHotels();
     this.searchHotels();
     this.applyFilters();
   }
@@ -58,7 +59,7 @@ export class HotelListComponent implements OnInit, AfterViewInit {
       this.searchQuery = searchQuery;
       this.hotelService
         .searchHotels(
-          searchQuery.location,
+          searchQuery.query,
           searchQuery.checkIn,
           searchQuery.checkOut,
           searchQuery.guestCount
@@ -72,9 +73,14 @@ export class HotelListComponent implements OnInit, AfterViewInit {
 
   applyFilters(): void {
     this.hotelService.filterEvent.subscribe((filterQuery) => {
+      // Navigating with query parameters
+      this.router.navigate(['search'], { // Assuming '/search' is your search page route
+        queryParams: { ...this.searchQuery }
+      });
+  
       this.hotelService
         .searchHotels(
-          this.searchQuery.location,
+          this.searchQuery.query,
           this.searchQuery.checkIn,
           this.searchQuery.checkOut,
           this.searchQuery.guestCount

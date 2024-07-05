@@ -51,8 +51,8 @@ export class RoomService {
     let params = new HttpParams()
       .set('hotelId', hotelId.toString())
       .set('guestCount', guestCount.toString())
-      .set('checkInDate', checkInDate.slice(0, 10))
-      .set('checkOutDate', checkOutDate.slice(0, 10));
+      .set('checkInDate', checkInDate)
+      .set('checkOutDate', checkOutDate);
 
     return this.http.get<GetRoomResponse[]>(`${this.apiUrl}/available-rooms`, {
       params,

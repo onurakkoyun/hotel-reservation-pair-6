@@ -2,6 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
+import { Router } from '@angular/router';
+
 
 export interface Hotel {
   id: number;
@@ -78,9 +80,9 @@ export class HotelService {
   private apiUrl = `${environment.apiUrl}/api/hotels`;
 
   searchEvent = new EventEmitter<{
-    location: string;
-    checkIn: Date;
-    checkOut: Date;
+    query: string;
+    checkIn: string;
+    checkOut: string;
     guestCount: number;
   }>();
   filterEvent = new EventEmitter<{
@@ -93,7 +95,7 @@ export class HotelService {
     priceTo: number;
   }>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getAllHotels(): Observable<Hotel[]> {
     return this.http.get<Hotel[]>(`${this.apiUrl}/get-all`).pipe(
@@ -123,18 +125,19 @@ export class HotelService {
   }
 
   searchHotels(
-    location: string,
-    checkIn: Date,
-    checkOut: Date,
+    query: string,
+    checkIn: string,
+    checkOut: string,
     guestCount: number
   ): Observable<Hotel[]> {
+
     return this.http
       .get<Hotel[]>(`${this.apiUrl}/search`, {
         params: new HttpParams({
           fromObject: {
-            query: location,
-            startDate: checkIn.toISOString().slice(0, 10),
-            endDate: checkOut.toISOString().slice(0, 10),
+            query: query,
+            startDate: checkIn,
+            endDate: checkOut,
             guestCount: guestCount.toString(),
           },
         }),
