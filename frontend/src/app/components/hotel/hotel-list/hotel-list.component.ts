@@ -19,6 +19,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HotelListComponent implements OnInit, AfterViewInit {
   hotels: Hotel[] = [];
+  isSearchClicked = false;
   searchQuery: {
     query: string;
     checkIn: string;
@@ -57,6 +58,7 @@ export class HotelListComponent implements OnInit, AfterViewInit {
   searchHotels(): void {
     this.hotelService.searchEvent.subscribe((searchQuery) => {
       this.searchQuery = searchQuery;
+      this.isSearchClicked = true;
       this.hotelService
         .searchHotels(
           searchQuery.query,

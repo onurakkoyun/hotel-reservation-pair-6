@@ -2,8 +2,12 @@
 <div *ngFor="let hotel of hotels; let i = index">
   <app-card [hotel]="hotel" [searchQuery]="searchQuery" [carouselId]="'controls-carousel-' + i"></app-card>
 </div>
-} @else {
+} @else if(hotels.length === 0 && isSearchClicked){
 <div class="flex justify-center">
   <h1>No hotels found</h1>
+</div>
+} @else {
+<div class="flex justify-center">
+  <img src="assets/homehermit.jpg" alt="" />
 </div>
 }
