@@ -39,4 +39,9 @@ public class RoomsController {
                                                    @RequestParam("checkOutDate") LocalDate checkOutDate) {
         return roomService.getAvailableRooms(hotelId, guestCount, checkInDate, checkOutDate);
     }
+
+    @GetMapping("/get-by-id")
+    public GetRoomResponse getById(@RequestParam("id") long id) {
+        return roomService.getRoomResponseById(id);
+    }
 }

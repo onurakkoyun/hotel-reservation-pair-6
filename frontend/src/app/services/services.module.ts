@@ -4,15 +4,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from '../components/user/login/login.component';
 import { UserService } from './user/user.service';
-
-
+import { ReservationService } from './reservation/reservation.service';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule
-  ],
-  providers: [AuthService, UserService] // Add here if you want to use the service request with JWT Interceptor
+  imports: [CommonModule, HttpClientModule],
+  providers: [AuthService, ReservationService],
 })
-export class ServicesModule { }
+export class ServicesModule {}

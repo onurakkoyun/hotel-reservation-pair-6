@@ -38,8 +38,9 @@ public class Reservation extends BaseEntity<Long> {
 	@Column(name = "currency")
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
-	
-	@Enumerated(EnumType.STRING)
+
+	@ManyToOne
+	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private ReservationStatus status;
 
 	@OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)

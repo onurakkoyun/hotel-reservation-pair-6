@@ -17,6 +17,8 @@ public interface RoomService {
 
     Room findById(long id);
 
+    GetRoomResponse getRoomResponseById(long id);
+
     void save(Room room);
 
     List<GetRoomResponse> getAvailableRooms(int hotelId, int guestCount,

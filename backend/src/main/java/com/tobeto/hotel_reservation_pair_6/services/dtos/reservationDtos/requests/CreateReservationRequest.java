@@ -3,7 +3,6 @@ package com.tobeto.hotel_reservation_pair_6.services.dtos.reservationDtos.reques
 import com.iyzipay.model.Currency;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

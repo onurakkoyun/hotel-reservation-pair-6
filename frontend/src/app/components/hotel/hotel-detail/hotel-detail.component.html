@@ -60,7 +60,14 @@
       </div>
     </div>
 
-    <div><app-room-list [availableRooms]="availableRooms" [days]="days" ></app-room-list></div>
+    <div>
+      <app-room-list
+        [availableRooms]="availableRooms"
+        [checkInDate]="checkInDate"
+        [checkOutDate]="checkOutDate"
+        [days]="days"
+      ></app-room-list>
+    </div>
 
     <div><app-review class="my-12"></app-review></div>
   </div>

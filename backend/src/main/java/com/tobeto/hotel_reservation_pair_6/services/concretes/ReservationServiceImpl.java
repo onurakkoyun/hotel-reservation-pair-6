@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class ReservationServiceImpl implements ReservationService{
     private final ReservationRepository reservationRepository;
+    private final ReservationStatusService reservationStatusService;
     private final PaymentService paymentService;
     private final GuestService guestService;
     private final RefundPaymentService refundPaymentService;
@@ -40,7 +41,9 @@ public class ReservationServiceImpl implements ReservationService{
         Room room = roomService.findById(request.getRoomId());
 
         Reservation reservation = ReservationMapper.INSTANCE.mapCreateReservationRequestToReservation(request);
-        reservation.setStatus(ReservationStatus.PENDING_APPROVAL_BY_HOTEL);
+        List<ReservationStatus> reservationStatus = reservationStatusService.getAllReservationStatus();
+
+        reservation.setStatus(reservationStatus.get(0)); //PENDING_APPROVAL_BY_HOTEL
         reservation.setCreatedDate(LocalDate.now());
 
         long daysBetween = reservation.getCheckOutDate().toEpochDay() - reservation.getCheckInDate().toEpochDay();
@@ -140,7 +143,7 @@ public class ReservationServiceImpl implements ReservationService{
                 .orElseThrow(() -> new BusinessException("The reservation does not found."));
 
         if (isApproved){
-            reservation.setStatus(ReservationStatus.APPROVED_BY_HOTEL);
+            //reservation.setStatus(ReservationStatus.APPROVED_BY_HOTEL);
             emailConfig.sendEmail(reservation.getGuest()
                     .getEmail(), "Your Reservation Approved!",
                     "Your reservation has been confirmed by the hotel.");
@@ -149,7 +152,9 @@ public class ReservationServiceImpl implements ReservationService{
                     "Your reservation has been confirmed successfully.");
         }
         else {
-            reservation.setStatus(ReservationStatus.CANCELED_BY_HOTEL);
+            List<ReservationStatus> reservationStatus = reservationStatusService.getAllReservationStatus();
+
+            reservation.setStatus(reservationStatus.get(2)); //CANCELED_BY_HOTEL
 
             String guestEmailBody ="<strong>Your reservation has been cancelled by Hotel!</strong><br/>" +
                     "<strong><u>Hotel Information</u></strong>" +
@@ -184,7 +189,9 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("The reservation does not found."));
 
-        reservation.setStatus(ReservationStatus.CANCELED_BY_GUEST);
+        List<ReservationStatus> reservationStatus = reservationStatusService.getAllReservationStatus();
+
+        reservation.setStatus(reservationStatus.get(3)); //CANCELED_BY_GUEST
 
         refundPaymentService.createRefund(reservation.getPayment().getId(), reservation.getAmount());
 

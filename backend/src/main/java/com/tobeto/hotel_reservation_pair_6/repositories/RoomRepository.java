@@ -24,10 +24,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
             "WHERE h.id = :hotelId " +
             "AND (:guestCount IS NULL OR r.capacity >= :guestCount) " +
             "AND r.quantity > (SELECT COUNT(res) FROM Reservation res WHERE res.room.id = r.id AND " +
-            "((res.checkInDate <= :endDate AND res.checkOutDate >= :startDate) OR " +
+            "((res.checkInDate <= :endDate AND res.checkOutDate > :startDate) OR " +
             "(res.checkInDate >= :startDate AND res.checkInDate <= :endDate) OR " +
-            "(res.checkOutDate >= :startDate AND res.checkOutDate <= :endDate)) AND " +
-            "(res.status = 'APPROVED_BY_HOTEL' OR res.status = 'PENDING_APPROVAL_BY_HOTEL'))")
+            "(res.checkOutDate > :startDate AND res.checkOutDate <= :endDate)) AND " +
+            "(res.status.id = 2 OR res.status.id = 1))")
     List<Room> searchAvailableRoomsByHotelId(@Param("hotelId") int hotelId,
                                              @Param("guestCount") int guestCount,
                                              @Param("startDate") LocalDate startDate,

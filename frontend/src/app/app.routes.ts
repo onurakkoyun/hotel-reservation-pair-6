@@ -16,78 +16,77 @@ import { UnauthorizedComponent } from './components/uncharted/unauthorized/unaut
 import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
         path: '',
-        component: LayoutComponent,
-        children: [
-            {
-              path: '',
-              redirectTo:'search',
-                pathMatch:'full'
-            },
-            {
-                path: 'search',
-                component: HomeComponent,
-            },
-            {
-                path: 'payments',
-                component: PaymentComponent,
-            },
-            {
-                path: 'hotels/:id',
-                component: HotelDetailComponent,
-            },
-            {
-                path: 'reservations',
-                component: ReservationListComponent,
-            },
-            {
-                path: 'reservations/:id',
-                component: ReservationDetailComponent,
-            },
-            {
-                path: 'reviews/:hotelId',
-                component: ReviewComponent,
-            },
-            {
-                path: 'reports/:hotelId',
-                component: DashboardComponent,
-                canActivate: [roleGuard],
-                data: { roles: ['MANAGER'] },
-            },
-            {
-                path: 'management/:managerId',
-                component: DashboardComponent,
-                canActivate: [roleGuard],
-                data: { roles: ['MANAGER'] },
-            },
-            {
-                path: 'settings/:userId',
-                component: SettingsComponent,
-                canActivate: [roleGuard],
-                data: { roles: ['GUEST', 'MANAGER'] },
-            },
-
-        ]
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-    },
-    {
-        path: 'guests/register',
-        component: RegisterComponent,
-    },
-    {
-        path: 'managers/register',
-        component: RegisterManagerComponent,
-    },
-    {
-        path: 'unauthorized',
-        component: UnauthorizedComponent, // Your 401 Unauthorized component
-    },
-    {
-        path: '**',
-        component: NotFoundComponent, // Your 404 Not Found component
-    },
+        redirectTo: 'search',
+        pathMatch: 'full',
+      },
+      {
+        path: 'search',
+        component: HomeComponent,
+      },
+      {
+        path: 'payments',
+        component: PaymentComponent,
+      },
+      {
+        path: 'hotels/:id',
+        component: HotelDetailComponent,
+      },
+      {
+        path: 'reservations',
+        component: ReservationListComponent,
+      },
+      {
+        path: 'reservations/:id',
+        component: ReservationDetailComponent,
+      },
+      {
+        path: 'reviews/:hotelId',
+        component: ReviewComponent,
+      },
+      {
+        path: 'reports/:hotelId',
+        component: DashboardComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['MANAGER'] },
+      },
+      {
+        path: 'management/:managerId',
+        component: DashboardComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['MANAGER'] },
+      },
+      {
+        path: 'settings/:userId',
+        component: SettingsComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['GUEST', 'MANAGER'] },
+      },
+    ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'guests/register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'managers/register',
+    component: RegisterManagerComponent,
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent, // Your 401 Unauthorized component
+  },
+  {
+    path: '**',
+    component: NotFoundComponent, // Your 404 Not Found component
+  },
 ];
