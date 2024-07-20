@@ -9,8 +9,9 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
+import {HotelService } from '../../../services/hotel/hotel.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { Hotel } from '../../../services/hotel/model/Hotel';
 
 @Component({
   selector: 'app-hotel-list',

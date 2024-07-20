@@ -23,8 +23,8 @@ import {
   CarouselOptions,
 } from 'flowbite';
 import type { InstanceOptions } from 'flowbite';
-import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Hotel } from '../../../services/hotel/model/Hotel';
 
 @Component({
   selector: 'app-card',

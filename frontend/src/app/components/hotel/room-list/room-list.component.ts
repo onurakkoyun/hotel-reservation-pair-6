@@ -11,7 +11,6 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { GetRoomResponse } from '../../../services/room/room.service';
 import { isPlatformBrowser } from '@angular/common';
 import {
   Carousel,
@@ -21,6 +20,7 @@ import {
   InstanceOptions,
 } from 'flowbite';
 import { Router } from '@angular/router';
+import { GetRoomResponse } from '../../../services/room/model/GetRoomResponse';
 
 @Component({
   selector: 'app-room-list',
@@ -62,7 +62,7 @@ export class RoomListComponent implements OnInit, AfterViewInit {
       checkIn: this.checkInDate,
       checkOut: this.checkOutDate,
     };
-    this.router.navigate(['/payments'], { queryParams });
+    this.router.navigate(['/payments'], { queryParams }); //TODO: This doesnt work
   }
 
   private initializeCarousels(): void {

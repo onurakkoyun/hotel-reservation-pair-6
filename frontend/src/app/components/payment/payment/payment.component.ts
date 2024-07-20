@@ -9,14 +9,16 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserService } from '../../../services/user/user.service';
 import {
-  GetRoomResponse,
   RoomService,
 } from '../../../services/room/room.service';
 import {
-  CreateReservationRequest,
   ReservationService,
 } from '../../../services/reservation/reservation.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ManagerDetails } from '../../../services/user/models/ManagerDetails';
+import { GuestDetails } from '../../../services/user/models/GuestDetails';
+import { GetRoomResponse } from '../../../services/room/model/GetRoomResponse';
+import { CreateReservationRequest } from '../../../services/reservation/model/CreateReservationRequest';
 
 @Component({
   selector: 'app-payment',
@@ -28,16 +30,9 @@ export class PaymentComponent {
   @Input() checkOutDate: string = '';
   @Input() roomId: number = 0;
 
+  userDetails!: GuestDetails | ManagerDetails;
   room: GetRoomResponse | undefined;
   paymentFormGroup: FormGroup;
-
-  id: number = -1;
-  isLogged: boolean = false;
-  displayEmail: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  isManager: boolean = false;
-  phoneNumber: string = '';
 
   expirationError: string | null = null;
   cvcError: string | null = null;
@@ -69,13 +64,8 @@ export class PaymentComponent {
       this.checkOutDate = params['checkOut'];
     });
     this.days = this.daysBetweenDates(this.checkInDate, this.checkOutDate);
-
-    this.authService.isLogged.subscribe((isLogged) => {
-      this.setLoggedState(isLogged);
-      if (isLogged) {
-        this.setInfo(this.displayEmail);
-      }
-    });
+    
+    this.setUserDetails();
 
     this.roomService.getById(this.roomId).subscribe((room) => {
       this.room = room;
@@ -83,20 +73,16 @@ export class PaymentComponent {
     });
   }
 
-  private setLoggedState(isLogged: boolean): void {
-    this.isLogged = isLogged;
-    this.displayEmail = this.authService.tokenPayload?.sub ?? '';
-  }
 
-  private setInfo(email: string): void {
-    const token = this.authService.token ?? '';
-
-    this.userService.getGuestDetailsByEmail(token, email).subscribe((user) => {
-      this.id = user.id;
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.change.markForCheck(); // Signal change detection
-    });
+  private setUserDetails(): void {
+    const displayEmail = this.authService.tokenPayload?.sub ?? '';
+    if (displayEmail) {
+      this.userService.getGuestDetailsByEmail(displayEmail).subscribe((userDetails) => {
+        this.userDetails = userDetails;
+        //console.log('User details:', this.userDetails);
+        this.change.markForCheck(); // Signal change detection
+      });
+    }
   }
 
   calculateTotalPrice(): number {
@@ -214,7 +200,7 @@ export class PaymentComponent {
 
     const reservationRequest: CreateReservationRequest = {
       roomId: this.roomId,
-      guestId: this.id,
+      guestId: this.userDetails.id,
       cardHolderName: this.paymentFormGroup.value.cardHolderName,
       cardNumber: this.paymentFormGroup.value.cardNumber.replace(/\s+/g, ''), // Remove spaces
       expirationMonth: this.paymentFormGroup.value.expirationMonth,
@@ -227,14 +213,10 @@ export class PaymentComponent {
     console.log(reservationRequest);
 
     this.reservationService.createReservation(reservationRequest).subscribe(
-      (response) => {
-        console.log('Reservation successful', response);
-        // Handle success (e.g., show a confirmation message, redirect)
+      (reservation) => {
+        console.log('Reservation created:', reservation);
+        // Redirect to reservation details page
       },
-      (error) => {
-        console.error('Reservation failed', error);
-        // Handle error (e.g., show an error message)
-      }
     );
   }
 }

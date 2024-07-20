@@ -93,9 +93,16 @@ export class CoreAuthService {
   }
 
   // Role-based authorization was taken out of the project
-  public isAuthorized(): boolean {
+  public isAuthorized(roles: String[]): boolean {
     if (!this.isAuthenticated) return false;
-    return true;
+
+    const tokenRole = this.tokenPayload?.role;
+
+    if (tokenRole && roles.includes(tokenRole)) {
+      return true;
+    }
+
+    return false;
   }
 
   public logoutHandler(): void {

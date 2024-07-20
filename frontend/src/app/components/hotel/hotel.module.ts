@@ -6,6 +6,9 @@ import { ReviewComponent } from '../review/review.component';
 import { RoomListComponent } from './room-list/room-list.component';
 import { MultiplyPipe } from '../../pipes/multiply.pipe';
 import { RouterModule } from '@angular/router';
+import { Util } from 'leaflet';
+import { UtilitiesModule } from '../../utilities/utilities.module';
+
 
 @NgModule({
   declarations: [HotelDetailComponent, ReviewComponent, RoomListComponent],

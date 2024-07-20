@@ -1,11 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, PLATFORM_ID, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import {
-  GetHotelImageResponse,
-  Hotel,
-} from '../../../services/hotel/hotel.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Carousel, CarouselInterface, CarouselItem, CarouselOptions, InstanceOptions, Modal, ModalOptions, ModalInterface } from 'flowbite';
+import { Hotel } from '../../../services/hotel/model/Hotel';
 
 
 

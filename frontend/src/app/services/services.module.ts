@@ -9,6 +9,6 @@ import { ReservationService } from './reservation/reservation.service';
 @NgModule({
   declarations: [],
   imports: [CommonModule, HttpClientModule],
-  providers: [AuthService, ReservationService],
+  providers: [AuthService, UserService, ReservationService],
 })
 export class ServicesModule {}
