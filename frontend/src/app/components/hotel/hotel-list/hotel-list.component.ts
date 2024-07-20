@@ -28,7 +28,9 @@ export class HotelListComponent implements OnInit, AfterViewInit {
   } = {
     query: '',
     checkIn: new Date().toISOString().slice(0, 10),
-    checkOut: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().slice(0, 10),
+    checkOut: new Date(new Date().setDate(new Date().getDate() + 1))
+      .toISOString()
+      .slice(0, 10),
     guestCount: 2,
   };
 
@@ -76,10 +78,11 @@ export class HotelListComponent implements OnInit, AfterViewInit {
   applyFilters(): void {
     this.hotelService.filterEvent.subscribe((filterQuery) => {
       // Navigating with query parameters
-      this.router.navigate(['search'], { // Assuming '/search' is your search page route
-        queryParams: { ...this.searchQuery }
+      this.router.navigate(['search'], {
+        // Assuming '/search' is your search page route
+        queryParams: { ...this.searchQuery },
       });
-  
+
       this.hotelService
         .searchHotels(
           this.searchQuery.query,

@@ -44,6 +44,7 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/api/rooms/available-rooms",
+            "/api/rooms/get-by-id",
             "/api/hotels/search",
             "/api/hotels/get-all",
             "/api/hotels/get-by-id/{id}",
@@ -89,7 +90,8 @@ public class SecurityConfiguration {
                 .logout(logout ->
                         logout.logoutUrl("/api/auth/logout")
                                 .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                                .logoutSuccessHandler((request, response, authentication)
+                                        -> SecurityContextHolder.clearContext())
                 );
         return http.build();
     }

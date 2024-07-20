@@ -30,7 +30,7 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
   checkInDate = this.route.snapshot.queryParamMap.get('checkIn')!;
   checkOutDate = this.route.snapshot.queryParamMap.get('checkOut')!;
   hotelId = this.route.snapshot.paramMap.get('id')!;
-  days = this.daysBetweenDates(this.checkInDate, this.checkOutDate);  
+  days = this.daysBetweenDates(this.checkInDate, this.checkOutDate);
 
   constructor(
     private hotelService: HotelService,
@@ -40,11 +40,9 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
     private change: ChangeDetectorRef,
     private roomService: RoomService,
     private ngZone: NgZone
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.hotelService.getHotelById(+this.hotelId).subscribe((hotel) => {
@@ -59,18 +57,20 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
       this.change.detectChanges();
     });
 
-
     this.roomService
-      .getAvailableRooms(+this.hotelId, this.guestCount, this.checkInDate, this.checkOutDate).subscribe((rooms) => {
+      .getAvailableRooms(
+        +this.hotelId,
+        this.guestCount,
+        this.checkInDate,
+        this.checkOutDate
+      )
+      .subscribe((rooms) => {
         this.availableRooms = rooms;
         this.change.detectChanges();
       });
-
-
   }
 
   private initMap(L: any): void {
-
     const defaultIcon = L.icon({
       iconUrl: 'assets/images/marker-icon.png',
       shadowUrl: 'assets/images/marker-shadow.png',
@@ -84,10 +84,7 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
     this.locationService.getLatLong(this.hotel.postalCode).subscribe({
       next: (location) => {
         const coor = [parseFloat(location.lat), parseFloat(location.lon)];
-        this.map = L.map('map').setView(
-          coor,
-          13
-        );
+        this.map = L.map('map').setView(coor, 13);
         //
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
@@ -100,16 +97,13 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
       },
       error: (error) => {
         console.error('Error fetching location', error);
-      }
+      },
     });
-
 
     // Invalidate map size after a delay
     /*     setTimeout(() => {
       this.map.invalidateSize();
     }, 0); */
-
-
   }
 
   daysBetweenDates(checkInDate: string, checkOutDate: string): number {

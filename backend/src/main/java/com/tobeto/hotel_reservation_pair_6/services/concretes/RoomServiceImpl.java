@@ -98,7 +98,18 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public Room findById(long id) {
-        return roomRepository.findById(id).orElseThrow();
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Room not found!"));
+    }
+
+    @Override
+    public GetRoomResponse getRoomResponseById(long id) {
+
+        Room room = findById(id);
+
+        GetRoomResponse response = RoomMapper.INSTANCE.mapRoomToGetRoomResponse(room);
+
+        return response;
     }
 
     @Override
@@ -111,7 +122,7 @@ public class RoomServiceImpl implements RoomService{
         List<Room> allRooms = roomRepository.searchAvailableRoomsByHotelId(hotelId, guestCount, checkInDate, checkOutDate);
 
         List<GetRoomResponse> responses = allRooms.stream().map(room -> {
-            GetRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetAvailableRoomsResponse(room);
+            GetRoomResponse availableRooms = RoomMapper.INSTANCE.mapRoomToGetRoomResponse(room);
             return availableRooms;
         }).collect(Collectors.toList());
 

@@ -33,7 +33,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
             "((res.checkInDate <= :endDate AND res.checkOutDate >= :startDate) OR " +
             "(res.checkInDate >= :startDate AND res.checkInDate <= :endDate) OR " +
             "(res.checkOutDate >= :startDate AND res.checkOutDate <= :endDate)) AND " +
-            "(res.status = 'APPROVED_BY_HOTEL' OR res.status = 'PENDING_APPROVAL_BY_HOTEL'))")
+            "(res.status.id = 2 OR res.status.id = 1))")
     List<Hotel> searchHotelsWithAvailableRooms(@Param("searchText") String searchText,
                                                @Param("guestCount") int guestCount,
                                                @Param("startDate") LocalDate startDate,

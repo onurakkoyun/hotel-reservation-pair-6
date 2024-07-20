@@ -24,5 +24,5 @@ public interface RoomMapper {
     @Mapping(source = "hotel.id", target = "hotelId")
     @Mapping(source = "roomType.id", target = "roomTypeId")
     @Mapping(source = "roomType.roomTypeName", target = "roomTypeName")
-    GetRoomResponse mapRoomToGetAvailableRoomsResponse(Room room);
+    GetRoomResponse mapRoomToGetRoomResponse(Room room);
 }

@@ -58,4 +58,11 @@ export class RoomService {
       params,
     });
   }
+
+  getById(id: number): Observable<GetRoomResponse> {
+    let params = new HttpParams().set('id', id.toString());
+    return this.http.get<GetRoomResponse>(`${this.apiUrl}/get-by-id`, {
+      params,
+    });
+  }
 }
