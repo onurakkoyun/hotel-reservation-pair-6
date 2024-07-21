@@ -13,7 +13,7 @@ export function jwtInterceptor(req: HttpRequest<any>, next: HttpHandler): Observ
   }
 
   if (token) {
-    console.log('Adding token to request');
+    //console.log('Adding token to request');
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`

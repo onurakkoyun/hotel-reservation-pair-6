@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { initDropdowns} from 'flowbite';
 import { AuthService } from '../../../services/auth/auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { GuestDetails } from '../../../services/user/models/GuestDetails';
+import { ManagerDetails } from '../../../services/user/models/ManagerDetails';
 
 @Component({
     selector: 'app-dropdown-menu',
@@ -11,13 +13,11 @@ import { isPlatformBrowser } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownMenuComponent implements OnInit {
-    @Input() displayEmail: string | null = null;
-    @Input() firstName: string | null = null;
-    @Input() lastName: string | null = null;
-    @Input() isManager: boolean | null = null;
-    @Input() id: number | null = null;
-    
-    constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone, private change: ChangeDetectorRef) { }
+    @Input()
+    userDetails!: GuestDetails | ManagerDetails;
+
+    constructor(@Inject(AuthService) private authService: AuthService, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private ngZone: NgZone, private change: ChangeDetectorRef) {
+     }
 
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {

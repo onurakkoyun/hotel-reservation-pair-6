@@ -8,6 +8,9 @@ import {
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user/user.service';
+import { GuestDetails } from '../../../services/user/models/GuestDetails';
+import { ManagerDetails } from '../../../services/user/models/ManagerDetails';
+
 
 @Component({
   selector: 'app-navbar',
@@ -16,42 +19,33 @@ import { UserService } from '../../../services/user/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit {
-  id: number = -1;
+  userDetails!: GuestDetails | ManagerDetails;
   isLogged: boolean = false;
-  displayEmail: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  isManager: boolean = false;
-  phoneNumber: string = '';
 
   constructor(
     private router: Router,
     @Inject(AuthService) private authService: AuthService,
     @Inject(UserService) private userService: UserService,
     private change: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.isLogged.subscribe((isLogged) => {
-      this.setLoggedState(isLogged);
+      this.isLogged = isLogged;
       if (isLogged) {
-        this.setInfo(this.displayEmail);
+        this.setUserDetails();
       }
     });
   }
 
-  private setLoggedState(isLogged: boolean): void {
-    this.isLogged = isLogged;
-    this.displayEmail = this.authService.tokenPayload?.sub ?? '';
-  }
-
-  private setInfo(email: string): void {
-    this.userService.getGuestDetailsByEmail(email).subscribe((user) => {
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.isManager = user.role == 'MANAGER';
-      this.id = user.id;
-      this.change.markForCheck(); // Signal change detection
-    });
+  private setUserDetails(): void {
+    const displayEmail = this.authService.tokenPayload?.sub ?? '';
+    if (displayEmail) {
+      this.userService.getGuestDetailsByEmail(displayEmail).subscribe((userDetails) => {
+        this.userDetails = userDetails;
+        //console.log('User details:', this.userDetails);
+        this.change.markForCheck(); // Signal change detection
+      });
+    }
   }
 }

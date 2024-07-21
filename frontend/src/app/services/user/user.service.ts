@@ -11,65 +11,22 @@ import { environment } from '../../../environment/environment';
 export class UserService {
 
   private apiControllerUrl = `${environment.apiUrl}/api/users`;
-  private _firstName = new BehaviorSubject<string>('');
-  private _lastName = new BehaviorSubject<string>('');
-  private _email = new BehaviorSubject<string>('');
-  private _phoneNumber = new BehaviorSubject<string>('');
-  private _companyName = new BehaviorSubject<string>('');
-  private _role = new BehaviorSubject<string>('GUEST');
-
+  private _userDetails = new Subject<GuestDetails | ManagerDetails>();
 
   constructor(private http: HttpClient) { }
 
-  get firstName(): Observable<string> {
-    return this._firstName.asObservable();
+  get userDetails(): Observable<GuestDetails | ManagerDetails> {
+    return this._userDetails.asObservable();
   }
 
-  get lastName(): Observable<string> {
-    return this._lastName.asObservable();
-  }
-
-  get email(): Observable<string> {
-    return this._email.asObservable();
-  }
-
-  get phoneNumber(): Observable<string> {
-    return this._phoneNumber.asObservable();
-  }
-
-  get companyName(): Observable<string> {
-    return this._companyName.asObservable();
-  }
-
-  get role(): Observable<string> {
-    return this._role.asObservable();
-  }
-
-  getGuestDetailsByEmail(email: string): Observable<GuestDetails> {
+  getGuestDetailsByEmail(email: string): Observable<GuestDetails | ManagerDetails> {
       const params = new HttpParams().set('email', email); // Use HttpParams to add query parameters
-      return this.http.get<GuestDetails>(`${this.apiControllerUrl}/get-by-email`, {
+      return this.http.get<GuestDetails | ManagerDetails>(`${this.apiControllerUrl}/get-by-email`, {
         params: params // Attach the email as a query parameter
       }).pipe(
-        tap((guestDetails) => {
-          this._firstName.next(guestDetails.firstName);
-          this._lastName.next(guestDetails.lastName);
-          this._role.next(guestDetails.role);
+        tap((userDetails) => {
+          this._userDetails.next(userDetails);
         })
       );
     }
-
-  getManagerDetailsByEmail(email: string): Observable<ManagerDetails> {
-    const params = new HttpParams().set('email', email); // Use HttpParams to add query parameters
-    return this.http.get<ManagerDetails>(`${this.apiControllerUrl}/get-by-email`, {
-      params: params // Attach the email as a query parameter
-    }).pipe(
-      tap((managerDetails) => {
-        this._firstName.next(managerDetails.firstName);
-        this._lastName.next(managerDetails.lastName);
-        this._email.next(managerDetails.email);
-        this._companyName.next(managerDetails.companyName);
-        this._role.next(managerDetails.role);
-      })
-    );
-  }
 }

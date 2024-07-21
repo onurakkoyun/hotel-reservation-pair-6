@@ -9,13 +9,15 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { Hotel, HotelService } from '../../../services/hotel/hotel.service';
+import { HotelService } from '../../../services/hotel/hotel.service';
 import { ActivatedRoute } from '@angular/router';
 import {
-  GetRoomResponse,
+
   RoomService,
 } from '../../../services/room/room.service';
 import { LocationService } from '../../../services/location/location.service';
+import { Hotel } from '../../../services/hotel/model/Hotel';
+import { GetRoomResponse } from '../../../services/room/model/GetRoomResponse';
 
 @Component({
   selector: 'app-hotel-detail',
@@ -116,19 +118,19 @@ export class HotelDetailComponent implements OnInit, AfterViewInit {
 
   getRatingText(ratingAverage: number): string {
     if (ratingAverage > 9) return 'Exceptional';
-    if (ratingAverage > 8) return 'Wonderful';
-    if (ratingAverage > 7) return 'Good';
-    if (ratingAverage > 6) return 'Normal';
-    if (ratingAverage > 4) return 'Bad';
+    else if (ratingAverage > 8) return 'Wonderful';
+    else if (ratingAverage > 7) return 'Good';
+    else if (ratingAverage > 6) return 'Normal';
+    else if (ratingAverage > 4) return 'Bad';
     return 'Not rated';
   }
 
   getRatingClass(ratingAverage: number): string {
     if (ratingAverage > 9) return 'bg-green-700';
-    if (ratingAverage > 8) return 'bg-green-600';
-    if (ratingAverage > 7) return 'bg-yellow-600';
-    if (ratingAverage > 6) return 'bg-orange-600';
-    if (ratingAverage > 4) return 'bg-red-600';
+    else if (ratingAverage > 8) return 'bg-green-600';
+    else if (ratingAverage > 7) return 'bg-yellow-600';
+    else if (ratingAverage > 6) return 'bg-orange-600';
+    else if (ratingAverage > 4) return 'bg-red-600';
     return 'bg-gray-600';
   }
 }

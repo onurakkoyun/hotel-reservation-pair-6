@@ -1,24 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { HotelLocation } from './model/HotelLocation';
 
-
-export interface Location {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: number;
-  lat: string;
-  lon: string;
-  class: string;
-  type: string;
-  place_rank: number;
-  importance: number;
-  addresstype: string;
-  name: string;
-  display_name: string;
-  boundingbox: string[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +12,11 @@ export class LocationService {
   constructor(private http: HttpClient) { }
 
 
-  getLatLong(postalCode: string): Observable<Location>  {
+  getLatLong(postalCode: string): Observable<HotelLocation>  {
 
     if (postalCode) {
       const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(postalCode)}`;
-      return this.http.get<Location[]>(url).pipe(
+      return this.http.get<HotelLocation[]>(url).pipe(
         map(data => {
           if (data.length > 0) {
             return data[0];

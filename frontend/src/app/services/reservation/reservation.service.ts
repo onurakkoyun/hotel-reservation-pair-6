@@ -2,19 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
+import { CreateReservationRequest } from './model/CreateReservationRequest';
 
-export interface CreateReservationRequest {
-  roomId: number;
-  guestId: number;
-  cardNumber: string;
-  cardHolderName: string;
-  expirationMonth: string;
-  expirationYear: string;
-  cvc: string;
-  currency: string;
-  checkInDate: string;
-  checkOutDate: string;
-}
+
 
 @Injectable({
   providedIn: 'root',
