@@ -59,18 +59,24 @@ export class PaymentComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.roomId = params['selectedRoomId'];
-      this.checkInDate = params['checkIn'];
-      this.checkOutDate = params['checkOut'];
-    });
-    this.days = this.daysBetweenDates(this.checkInDate, this.checkOutDate);
-    
-    this.setUserDetails();
+      const selectedRoomId = params['selectedRoomId'];
+      this.roomId = selectedRoomId ? Number(selectedRoomId) : 0;
+      this.checkInDate = params['checkIn'] ?? '';
+      this.checkOutDate = params['checkOut'] ?? '';
 
-    this.roomService.getById(this.roomId).subscribe((room) => {
-      this.room = room;
-      this.change.detectChanges();
+      this.days = this.checkInDate && this.checkOutDate
+        ? this.daysBetweenDates(this.checkInDate, this.checkOutDate)
+        : 0;
+
+      if (this.roomId > 0) {
+        this.roomService.getById(this.roomId).subscribe((room) => {
+          this.room = room;
+          this.change.detectChanges();
+        });
+      }
     });
+
+    this.setUserDetails();
   }
 
 
