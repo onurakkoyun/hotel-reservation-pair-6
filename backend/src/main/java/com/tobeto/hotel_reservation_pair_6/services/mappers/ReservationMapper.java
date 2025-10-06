@@ -27,5 +27,7 @@ public interface ReservationMapper {
     @Mapping(source = "guest.email", target = "email")
     @Mapping(source = "guest.phoneNumber", target = "phoneNumber")
     @Mapping(source = "room.hotel.hotelName", target = "hotelName")
+    @Mapping(source = "status.status", target = "status")
+    @Mapping(target = "currency", expression = "java(reservation.getCurrency() != null ? reservation.getCurrency().name() : null)")
     GetReservationReportResponse mapReservationToGetReservationReportResponse(Reservation reservation);
 }
